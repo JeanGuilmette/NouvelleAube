@@ -1,4 +1,6 @@
-NouvelleAube
-============
+Nouvelle Aube
+=============
 
-Jeux fait dans pout un projet scolaire 
+Utilise:
+Python 3.4
+pyGame
