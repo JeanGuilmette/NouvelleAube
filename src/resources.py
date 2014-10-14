@@ -11,6 +11,15 @@ resourceDef = dict( \
     PierreCom  = dict(unitMax = 8000, delay = -31000, ratio = 100, rate = 0),
     PierreRare  = dict(unitMax = 1000, delay = -310000, ratio = 100, rate = 0),
     Petrole  = dict(unitMax = 2000, delay = -310000, ratio = 100, rate = 0),
+    Nourriture  = dict(unitMax = 2000, delay = -310000, ratio = 100, rate = 0), 
+    Materiaux  = dict(unitMax = 2000, delay = -310000, ratio = 100, rate = 0), 
+    Energie  = dict(unitMax = 2000, delay = -310000, ratio = 100, rate = 0),
+    TestResA  = dict(unitMax = 1000, delay = 31, ratio = 100, rate = 1),  # Should not be modified, used to valid internal mechanic of the game 
+    TestResB  = dict(unitMax = 5000, delay = 31, ratio = 100, rate = 10)  # Should not be modified, used to valid internal mechanic of the game        
+    )
+
+terrainType = dict( \
+    Plaine = dict(agriculture = 5.0, boisCom = 0.75, boisRare = 0.5)
     )
 
 
@@ -36,7 +45,9 @@ class Resource():
         self.regenDay +=1;
         if self.regenDay == self.regenDelay :
             self.current = self.current + (self.current/self.regenRatio) * self.regenRate
+            self.current = self.current if(self.current <= self.max) else self.max
             self.regenDay = 0
+            
 
     def Unserialize(self, resDict):
             self.stock = resDict['Stock']

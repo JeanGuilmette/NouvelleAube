@@ -1,12 +1,14 @@
+import sys
 from unittest import TestCase
+sys.path.append("../src")
 from resources import *
 from zone import ZoneModifier
 
 class TestResource(TestCase):
 
     def testCreation(self):
-        r = Resource('Chasse')
-        self.assertEquals('Chasse', r.name)
+        r = Resource('TestResA')
+        self.assertEquals('TestResA', r.name)
         self.assertEquals(0, r.stock)
         self.assertEquals(1000, r.current)
         self.assertEquals(1000, r.max)
@@ -17,9 +19,9 @@ class TestResource(TestCase):
 
 
     def testDoubleCreation(self):
-        r1 =  Resource('Agriculture')
-        r = Resource('Chasse')
-        self.assertEquals('Chasse', r.name)
+        r1 =  Resource('TestResB')
+        r = Resource('TestResA')
+        self.assertEquals('TestResA', r.name)
         self.assertEquals(0, r.stock)
         self.assertEquals(1000, r.current)
         self.assertEquals(1000, r.max)
@@ -29,8 +31,8 @@ class TestResource(TestCase):
         self.assertEquals(100, r.regenRatio)
 
     def testHourlyAdjustementNoProd(self):
-        r = Resource('Agriculture')
-        zoneMod = ZoneModifier()
+        r = Resource('TestResB')
+        zoneMod = ZoneModifier("Science")
 
         # Check if initial value of resource are valid
         self.assertEquals(0, r.stock)
@@ -38,44 +40,44 @@ class TestResource(TestCase):
         self.assertEquals(5000, r.max)
 
         # Apply hourly production without any production modifier
-        r.HourlyAdjustment(100, zoneMod)
+        r.HourlyAdjustment(zoneMod)
         self.assertEquals(0, r.stock)
         self.assertEquals(5000,r.current)
         self.assertEquals(5000, r.max)
 
     def testHourlyAdjustementScienceProd(self):
-        r = Resource('Agriculture')
-        zoneMod = ZoneModifier()
+        r = Resource('TestResB')
+        zoneMod = ZoneModifier("Science")
         zoneMod.prodScience = 10
 
         # Apply hourly production with science production modifier
-        r.HourlyAdjustment(100, zoneMod)
+        r.HourlyAdjustment(zoneMod)
         self.assertEquals(10, r.stock)
         self.assertEquals(4990,r.current)
         self.assertEquals(5000, r.max)
 
 
     def testHourlyAdjustementBuildingProd(self):
-        r = Resource('Agriculture')
-        zoneMod = ZoneModifier()
+        r = Resource('TestResB')
+        zoneMod = ZoneModifier("Science")
         zoneMod.prodBuilding = 10
 
         # Apply hourly production with science production modifier
-        r.HourlyAdjustment(100, zoneMod)
+        r.HourlyAdjustment(zoneMod)
         self.assertEquals(10, r.stock)
         self.assertEquals(4990,r.current)
         self.assertEquals(5000, r.max)
 
 
     def testHourlyAdjustementProdWithPanic(self):
-        r = Resource('Agriculture')
-        zoneMod = ZoneModifier()
+        r = Resource('TestResB')
+        zoneMod = ZoneModifier("Science")
         zoneMod.prodBuilding = 25
         zoneMod.prodScience = 15
-        zoneMod.panique = 50
+        zoneMod.panique = 0.5
 
         # Apply hourly production with panic modifier
-        r.HourlyAdjustment(100, zoneMod)
+        r.HourlyAdjustment(zoneMod)
         self.assertEquals(20, r.stock)
         self.assertEquals(4980,r.current)
         self.assertEquals(5000, r.max)

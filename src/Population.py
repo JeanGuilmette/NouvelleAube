@@ -4,26 +4,25 @@ __author__ = 'SJS'
 
 class Population():
     def __init__(self, popMax, croissance):
-        self.pop_max = popMax
-        self.croissance = croissance
-        self.santé = 0
-        self.influence = 0
-        self.bonheur = 0
-        self.recherche = 0
-        self.éducation = 0
-        self.panique = 0
-        self.paniquedecatastrophe = 0
-        self.criminalité = 0
+        self.popMax = popMax            # Maximum of population supported by the island
+        self.croissance = croissance    # Number of new people by unit of time.
+        self.sante= 0                   #
+        self.influence = 0              #
+        self.bonheur = 0                #
+        self.recherche = 0              # 
+        self.education =  0             #
+        self.panique = 0                #
+        self.paniquedecatastrophe = 0   #
+        self.criminalite = 0            #
 
 
-    def valeur_de_panique(self):
+    def HourlyPanicAdlustment(self):
     ##    Calcule la valeur de panique
         self.panique = (self.panique + self.paniquedecatastrophe)
-        if unJourPasse == True:
-            if self.panique > 0:
-                self.panique = (self.panique/10) -1
-            if self.panique < 0:
-                self.panique = 0
+        if self.panique > 0:
+            self.panique = (self.panique/10) -1
+        if self.panique < 0:
+            self.panique = 0
 
     #----------------------------------------------------------------------
 
@@ -36,44 +35,45 @@ class Population():
 
     #----------------------------------------------------------------------
 
-    def valeur_de_santé(self):
+    def valeur_de_sante(self):
     ##calcule valeur de santé
-        self.santé = (self.effetsantébâtiment + self.effetsantéscience)-self.panique
-        if self.santé > 100:
-            self.santé =100
+        self.sante = (self.effetsantébâtiment + self.effetsantéscience)-self.panique
+        if self.sante > 100:
+            self.sante =100
 
 
     ##-----------------------------------------------------------------------
 
     def valeur_de_croissance_humaine(self):
-        self.croissancepophumaine = (self.santé*self.population*(self.bonheur/10))/(100*self.panique*(self.polution/10)
+        self.croissancepophumaine = (self.sante*self.population*(self.bonheur/10))/(100*self.panique*(self.polution/10))
+
 
     def valeur_de_population(self):
-        if unJourPasse == True:
-            self.pop_secteur += self.croissancepophumaine
-            self.population = self.population - (self.population/10)
+        #if unJourPasse == True:
+        self.pop_secteur += self.croissancepophumaine
+        self.population = self.population - (self.population/10)
 
     #--------------------------------------------------------------------------
 
-    def valeur_de_criminalité(self):
-        self.criminalité = ((self.population/100*(self.panique+1))/self.bonheur)+ self.effetcriminalitébâtiment + effetcriminalitéscience
+    def valeur_de_criminalite(self):
+        self.criminalite = ((self.population/100*(self.panique+1))/self.bonheur) #+ self.effetcriminalitebatiment + effetcriminalitescience
 
     #--------------------------------------------------------------------------
 
     def valeurinfluence(self):
-        self.influence = ((50*self.santé + 50*self.bonheur)/(500*self.panique + 50*self.criminalité + 1)) + effetinfluencebâtiment + effetinfluencescience
+        self.influence = ((50*self.sante + 50*self.bonheur)/(500*self.panique + 50*self.criminalite + 1)) #+ effetinfluencebâtiment + effetinfluencescience
 
     #--------------------------------------------------------------------------
 
     def valeur_de_polution(self):
-        self.polution= ((self.impactsurpolutiondeschoix+self.effetpolutionbâtiment)*(self.population/500)) + effetpolutionbâtiment + effetpolutionscience
+        self.polution= ((self.impactsurpolutiondeschoix+self.effetpolutionbâtiment)*(self.population/500)) # + effetpolutionbâtiment + effetpolutionscience
 
     #--------------------------------------------------------------------------
 
-    def valeuréducation(self):
-        self.éducation = (self.effetéducationbâtiment + self.effetéducationscience)/self.panique
+    def valeurEducation(self):
+        pass #self.éducation = (self.effetéducationbâtiment + self.effetéducationscience)/self.panique
     #---------------------------------------------------------------------------
 
     def valeur_de_recherche(self):
-        self.recherche = (self.effetrecherchebâtiment + self.effetrecherchescience)/self.panique
+        pass #self.recherche = (self.effetrecherchebâtiment + self.effetrecherchescience)/self.panique
     #----------------------------------------------------------------------------

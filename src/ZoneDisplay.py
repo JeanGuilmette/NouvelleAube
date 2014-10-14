@@ -1,8 +1,6 @@
-import DockingMenu
 __author__ = 'SJS'
 
-import pygame, sys
-from pygame.locals import *
+import pygame
 from defines import COLORS
 
 

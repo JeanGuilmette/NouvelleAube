@@ -1,7 +1,7 @@
-##Base de jeu. Code central pour le faire fonctionner. Principalement des
-##variables globales pour faire fonctionner
-##toutes les autres parties du programmes.
-##Ce fichier permet donc de faire le lien entre elles.
+# Base de jeu. Code central pour le faire fonctionner.
+# Principalement des variables globales pour faire fonctionner
+# toutes les autres parties du programmes.
+# Ce fichier permet donc de faire le lien entre elles.
 
 import pygame
 pygame.init()
@@ -11,10 +11,9 @@ import MenuPrincipale
 import EndGame
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     # Create main windows
     game = EnjeuxSurvie.EnjeuxSurvie()
-    game.InitDisplay()
 
     # Display introduction splash screen
     Introduction.Introduction(game.GetMainWindow())
@@ -23,6 +22,10 @@ if __name__=="__main__":
     mainMenu = MenuPrincipale.MenuPrincipale(game.GetMainWindow())
     action = mainMenu.showMenuScreen()
     if(action.lower() == "start"):
+        game.run()
+    elif(action.lower() == "continue"):
+        game.run()
+    elif(action.lower() == "option"):
         game.run()
 
     # Game Over

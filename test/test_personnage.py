@@ -1,3 +1,5 @@
+import sys
+sys.path.append("../src")
 from unittest import TestCase
 from Personnage import Personnage
 
