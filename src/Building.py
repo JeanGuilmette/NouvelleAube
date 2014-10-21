@@ -1,10 +1,10 @@
 __author__ = 'SJS'
 
 buildingDef = dict( \
-    Farm = dict(imgName = "farm.jpg", workerMax = 10, secteur = "primaire", space = 4, buildcost = dict(argent = 1000, bois = 345, metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Mines  =  dict(imgName = "mine.jpg", workerMax = 100, secteur = "primaire", space = 2, buildcost = dict(argent = 1000, bois = 345, metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Moulin = dict(imgName = "moulin.jpg", workerMax = 100, secteur = "secondaire", space = 1, buildcost = dict(argent = 1000, bois = 345, metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Boulangerie = dict(imgName = "boulangerie.jpg", workerMax = 100, secteur = "tertiaire", space = 1, buildcost = dict(argent = 1000, bois = 345, metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" )
+    Farm = dict(imgName = "farm.jpg", workerMax = 10, secteur = "primaire", space = 4, buildcost = dict( bois = 345, metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Mines  =  dict(imgName = "mine.jpg", workerMax = 100, secteur = "primaire", space = 2, buildcost = dict( bois = 345, metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Moulin = dict(imgName = "moulin.jpg", workerMax = 100, secteur = "secondaire", space = 1, buildcost = dict( bois = 345, metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Boulangerie = dict(imgName = "boulangerie.jpg", workerMax = 100, secteur = "tertiaire", space = 1, buildcost = dict( bois = 345, metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" )
     )
 
 
@@ -25,13 +25,13 @@ class Batiment(object):
         self.waterAvailable = 0                         # Acces to water to oparate the building
         self.accessToRoad = 0                           # Acces to transportation network
         self.Communication = 0                          # Access to internet, radio, TV, onde courte
-        
-        
+        self.bonusproduction = 0.1 * self.worker        # Bonus ajoute au a la production de batiments du secteur.
+
     def ComputeProductivity(self):
         pass
-    
+
     def Maintenance(self):
         pass
-    
+
     def isOperational(self):
         pass

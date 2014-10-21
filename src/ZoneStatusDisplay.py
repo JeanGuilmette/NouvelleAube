@@ -28,8 +28,8 @@ class ZoneStatusDisplay(object):
         self.items = []
         
         # Each column have 150 pixel so 5 column of 9 row.
-        self.labelCol1 = ("Nourriture", "Materiaux", "Energie")
-        #self.labelCol1 = ("Agriculture", "Chasse", "Peche", "BoisCom", "BoisRare", "MetauxCom", "MetauxRare", "PierreCom", "PierreRare", "Petrole")
+        #self.labelCol1 = ("Nourriture", "Materiaux", "Energie")
+        self.labelCol1 = ("Agriculture", "Chasse", "Peche", "Bois", "Metaux", "Pierre")
         #self.labelCol2 = ("Petrole", "Eau")        
         self.labelCol3 = ("Population", "Sante", "Bonheur", "Recherche", "Education", "Panique", "Criminalite", "Influence", "Pollution", "Tresors", "Production")    
         #self.labelCol4 = ("Tresors", "Production")         

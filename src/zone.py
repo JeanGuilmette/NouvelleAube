@@ -38,12 +38,12 @@ class Island(object):
 
     # Create new game with inital value
     def create(self):
-        resList = ("Nourriture", "Materiaux", "Energie")
-        zone = Secteur("Region", resList)
+        resList = ("Agriculture", "Chasse", "Peche", "Bois", "Metaux", "Pierre")
+        zone = Secteur("Region","Foret", resList)
         self.secteur.append(["Region", zone])
-        zone = Secteur("Saguenay", resList)
+        zone = Secteur("Saguenay", "Foret", resList)
         self.secteur.append(["Saguenay", zone])
-        zone = Secteur("Gaspesis", resList)
+        zone = Secteur("Gaspesis", "Plaine", resList)
         self.secteur.append(["Gaspesis", zone])
         self.activeZone = self.secteur[0]
 
@@ -62,13 +62,14 @@ class Secteur():
     __size = ""
     __espace_entreposage = ""
 
-    def __init__(self, name, resList):
+    def __init__(self, name, terrain, resList):
         self.name = name               # Name of the zone
         self.spaceMax = 50             # Maximum available space on the zone
         self.currentSpace = 0          # Currently used space of the zone
         self.resources = dict()        # Available resource in the zone
         self.batiments = dict()        # List of building in the zone
         self.__population = Population.Population(100000, 5)
+        self.TypeTerrain = resources.terrainType[terrain]
 
         self.ConstructResourcesList(resList)
 

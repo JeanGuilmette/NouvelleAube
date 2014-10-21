@@ -12,7 +12,7 @@ import MapDisplay
 import yaml
 
 from defines import COLORS, FPS
-from zone import ZoneModifier
+from zone import ZoneModifier, Secteur
 
 
 class EnjeuxSurvie:
@@ -108,7 +108,7 @@ class EnjeuxSurvie:
             zoneMod.prodScience = 1
             for zone in self.island.secteur:
                 for res in zone[1].resources.values():
-                    res.HourlyAdjustment(zoneMod)
+                    res.HourlyAdjustment(zoneMod, zone[1])
                     res.DailyAdjustment()
             self.counter = 0
         else:
