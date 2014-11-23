@@ -14,6 +14,7 @@ class Population():
         self.panique = 0                #
         self.paniquedecatastrophe = 0   #
         self.criminalite = 0            #
+        self.current = 0                #
 
 
     def HourlyPanicAdlustment(self):

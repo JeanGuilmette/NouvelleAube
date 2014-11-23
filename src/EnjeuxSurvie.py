@@ -10,9 +10,10 @@ import ZoneDisplay
 import ZoneStatusDisplay
 import MapDisplay
 import yaml
+import Island
 
 from defines import COLORS, FPS
-from zone import ZoneModifier, Secteur
+# from zone import ZoneModifier, Secteur
 
 
 class EnjeuxSurvie:
@@ -38,7 +39,7 @@ class EnjeuxSurvie:
 
     # Build initial island at beginning of a new game
     def ConstructZone(self, filename="new"):
-        self.island = zone.Island(filename)
+        self.island = Island.Island(filename)
 
     # Build reference to all menu
     def CreateAllMenu(self):
@@ -48,8 +49,8 @@ class EnjeuxSurvie:
 
         # Create zone menu
         self.zoneMenu = ZoneDisplay.ZoneDisplay(self.display.GetScreen(), self.island.secteur, [0, 0, 150, 400])
-        self.resourceMenu = ZoneStatusDisplay.ZoneStatusDisplay(self.display.GetScreen(), self.island.activeZone, [0, 400, 650, 200])
-        self.mapDisplay = MapDisplay.MapDisplay(self.display.GetScreen(), self.island.activeZone[1], [150, 0, 650, 400])
+        self.resourceMenu = ZoneStatusDisplay.ZoneStatusDisplay(self.display.GetScreen(), self.island.GetActiveZone(), [0, 400, 650, 200])
+        self.mapDisplay = MapDisplay.MapDisplay(self.display.GetScreen(), self.island.GetActiveZone(), [150, 0, 650, 400])
 
     def DrawWorld(self):
         if (self.display.GetScreen() is not None):
@@ -61,8 +62,8 @@ class EnjeuxSurvie:
             self.display.drawGrid()
             self.zoneMenu.draw()
             self.buildMenu.draw()
-            self.resourceMenu.ShowStatus(self.island.activeZone)
-            self.mapDisplay.draw(self.island.activeZone[1])
+            self.resourceMenu.ShowStatus(self.island.GetActiveZone())
+            self.mapDisplay.draw(self.island.GetActiveZone())
             pygame.display.flip()
 
     def ValidPlayerInput(self):
@@ -80,14 +81,14 @@ class EnjeuxSurvie:
                         continue
                     # If no button pressed, check for button in ZoneMenu
                     zone = self.zoneMenu.validSelectedMenu(event)
-                    if(zone[0].lower() != "none"):
-                        print("Zone menu action: %s" % (zone[0]))
-                        if(zone[0].lower() == "quit"):
+                    if(zone.lower() != "none"):
+                        print("Zone menu action: %s" % (zone))
+                        if(zone.lower() == "quit"):
                             self.quitFlag = True
                         else:
                             # self.resourceMenu.SetSector(zone)
                             # self.resourceMenu.ShowStatus(zone)
-                            self.island.activeZone = zone
+                            self.island.SetActiveZone(zone)
 
     def GetMainWindow(self):
         return self.display.GetScreen()
@@ -103,13 +104,10 @@ class EnjeuxSurvie:
         # Histoire principal Event
 
         if(self.counter > (FPS * 1)):  # update ressource every 5 secondes
-            zoneMod = ZoneModifier("building")
+            zoneMod = zone.ZoneModifier("building")
             zoneMod.prodBuilding = 1
             zoneMod.prodScience = 1
-            for zone in self.island.secteur:
-                for res in zone[1].resources.values():
-                    res.HourlyAdjustment(zoneMod, zone[1])
-                    res.DailyAdjustment()
+            self.island.UpdateProd()
             self.counter = 0
         else:
             self.counter = self.counter + 1

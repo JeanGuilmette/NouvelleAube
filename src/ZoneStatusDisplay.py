@@ -40,7 +40,7 @@ class ZoneStatusDisplay(object):
         pygame.draw.rect(self.menuSurface, self.bgColor, self.menuCoord, 0)
         pygame.draw.rect(self.menuSurface, self.borderColor, self.menuCoord, 3)        
         # Zone name
-        label = self.font.render(zone[0], 1, self.fontColor)
+        label = self.font.render(zone.name, 1, self.fontColor)
         self.menuSurface.blit(label, (2, 2))
        
         # Display resource first columns
@@ -69,10 +69,10 @@ class ZoneStatusDisplay(object):
             stock = 0
             available = 0
             stockMax = 0
-            if item in zone[1].resources:
-                stock = zone[1].resources[item].stock
-                available = zone[1].resources[item].current
-                stockMax = zone[1].resources[item].max
+            if item in zone.resources:
+                stock = zone.resources[item].stock
+                available = zone.resources[item].current
+                stockMax = zone.resources[item].max
             resString = ("%d / %d / %d" % (stock, available, stockMax ))
             label = self.font.render(resString, 1, self.fontColor)
             self.menuSurface.blit(label, (posX+110, posY))

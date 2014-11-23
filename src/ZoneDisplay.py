@@ -26,7 +26,7 @@ class ZoneDisplay(object):
         # Build menu display
         self.items = []
         for index, item in enumerate(self.secteur):
-            label = self.font.render(item[0], 1, self.fontColor)
+            label = self.font.render(item, 1, self.fontColor)
             width = label.get_rect().width
             height = label.get_rect().height
             posx = 5

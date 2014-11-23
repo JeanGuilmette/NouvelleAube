@@ -49,6 +49,6 @@ class DockingMenu():
         # First: Check Menus. Menus trump all.
         for name, label, (width, height), (posx, posy) in self.items:
             if( (posY > posy) and (posY < (posy+height)) and (posX > posx) and (posX < (posx + width)) ): 
-                label          
+                label
                 return name
         return "none"

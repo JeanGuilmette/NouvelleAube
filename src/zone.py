@@ -3,6 +3,7 @@ __author__ = 'SJS'
 import pygame
 import resources
 import Population
+import Building
 from defines import COLORS
 
 
@@ -23,35 +24,7 @@ class ZoneModifier():
         self.prodBuilding = 0
 
 
-class Island(object):
-    def __init__(self, filename):
-        self.secteur = []
-        self.activeZone = None                      # Which zone player currently examine or work with
-        if(filename == "new"):
-            self.create()
-        else:
-            self.load(filename)
 
-    # load game information from saved file
-    def load(self, filename):
-        pass
-
-    # Create new game with inital value
-    def create(self):
-        resList = ("Agriculture", "Chasse", "Peche", "Bois", "Metaux", "Pierre")
-        zone = Secteur("Region","Foret", resList)
-        self.secteur.append(["Region", zone])
-        zone = Secteur("Saguenay", "Foret", resList)
-        self.secteur.append(["Saguenay", zone])
-        zone = Secteur("Gaspesis", "Plaine", resList)
-        self.secteur.append(["Gaspesis", zone])
-        self.activeZone = self.secteur[0]
-
-    def get_current_population(self):
-        pass
-
-    def get_max_population(self):
-        pass
 
 
 ########################################
@@ -77,8 +50,8 @@ class Secteur():
         for resName in resList:
             self.resources[resName] = resources.Resource(resName)
 
-    def AddBuilding(self, building):
-        pass
+    def AddBuilding(self, buildingType, pos):
+        self.batiments[buildingType] = Building.Batiment(buildingType, pos)
 
     def draw(self):
         if(self.name.lower() == "region"):
@@ -87,5 +60,27 @@ class Secteur():
         # Create region
         surface = pygame.Surface((600, 400))
         pygame.draw.rect(surface, COLORS.GREEN, [0, 0, 600, 400], 0)
-        
+
         return surface
+    
+    def GetCurrentPopulation(self):
+        return self.__population.current
+    
+    def GetMaxPopulation(self):
+        return self.__population.popMax  
+    
+    def UpdateProd(self):
+        for res in self.resources:
+            prod = 0            
+            for b in self.batiments:
+                if(self.batiments[b].resType == res):
+                    a = self.TypeTerrain[res]
+                    c = self.batiments[b]
+                    d = c.ComputeProductivity(a, 1.0)  
+                    prod += d                  
+#                     prod += self.batiments[b].ComputeProductivity(self.TypeTerrain[res], 1.0)
+            self.resources[res].HourlyAdjustment(prod)
+            
+    def ComputeProduction(self, resource):
+        pass
+
