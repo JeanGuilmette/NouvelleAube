@@ -15,6 +15,7 @@ class Batiment(object):
         self.image = buildingDef[name]["imgName"]        # Filename of image to represent building on map (on zoom information?)
         self.resType = buildingDef[name]["resType"]      # 
         self.position = pos                              # Position of building on map (zone)
+        self.numberBuilding = 0                          # Number of building constructed in zone
         self.worker = 0                                  # Current number of worker affected to building
         self.workerMax = buildingDef[name]["workerMax"]  # Maximum number of worker that could work in this building
         self.secteur = buildingDef[name]["secteur"]      # Activity sector of the building
@@ -39,5 +40,23 @@ class Batiment(object):
         return True if (self.worker > 0) else False
     
     def AssignWorker(self, nbrWorker):
-        self.worker = (self.worker + nbrWorker) if( (self.worker + nbrWorker) <= self.workerMax) else self.workerMax
+        limitMaxWorker = (self.workerMax * self.numberBuilding)
+        self.worker = (self.worker + nbrWorker) if( (self.worker + nbrWorker) <= limitMaxWorker ) else limitMaxWorker
         self.worker = self.worker if (self.worker >= 0) else 0
+        
+    def Add(self, pos):
+        self.numberBuilding = self.numberBuilding + 1 
+        
+    def Remove(self):
+        self.numberBuilding = self.numberBuilding - 1
+        self.numberBuilding = self.numberBuilding if (self.numberBuilding >= 0) else 0    
+        self.AssignWorker(0)    
+        
+    def AddWorker(self):
+        val = self.worker + 1
+        limitMaxWorker = self.workerMax * self.numberBuilding
+        self.worker = val if( val <= limitMaxWorker ) else limitMaxWorker
+        
+    def RemoveWorker(self):
+        self.worker = self.worker - 1
+        self.worker = self.worker if (self.worker >= 0) else 0    

@@ -52,6 +52,9 @@ class Island(object):
                 popMax += self.secteur[zone].GetMaxPopulation()
         return popMax 
 
+    def AddBuilding(self, zoneName, buildingName, pos):
+        self.secteur[zoneName].AddBuilding(buildingName, pos)
+        
     def UpdateProd(self):
         for zone in self.secteur:
             if(zone != "Region"):

@@ -45,14 +45,21 @@ class Secteur():
         self.TypeTerrain = resources.terrainType[terrain]
 
         self.ConstructResourcesList(resList)
+        
+        for buildingType in Building.buildingDef:
+            pos = (0,0)
+            self.batiments[buildingType] = Building.Batiment(buildingType, pos)    
 
     def ConstructResourcesList(self, resList):
         for resName in resList:
             self.resources[resName] = resources.Resource(resName)
 
     def AddBuilding(self, buildingType, pos):
-        self.batiments[buildingType] = Building.Batiment(buildingType, pos)
+        self.batiments[buildingType].Add(pos)
 
+    def RemoveBuilding(self, buildingType):
+        self.batiments[buildingType].Remove()
+        
     def draw(self):
         if(self.name.lower() == "region"):
             return pygame.image.load("image/islandMap.jpg")

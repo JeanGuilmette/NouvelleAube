@@ -11,7 +11,8 @@ import ZoneStatusDisplay
 import MapDisplay
 import yaml
 import Island
-
+import BuildMenu
+from time import sleep
 from defines import COLORS, FPS
 # from zone import ZoneModifier, Secteur
 
@@ -45,12 +46,15 @@ class EnjeuxSurvie:
     def CreateAllMenu(self):
         # create build menu
         menu_items = ('Zone', 'Building', 'Resources', 'Options', 'Quit')
-        self.buildMenu = DockingMenu.DockingMenu(self.display.GetScreen(), menu_items, [650, 400, 150, 200])
+        self.buildMenu = DockingMenu.DockingMenu(self.GetMainWindow(), menu_items, [650, 400, 150, 200])
 
         # Create zone menu
-        self.zoneMenu = ZoneDisplay.ZoneDisplay(self.display.GetScreen(), self.island.secteur, [0, 0, 150, 400])
-        self.resourceMenu = ZoneStatusDisplay.ZoneStatusDisplay(self.display.GetScreen(), self.island.GetActiveZone(), [0, 400, 650, 200])
-        self.mapDisplay = MapDisplay.MapDisplay(self.display.GetScreen(), self.island.GetActiveZone(), [150, 0, 650, 400])
+        self.zoneMenu = ZoneDisplay.ZoneDisplay(self.GetMainWindow(), self.island.secteur, [0, 0, 150, 400])
+        self.resourceMenu = ZoneStatusDisplay.ZoneStatusDisplay(self.GetMainWindow(), self.island.GetActiveZone(), [0, 400, 650, 200])
+        self.mapDisplay = MapDisplay.MapDisplay(self.GetMainWindow(), self.island.GetActiveZone(), [150, 0, 650, 400])
+        
+        # Create build menu
+        self.buildChoiceMenu = BuildMenu.BuildMenu(self.GetMainWindow(), self.island.GetActiveZone(), [50, 50, 550, 300])
 
     def DrawWorld(self):
         if (self.display.GetScreen() is not None):
@@ -78,7 +82,12 @@ class EnjeuxSurvie:
                         print("Build menu action: %s" % (action))
                         if(action.lower() == "quit"):
                             self.quitFlag = True
-                        continue
+                        elif(action.lower() == "building"):
+                        	if(self.island.GetActiveZone().name.lower() != "region"):
+	                            print("Show building construction menu")
+	                            # Now re-open the window to display everything
+	                            self.display.SetWindow(0, 0, self.display.GetScreenWidth(), self.display.GetScreenHeight())
+	                            self.buildChoiceMenu.Run(self.island.GetActiveZone())
                     # If no button pressed, check for button in ZoneMenu
                     zone = self.zoneMenu.validSelectedMenu(event)
                     if(zone.lower() != "none"):
