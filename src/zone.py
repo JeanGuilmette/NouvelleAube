@@ -55,6 +55,17 @@ class Secteur():
             self.resources[resName] = resources.Resource(resName)
 
     def AddBuilding(self, buildingType, pos):
+        #Check if resources are availble
+        for resNeeded in self.batiments[buildingType].buildCost:
+            if(self.resources[resNeeded].stock >= self.batiments[buildingType].buildCost[resNeeded]):
+                pass
+            else:
+                print("Missing ressource")
+                return "No ressource"
+        #Remove resources
+        for resNeeded in self.batiments[buildingType].buildCost:
+            self.resources[resNeeded].stock -= self.batiments[buildingType].buildCost[resNeeded]
+        #Add new building        
         self.batiments[buildingType].Add(pos)
 
     def RemoveBuilding(self, buildingType):
@@ -90,4 +101,9 @@ class Secteur():
             
     def ComputeProduction(self, resource):
         pass
+    
+    def Initialize(self):
+        self.resources["Bois"].stock = 1000
+        self.resources["Metaux"].stock = 1000
+        self.__population.current = 5000
 

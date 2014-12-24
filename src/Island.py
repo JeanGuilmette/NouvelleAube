@@ -30,6 +30,8 @@ class Island(object):
     def __create(self):
         for sectorName in secteurDef:
             self.secteur[sectorName] = zone.Secteur(sectorName, secteurDef[sectorName]["terType"], secteurDef[sectorName]["resList"])
+            if(sectorName != "Region"): 
+                self.secteur[sectorName].Initialize()
         self.__activeZone = "Region"
 
     def GetActiveZone(self):
