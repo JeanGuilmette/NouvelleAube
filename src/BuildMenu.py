@@ -83,15 +83,20 @@ class BuildMenu(object):
             resString = "Add  -  Remove"
             label = self.font.render(resString, 1, self.fontColor)
             self.menuSurface.blit(label, (posX+375, posY))            
-            
-#             self.items[index] = [nameBuilding, height, (posX, posY)]  
+           
+        resString = ("QUIT")
+        label = self.font.render(resString, 1, COLORS.GREEN)
+        self.menuSurface.blit(label, (self.menuSurface.get_width()-50, self.menuSurface.get_height()-height ))
+
             
     def validSelectedMenu(self, event):
         # Read location and which buttons are down...
         buttonPressed = event.dict["button"]
         posX = event.dict["pos"][0] - self.menuPos[0]
         posY = event.dict["pos"][1] - self.menuPos[1]
-
+        if( (posX > self.menuSurface.get_width()-50) and (posY > self.menuSurface.get_height()-75) ):
+            return "quit", "quit" 
+          
         # First: Check Menus. Menus trump all.
         for name, height, (posx, posy) in self.items:
             if( (posY > posy) and (posY < (posy+height))):
@@ -102,7 +107,7 @@ class BuildMenu(object):
                 if( (posX > 375) and (posX < 425) ):    
                     return name, "worker add"
                 if( (posX > 475) and (posX < 525) ):                    
-                    return name,"worker remove"                
+                    return name,"worker remove"         
         return "none", "none"
             
             

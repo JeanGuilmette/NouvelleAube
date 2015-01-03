@@ -67,4 +67,5 @@ class TestSecteur(TestCase):
         self.sectorB.UpdateProd()
         self.assertEqual(0, self.sectorB.resources["TestResB"].stock)
         self.assertEqual(5000, self.sectorB.resources["TestResB"].current)
-        self.assertEqual(5000, self.sectorB.resources["TestResB"].max)    
+        self.assertEqual(5000, self.sectorB.resources["TestResB"].max) 
+        

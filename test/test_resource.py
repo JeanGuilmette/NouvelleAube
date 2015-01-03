@@ -47,7 +47,7 @@ class TestResource(TestCase):
         self.assertEquals(5000, r.max)
 
         # Apply hourly production without any production modifier
-        r.HourlyAdjustment(0)
+        r.Adjustment(0)
         self.assertEquals(0, r.stock)
         self.assertEquals(5000,r.current)
         self.assertEquals(5000, r.max)
@@ -55,7 +55,7 @@ class TestResource(TestCase):
     def testHourlyAdjustementScienceProd(self):
         r = resources.Resource('TestResB')
         # Apply hourly production with science production modifier
-        r.HourlyAdjustment(10)
+        r.Adjustment(10)
         self.assertEquals(10, r.stock)
         self.assertEquals(4990,r.current)
         self.assertEquals(5000, r.max)
@@ -64,7 +64,7 @@ class TestResource(TestCase):
     def testHourlyAdjustementBuildingProd(self):
         r = resources.Resource('TestResB')
         # Apply hourly production with science production modifier
-        r.HourlyAdjustment(10)
+        r.Adjustment(10)
         self.assertEquals(10, r.stock)
         self.assertEquals(4990,r.current)
         self.assertEquals(5000, r.max)
@@ -73,7 +73,7 @@ class TestResource(TestCase):
     def testHourlyAdjustementProdWithPanic(self):
         r = resources.Resource('TestResB')
         # Apply hourly production with panic modifier
-        r.HourlyAdjustment(20)
+        r.Adjustment(20)
         self.assertEquals(20, r.stock)
         self.assertEquals(4980,r.current)
         self.assertEquals(5000, r.max)

@@ -5,6 +5,7 @@
 #
 # import EnjeuxSurvie
 # import zone
+from numpy import prod
 __author__ = 'SJS'
 
 
@@ -47,11 +48,13 @@ class Resource(object):
         self.regenRate = resourceDef[name]["rate"]
         self.regenRatio = resourceDef[name]["ratio"]
 
-    def HourlyAdjustment(self, prod):
+    def Adjustment(self, prod):
+        if((self.stock+prod) > self.max):
+            prod = self.max - self.stock
+        if((self.current - prod) < 0):
+            prod = self.current
         self.stock += prod
         self.current -= prod
-
-    def DailyAdjustment(self):
         self.regenDay +=1;
         if self.regenDay == self.regenDelay:
             self.current = self.current + (self.current/self.regenRatio) * self.regenRate

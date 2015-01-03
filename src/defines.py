@@ -13,4 +13,7 @@ class COLORS(object):
 
 
 CELLSIZE = 100
-FPS = 30         # frames per second setting
+FPS = 1         # frames per second setting
+FPS_MIN = 1
+FPS_MAX = 30
+FPS_DELTA = 1
