@@ -4,9 +4,9 @@ import zone
 OVERVIEW_ZONE_NAME = "Region"
 
 secteurDef = dict(
-    Region = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Metaux", "Pierre") ),
-    Saguenay = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Metaux", "Pierre") ),
-    Gaspesis = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Metaux", "Pierre") ),    
+    Region = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/islandMap.jpg" ),
+    Saguenay = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region1.jpg" ),
+    Gaspesis = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),    
     )
 
 class Island(object):
@@ -25,7 +25,7 @@ class Island(object):
     # Create new game with inital value
     def __create(self):
         for sectorName in secteurDef:
-            self.secteur[sectorName] = zone.Secteur(sectorName, secteurDef[sectorName]["terType"], secteurDef[sectorName]["resList"])
+            self.secteur[sectorName] = zone.Secteur(sectorName, secteurDef[sectorName]["terType"], secteurDef[sectorName]["resList"], secteurDef[sectorName]["image"])
             if(sectorName != OVERVIEW_ZONE_NAME): 
                 self.secteur[sectorName].Initialize()
         self.__activeZone = OVERVIEW_ZONE_NAME
@@ -56,6 +56,37 @@ class Island(object):
             popMax = self.secteur[self.__activeZone].GetMaxPopulation()                    
         return popMax 
 
+    def GetCurrentWorker(self):
+        pop = 0
+        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):            
+                    pop += self.secteur[zone].GetCurrentWorker()
+        else:
+            pop = self.secteur[self.__activeZone].GetCurrentWorker()
+        return pop 
+
+    def GetAvailableWorker(self):
+        popMax = 0
+        if(self.__activeZone == OVERVIEW_ZONE_NAME):        
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    popMax += self.secteur[zone].GetAvailableWorker()
+        else:
+            popMax = self.secteur[self.__activeZone].GetAvailableWorker()                    
+        return popMax 
+ 
+    def GetMaxWorker(self):
+        popMax = 0
+        if(self.__activeZone == OVERVIEW_ZONE_NAME):        
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    popMax += self.secteur[zone].GetMaxWorker()
+        else:
+            popMax = self.secteur[self.__activeZone].GetMaxWorker()                    
+        return popMax     
+    
+    
     def GetSante(self):
         retval = 0
         if(self.__activeZone == OVERVIEW_ZONE_NAME):

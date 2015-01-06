@@ -16,13 +16,13 @@ if __name__ == "__main__":
     game = EnjeuxSurvie.EnjeuxSurvie()
 
     # Display introduction splash screen
-#     Introduction.Introduction(game.GetMainWindow())
+    Introduction.Introduction(game.GetMainWindow())
   
     # Create and display Start menu
     mainMenu = MenuPrincipale.MenuPrincipale(game.GetMainWindow())
     action = mainMenu.showMenuScreen()
     if(action.lower() == "start"):
-#         StoryTelling.StoryTelling(game.GetMainWindow())        
+        StoryTelling.StoryTelling(game.GetMainWindow())        
         game.run()
     elif(action.lower() == "continue"):
         game.run()
@@ -30,4 +30,4 @@ if __name__ == "__main__":
         game.run()
 
     # Game Over
-    end = EndGame.EndGame(game.GetMainWindow())
+    EndGame.EndGame(game.GetMainWindow(), game.score)

@@ -5,7 +5,7 @@ from defines import COLORS
 
 
 class EndGame():
-    def __init__(self, display):
+    def __init__(self, display, score):
         self.menuSurface =  display
         self.scr_width = self.menuSurface.get_rect().width
         self.scr_height = self.menuSurface.get_rect().height
@@ -16,6 +16,8 @@ class EndGame():
         self.bgImage = pygame.image.load("image/Nouvelle_Aube.jpg")        
 
         self.font = pygame.font.SysFont(None, 30)
+        
+        self.score = score
         self.showScreen()
 
 
@@ -36,7 +38,11 @@ class EndGame():
     def showScreen(self):
         titleFont = pygame.font.Font('freesansbold.ttf', 100)
         titleSurf1 = titleFont.render('Game Over!', True, COLORS.DARKGRAY)
+        resString = ("Your Score: %d" % (self.score))
+        scoreSurf = titleFont.render(resString, True, COLORS.BLACK)
  
+        centerX = (self.menuSurface.get_rect().width/2) - (scoreSurf.get_rect().width/2)
+        centerY = (self.menuSurface.get_rect().height/2) - (scoreSurf.get_rect().height/2)
         posX = 50
         posY = 50
         dirY = -1
@@ -44,6 +50,7 @@ class EndGame():
         while True:
             self.menuSurface.blit(self.bgImage, [0,0])
             self.menuSurface.blit(titleSurf1, ( posX, posY) )
+            self.menuSurface.blit(scoreSurf, (centerX, centerY))
 
             self.drawPressKeyMsg()
 

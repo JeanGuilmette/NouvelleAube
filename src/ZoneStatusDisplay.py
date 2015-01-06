@@ -29,8 +29,8 @@ class ZoneStatusDisplay(object):
         # Build menu display
         self.items = []
         # Each column have 150 pixel so 5 column of 9 row.
-        self.labelColResources = ("Agriculture", "Chasse", "Peche", "Bois", "Metaux", "Pierre")
-        self.labelCol3 = ("Population", "Sante", "Bonheur", "Recherche", "Education", "Panique", "Criminalite", "Influence", "Pollution", "Tresors", "Production")  
+        self.labelColResources = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole")
+#         self.labelCol3 = ("Population", "Sante", "Bonheur", "Recherche", "Education", "Panique", "Criminalite", "Influence", "Pollution", "Tresors", "Production")  
      
     def ShowStatus(self):
         # Show Zone name
@@ -76,18 +76,20 @@ class ZoneStatusDisplay(object):
  
         posY = posY + height
         self.CreateTextLine("Population", ("%d/%d" % (self.island.GetCurrentPopulation(), self.island.GetPopulationMax()) ), posX, posY)
-#         posY = posY + height
-#         self.CreateTextLine("Sante", ("%d" % self.island.GetSante()), posX, posY)   
-#         posY = posY + height
-#         self.CreateTextLine("Bonheur", ("%d" % self.island.GetBonheur()), posX, posY)
-#         posY = posY + height
-#         self.CreateTextLine("Recherche", ("%d" % self.island.GetRecherche()), posX, posY)        
-#         posY = posY + height
-#         self.CreateTextLine("Education", ("%d" % self.island.GetEducation()), posX, posY)        
-#         posY = posY + height
-#         self.CreateTextLine("Panique", ("%d" % self.island.GetPanique()), posX, posY)    
-#         posY = posY + height
-#         self.CreateTextLine("Criminalite", ("%d" % self.island.GetCriminalite()), posX, posY)            
+        posY = posY + height
+        self.CreateTextLine("Worker", ("%d/%d/%d" % (self.island.GetCurrentWorker(), self.island.GetAvailableWorker(), self.island.GetMaxWorker()) ), posX, posY)
+        posY = posY + height        
+        self.CreateTextLine("Sante", ("%d" % self.island.GetSante()), posX, posY)   
+        posY = posY + height
+        self.CreateTextLine("Bonheur", ("%d" % self.island.GetBonheur()), posX, posY)
+        posY = posY + height
+        self.CreateTextLine("Recherche", ("%d" % self.island.GetRecherche()), posX, posY)        
+        posY = posY + height
+        self.CreateTextLine("Education", ("%d" % self.island.GetEducation()), posX, posY)        
+        posY = posY + height
+        self.CreateTextLine("Panique", ("%d" % self.island.GetPanique()), posX, posY)    
+        posY = posY + height
+        self.CreateTextLine("Criminalite", ("%d" % self.island.GetCriminalite()), posX, posY)            
 #         posY = posY + height
 #         self.CreateTextLine("Influence", ("%d" % self.island.GetInfluence()), posX, posY)   
 #         posY = posY + height

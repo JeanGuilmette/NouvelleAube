@@ -6,28 +6,6 @@ import Population
 import Building
 from defines import COLORS
 
-
-class ZoneModifier():
-    def __init__(self, source):
-        self.source = source
-        self.production = 0
-        self.bonheur = 0
-        self.sante = 0
-        self.criminalite = 0
-        self.influence = 0
-        self.polution = 0
-        self.Education = 0
-        self.recherche = 0
-        self.panique = 0
-        self.nourriture = 0
-        self.prodScience = 0
-        self.prodBuilding = 0
-
-
-
-
-
-########################################
 ########################################
 class Secteur():
     __terrain = "none"
@@ -35,7 +13,7 @@ class Secteur():
     __size = ""
     __espace_entreposage = ""
 
-    def __init__(self, name, terrain, resList):
+    def __init__(self, name, terrain, resList, map):
         self.name = name               # Name of the zone
         self.spaceMax = 50             # Maximum available space on the zone
         self.currentSpace = 0          # Currently used space of the zone
@@ -43,7 +21,8 @@ class Secteur():
         self.batiments = dict()        # List of building in the zone
         self.population = Population.Population(100000, 0.05)
         self.TypeTerrain = resources.terrainType[terrain]
-
+        self.map = map
+        
         self.ConstructResourcesList(resList)
         
         for buildingType in Building.buildingDef:
@@ -62,23 +41,48 @@ class Secteur():
             else:
                 print("Missing ressource")
                 return "No ressource"
-        #Remove resources
+            
+        # Check space avaialble
+        if( (self.currentSpace + self.batiments[buildingType].space) > self.spaceMax):
+            print("Not enough space needed: %d used: %d  max: %d" % (self.batiments[buildingType].space, self.currentSpace, self.spaceMax) )
+            return "No space"
+        
+        #Remove resources and use space
         for resNeeded in self.batiments[buildingType].buildCost:
             self.resources[resNeeded].stock -= self.batiments[buildingType].buildCost[resNeeded]
+            
+        self.currentSpace += self.batiments[buildingType].space  
+        
         #Add new building        
         self.batiments[buildingType].Add(pos)
 
     def RemoveBuilding(self, buildingType):
         self.batiments[buildingType].Remove()
+        self.currentSpace -= self.batiments[buildingType].space
         
+    def AddWorker(self, building):
+        if(self.population.ActivateWorker() == True):
+            self.batiments[building].AddWorker()
+      
+    def RemoveWorker(self, building):
+        if(self.population.Deactivateworker()() == True):
+            self.batiments[building].RemoveWorker()   
+
     def draw(self):
-        if(self.name.lower() == "region"):
-            return pygame.image.load("image/islandMap.jpg")
-
-        # Create region
-        surface = pygame.Surface((600, 400))
-        pygame.draw.rect(surface, COLORS.GREEN, [0, 0, 600, 400], 0)
-
+        surface =  pygame.image.load(self.map)
+        # Create building
+        size = 50
+        posX = 50
+        posY = 50
+        for building in self.batiments:
+            for index in range (0, self.batiments[building].numberBuilding):
+                imgBuild = pygame.image.load(self.batiments[building].image)
+                scale1 = pygame.transform.scale(imgBuild, (size, size))                
+                surface.blit(scale1, (posX, posY))
+                posX += size #imgBuild.get_rect().width
+                if(posX > surface.get_rect().width -50):
+                    posY += size
+                    posX = 50
         return surface
 
     def GetCurrentPopulation(self):
@@ -86,6 +90,15 @@ class Secteur():
     
     def GetMaxPopulation(self):
         return self.population.popMax 
+
+    def GetCurrentWorker(self):
+        return self.population.workerCurrent  
+    
+    def GetMaxWorker(self):
+        return self.population.workerMax     
+    
+    def GetAvailableWorker(self):
+        return self.population.workerIdle
     
     def GetSante(self):
         return self.population.sante
@@ -136,19 +149,18 @@ class Secteur():
                 if(self.batiments[b].resType == res):
                     prod += self.batiments[b].ComputeProductivity(self.TypeTerrain[res], 1.0)
             self.resources[res].Adjustment(prod)
-
     
     
     def UpdatePopulation(self):
         self.population.PopulationAdjustment()
         
     def Initialize(self):
-        self.resources["Agriculture"].stock = 10000
-        self.resources["Chasse"].stock = 10000
-        self.resources["Peche"].stock = 10000               
+        self.resources["Agriculture"].stock = 1000
+        self.resources["Chasse"].stock = 1000
+        self.resources["Peche"].stock = 1000               
         self.resources["Bois"].stock = 1000
-        self.resources["Metaux"].stock = 1000
-        self.population.current = 5000
+        self.resources["Minerais"].stock = 1000
+        self.population.SetCurrentPopulation(5000)
 
     def UpdateExpandRessource(self):
         #Nourrire la population
@@ -157,16 +169,16 @@ class Secteur():
         self.resources["Peche"].stock -= 0.005 * self.population.current
         if(self.resources["Agriculture"].stock <= 0):
             self.resources["Agriculture"].stock = 0
-            self.population.bonheur -= 5
-            self.population.criminalite += 5
-            self.population.sante -= 2
+            self.population.bonheur -= 0.5
+            self.population.criminalite += 0.5
+            self.population.sante -= 0.22
         if(self.resources["Chasse"].stock <= 0):
             self.resources["Chasse"].stock = 0
-            self.population.bonheur -= 5
-            self.population.criminalite += 5
-            self.population.sante -= 2  
+#             self.population.bonheur -= 0.5
+#             self.population.criminalite += 0.5
+#             self.population.sante -= 0.2  
         if(self.resources["Peche"].stock <= 0):
             self.resources["Peche"].stock = 0
-            self.population.bonheur -= 5
-            self.population.criminalite += 5
-            self.population.sante -= 2
+#             self.population.bonheur -= 0.5
+#             self.population.criminalite += 0.5
+#             self.population.sante -= 0.2

@@ -1,12 +1,12 @@
 __author__ = 'SJS'
 
 buildingDef = dict( \
-    TestA = dict(resType = "Agriculture", imgName = "testA.jpg", workerMax = 10, secteur = "primaire", space = 4, buildcost = dict( Bois = 345, Metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Farm = dict(resType = "Agriculture", imgName = "farm.jpg", workerMax = 10, secteur = "primaire", space = 4, buildcost = dict( Bois = 345, Metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Mines  =  dict(resType = "Metaux", imgName = "mine.jpg", workerMax = 100, secteur = "primaire", space = 2, buildcost = dict( Bois = 345, Metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Moulin = dict(resType = "Agriculture", imgName = "moulin.jpg", workerMax = 100, secteur = "secondaire", space = 1, buildcost = dict( Bois = 345, Metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Boulangerie = dict(resType = "Agriculture", imgName = "boulangerie.jpg", workerMax = 100, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 345, Metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Bucheron = dict(resType = "Bois", imgName = "camp.jpg", workerMax = 20, secteur = "primaire", space = 5, buildcost = dict( Bois = 345, Metaux = 6), buildTime = 5, entretient = 0.1, prerequis = "" )
+    TestA = dict(resType = "Agriculture", imgName = "image/testA.jpg", workerMax = 10, secteur = "primaire", space = 4, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Farm = dict(resType = "Agriculture", imgName = "image/farm.jpg", workerMax = 10, secteur = "primaire", space = 40, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Mines  =  dict(resType = "Metaux", imgName = "image/mine.jpg", workerMax = 100, secteur = "primaire", space = 2, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Moulin = dict(resType = "Agriculture", imgName = "image/moulin.jpg", workerMax = 100, secteur = "secondaire", space = 1, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Boulangerie = dict(resType = "Agriculture", imgName = "image/boulangerie.jpg", workerMax = 100, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Bucheron = dict(resType = "Bois", imgName = "image/Camp.jpg", workerMax = 20, secteur = "primaire", space = 5, buildcost = dict( Bois = 0, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" )
     )
 
 

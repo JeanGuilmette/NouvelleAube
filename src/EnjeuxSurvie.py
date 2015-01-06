@@ -4,7 +4,7 @@ __author__ = 'SJS'
 
 # This is the main class for the game.
 # It's the glue and control to execute and play the game.
-
+import time
 import datetime
 import pygame
 import yaml
@@ -15,7 +15,7 @@ import ZoneStatusDisplay
 import MapDisplay
 import Island
 import BuildMenu
-from defines import COLORS, FPS, FPS_DELTA, FPS_MIN, FPS_MAX
+from defines import COLORS, FPS, FPS_DELTA, FPS_MIN, FPS_MAX, FPS_DAY
 import zone
 
         
@@ -37,6 +37,9 @@ class EnjeuxSurvie(object):
         self.gameTime = datetime.date(2014, 12, 29) # Fisrt day of the game
         self.counter = 0
         self.tick = FPS
+        self.day = FPS_DAY
+        self.score = 0
+        
         
         # Initialize display
         self.display.CreateScreen()
@@ -47,14 +50,15 @@ class EnjeuxSurvie(object):
 
     # Build reference to all menu
     def CreateAllMenu(self):
-        # create build menu
-        menu_items = ('Zone', 'Building', 'Resources', 'Options', 'Quit')
-        self.buildMenu = DockingMenu.DockingMenu(self.GetMainWindow(), menu_items, [650, 400, 150, 200])
-
-        # Create zone menu
-        self.zoneMenu = ZoneDisplay.ZoneDisplay(self.GetMainWindow(), self.island.secteur, [0, 0, 150, 400])
-        self.resourceMenu = ZoneStatusDisplay.ZoneStatusDisplay(self.GetMainWindow(), self.island, [0, 400, 650, 200])
-        self.mapDisplay = MapDisplay.MapDisplay(self.GetMainWindow(), self.island.GetActiveZone(), [150, 0, 650, 400])
+        sizeX = self.display.GetScreenWidth()
+        sizeY = self.display.GetScreenHeight()
+         
+        # create  menu
+        menu_items = ('Building', 'Transfert', 'Options', 'Quit')
+        self.buildMenu = DockingMenu.DockingMenu(self.GetMainWindow(), menu_items, [sizeX-150, sizeY-200, 150, 200])
+        self.zoneMenu = ZoneDisplay.ZoneDisplay(self.GetMainWindow(), self.island.secteur, [0, 0, 150, sizeY-200])
+        self.resourceMenu = ZoneStatusDisplay.ZoneStatusDisplay(self.GetMainWindow(), self.island, [0, sizeY-200, sizeX-150, 200])
+        self.mapDisplay = MapDisplay.MapDisplay(self.GetMainWindow(), self.island.GetActiveZone(), [150, 0, sizeX-150, sizeY-200])
         
         # Create build menu
         self.buildChoiceMenu = BuildMenu.BuildMenu(self.GetMainWindow(), self.island.GetActiveZone(), [50, 50, 550, 300])
@@ -66,7 +70,7 @@ class EnjeuxSurvie(object):
             # Now re-open the window to display everything
             self.display.SetWindow(0, 0, self.display.GetScreenWidth(), self.display.GetScreenHeight())
 
-            self.display.drawGrid()
+#             self.display.drawGrid()
             self.zoneMenu.draw()
             self.buildMenu.draw()
             self.resourceMenu.ShowStatus()
@@ -88,23 +92,26 @@ class EnjeuxSurvie(object):
         return self.display.GetScreen()
 
     def UpdateWorld(self):
-        # Update game time
-        self.gameTime += datetime.timedelta(days=1)
-        
-        # Update production and regeneration of ressource every day
-        self.island.UpdateProd()
+        self.counter += 1
+        if(self.counter >= self.day):
+            # Update game time
+            self.gameTime += datetime.timedelta(days=1)
             
-        # Update Population based on natalite and mortalite
-        self.island.UpdatePopulation()
-                     
-        # Update reserve  based on consomation and entretient
-        self.island.UpdateExpandRessource()
-        
-        # Verify if a catastrophe occur
-        # Update modifer for production/moral/natalite... science, building
-        # Verify if construction is completed
-        # New decovery completed
-        # Histoire principal Event            
+            # Update production and regeneration of ressource every day
+            self.island.UpdateProd()
+                
+            # Update Population based on natalite and mortalite
+            self.island.UpdatePopulation()
+                         
+            # Update reserve  based on consomation and entretient
+            self.island.UpdateExpandRessource()
+            
+            # Verify if a catastrophe occur
+            # Update modifer for production/moral/natalite... science, building
+            # Verify if construction is completed
+            # New decovery completed
+            # Histoire principal Event  
+            self.counter = 0          
 
     def DrawGameClock(self):
         # Windows characteristic
@@ -113,7 +120,7 @@ class EnjeuxSurvie(object):
         self.fontColor = COLORS.WHITE
         self.borderColor = COLORS.DARKGRAY   
               
-        resString = ("%s - %s dps" % (self.gameTime.isoformat(), self.tick))
+        resString = ("%s - %s dps" % (self.gameTime.isoformat(), self.day))
         label = self.font.render(resString, 1, self.fontColor, self.bgColor)
         surface = self.display.GetScreen()
         posX =  surface.get_width() - 75 - (label.get_rect().width/2)
@@ -138,17 +145,18 @@ class EnjeuxSurvie(object):
             self.UpdateWorld()
             self.DrawWorld()
             pygame.display.flip()
+            self.isEndofGame()
 
     def ProcessKeyInput(self, event):
         if event.key == pygame.K_KP_PLUS:
-            self.tick = (self.tick + FPS_DELTA) 
+            self.day = (self.day + FPS_DELTA) 
         elif event.key == pygame.K_KP_MINUS:
-            self.tick = (self.tick - FPS_DELTA)
+            self.day = (self.day - FPS_DELTA)
             
-        if (self.tick < FPS_MIN):
-            self.tick = FPS_MIN
-        if (self.tick > FPS_MAX):
-            self.tick = FPS_MAX
+        if (self.day < FPS_MIN):
+            self.day = FPS_MIN
+        if (self.day > FPS_MAX):
+            self.day = FPS_MAX
 
     def ProcessMouseInput(self, event):
         # First check the button of the build menu
@@ -174,4 +182,14 @@ class EnjeuxSurvie(object):
     
             # self.resourceMenu.ShowStatus(zone)
 
-
+    def isEndofGame(self):
+        pop = self.island.GetCurrentPopulation()
+        if(pop <= 0):
+            print("Game Over, You have lost")
+            self.score = -1
+            self.quitFlag = True
+        elif(pop >= self.island.GetPopulationMax()):
+            print("You have Win Game over")
+            self.score = 100
+            self.quitFlag = True
+            time.sleep(10)

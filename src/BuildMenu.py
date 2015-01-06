@@ -131,10 +131,11 @@ class BuildMenu(object):
                             zone.RemoveBuilding(building)
                         elif(action.lower() == "worker add"):
                             print("add worker")
-                            zone.batiments[building].AddWorker()                           
+                            zone.AddWorker(building)
                         elif(action.lower() == "worker remove"):
                             print("remove building")    
-                            zone.batiments[building].RemoveWorker() 
+                            zone.RemoveWorker(building)
+
                 
     def Run(self, zone):
         self.quitFlag = False

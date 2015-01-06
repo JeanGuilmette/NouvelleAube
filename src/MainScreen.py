@@ -1,12 +1,10 @@
 import pygame
-from defines import COLORS, CELLSIZE
 
 
 class MainScreen():
     def __init__(self):
-        self.screenheight = 600
-        self.screenwidth = 800
-        self.sizeMod = float(self.screenwidth) / 800.0
+        self.screenheight = 768
+        self.screenwidth = 1024        
         self.isFullscreen = 0
         self.window = pygame.rect.Rect(0,0, self.screenwidth-1, self.screenheight-1)
         self.menuSurface = None
@@ -25,7 +23,6 @@ class MainScreen():
     def SetScreenSize(self, sizeX, sizeY):
         self.screenheight = sizeY
         self.screenwidth = sizeX
-        self.sizeMod = self.screenwidth / 800
         self.CheckWindowSize()
 
     def SetWindow(self, startX, startY, sizeX, sizeY):
@@ -65,10 +62,5 @@ class MainScreen():
     def GetWindow(self):
         return self.window
 
-    def drawGrid(self):
-        for x in range(0, self.screenwidth, CELLSIZE): # draw vertical lines
-            pygame.draw.line(self.menuSurface, COLORS.BLACK, (x, 0), (x, self.screenheight))
-        for y in range(0, self.screenheight, CELLSIZE): # draw horizontal lines
-            pygame.draw.line(self.menuSurface, COLORS.BLACK, (0, y), (self.screenwidth, y))
         
             
