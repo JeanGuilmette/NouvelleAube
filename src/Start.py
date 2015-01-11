@@ -5,29 +5,42 @@
 
 import pygame
 pygame.init()
-import EnjeuxSurvie
+import EnjeuxSurvieEngine
 import Introduction
 import MenuPrincipale
 import EndGame
 import StoryTelling
 
+
+def CreateMainWindows():
+        pygame.display.set_caption('Enjeux-Survie')        
+        pygame.display.set_icon(pygame.image.load("image/pygame.bmp"))
+        disp = pygame.display.set_mode((1027, 768), 0, 32)
+        disp.convert()
+        return disp
+    
+    
+    
 if __name__ == "__main__":
     # Create main windows
-    game = EnjeuxSurvie.EnjeuxSurvie()
+    disp = CreateMainWindows()
 
     # Display introduction splash screen
-    Introduction.Introduction(game.GetMainWindow())
+#     Introduction.Introduction(disp)
   
     # Create and display Start menu
-    mainMenu = MenuPrincipale.MenuPrincipale(game.GetMainWindow())
-    action = mainMenu.showMenuScreen()
-    if(action.lower() == "start"):
-        StoryTelling.StoryTelling(game.GetMainWindow())        
-        game.run()
-    elif(action.lower() == "continue"):
-        game.run()
-    elif(action.lower() == "option"):
-        game.run()
+#     mainMenu = MenuPrincipale.MenuPrincipale(disp)
+#     action = mainMenu.showMenuScreen()
+    
+    game = EnjeuxSurvieEngine.EnjeuxSurvieEngine(disp) 
+    game.run()   
+#     if(action.lower() == "start"):
+# #         StoryTelling.StoryTelling(game.GetMainWindow())        
+#         game.run()
+#     elif(action.lower() == "continue"):
+#         game.run()
+#     elif(action.lower() == "option"):
+#         game.run()
 
     # Game Over
-    EndGame.EndGame(game.GetMainWindow(), game.score)
+    EndGame.EndGame(disp, game.score)

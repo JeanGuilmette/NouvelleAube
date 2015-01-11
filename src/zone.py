@@ -65,7 +65,7 @@ class Secteur():
             self.batiments[building].AddWorker()
       
     def RemoveWorker(self, building):
-        if(self.population.Deactivateworker()() == True):
+        if(self.population.Deactivateworker() == True):
             self.batiments[building].RemoveWorker()   
 
     def draw(self):

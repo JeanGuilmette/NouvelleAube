@@ -18,17 +18,20 @@ import BuildMenu
 from defines import COLORS, FPS, FPS_DELTA, FPS_MIN, FPS_MAX, FPS_DAY
 import zone
 
+import sys; sys.path.append("../pgu")
+from pgu import gui
+
         
-class EnjeuxSurvie(object):
-    def __init__(self):
-        self.display = MainScreen.MainScreen()      # Main screen  to display the game
+class EnjeuxSurvieEngine(object):
+    def __init__(self, disp):
+        self.display = disp                        # Main screen  to display the game
         self.fpsClock = pygame.time.Clock()         # Timer to calculate time elapsed by turn
         
-        # Reference to menu and screen area
-        self.buildMenu = None                       # Menu allowing action
-        self.zoneMenu = None                        # Menu to select active Zone
-        self.resourceMenu = None                    # Show status of resource
-        self.mapDisplay = None                      # Show map of active zone
+#         # Reference to menu and screen area
+#         self.buildMenu = None                       # Menu allowing action
+#         self.zoneMenu = None                        # Menu to select active Zone
+#         self.resourceMenu = None                    # Show status of resource
+#         self.mapDisplay = None                      # Show map of active zone
         
         # Internal structure to control game
         self.island = None                          # Main object containing information on game
@@ -40,56 +43,25 @@ class EnjeuxSurvie(object):
         self.day = FPS_DAY
         self.score = 0
         
-        
-        # Initialize display
-        self.display.CreateScreen()
-
     # Build initial island at beginning of a new game
     def ConstructZone(self, filename="new"):
         self.island = Island.Island(filename)
 
     # Build reference to all menu
     def CreateAllMenu(self):
-        sizeX = self.display.GetScreenWidth()
-        sizeY = self.display.GetScreenHeight()
-         
-        # create  menu
-        menu_items = ('Building', 'Transfert', 'Options', 'Quit')
-        self.buildMenu = DockingMenu.DockingMenu(self.GetMainWindow(), menu_items, [sizeX-150, sizeY-200, 150, 200])
-        self.zoneMenu = ZoneDisplay.ZoneDisplay(self.GetMainWindow(), self.island.secteur, [0, 0, 150, sizeY-200])
-        self.resourceMenu = ZoneStatusDisplay.ZoneStatusDisplay(self.GetMainWindow(), self.island, [0, sizeY-200, sizeX-150, 200])
-        self.mapDisplay = MapDisplay.MapDisplay(self.GetMainWindow(), self.island.GetActiveZone(), [150, 0, sizeX-150, sizeY-200])
-        
-        # Create build menu
-        self.buildChoiceMenu = BuildMenu.BuildMenu(self.GetMainWindow(), self.island.GetActiveZone(), [50, 50, 550, 300])
+        self.mainGUI = MainScreen.MainScreen(self.island, self.display)        
 
     def DrawWorld(self):
-        if (self.display.GetScreen() is not None):
-            self.display.GetScreen().fill((COLORS.BLACK))  # Erase entire screen
-
-            # Now re-open the window to display everything
-            self.display.SetWindow(0, 0, self.display.GetScreenWidth(), self.display.GetScreenHeight())
-
-#             self.display.drawGrid()
-            self.zoneMenu.draw()
-            self.buildMenu.draw()
-            self.resourceMenu.ShowStatus()
-            self.mapDisplay.draw(self.island.GetActiveZone())
-            self.DrawGameClock()
-            pygame.display.flip()
-            
+        self.mainGUI.update()
+        pygame.display.update()
 
     def ValidPlayerInput(self):
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if (event.type == pygame.QUIT or
+                event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 self.quitFlag = True
-            elif event.type == pygame.KEYDOWN:
-                self.ProcessKeyInput(event)
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                self.ProcessMouseInput(event)
-
-    def GetMainWindow(self):
-        return self.display.GetScreen()
+            else:
+                self.mainGUI.event(event)
 
     def UpdateWorld(self):
         self.counter += 1
@@ -119,13 +91,13 @@ class EnjeuxSurvie(object):
         self.font = pygame.font.SysFont(None, 25)
         self.fontColor = COLORS.WHITE
         self.borderColor = COLORS.DARKGRAY   
-              
+               
         resString = ("%s - %s dps" % (self.gameTime.isoformat(), self.day))
         label = self.font.render(resString, 1, self.fontColor, self.bgColor)
-        surface = self.display.GetScreen()
+        surface = self.display
         posX =  surface.get_width() - 75 - (label.get_rect().width/2)
         posY =  surface.get_height() - label.get_rect().height 
-        self.display.GetScreen().blit(label, (posX, posY))
+        self.display.blit(label, (posX, posY))
 
     # Build initial island at beginning of a new game
     def LoadGame(self, saveFile):
@@ -142,10 +114,10 @@ class EnjeuxSurvie(object):
             # Valid player input
             self.ValidPlayerInput()
 
-            self.UpdateWorld()
+#             self.UpdateWorld()
             self.DrawWorld()
-            pygame.display.flip()
-            self.isEndofGame()
+#             pygame.display.flip()
+#             self.isEndofGame()
 
     def ProcessKeyInput(self, event):
         if event.key == pygame.K_KP_PLUS:
@@ -168,8 +140,6 @@ class EnjeuxSurvie(object):
             elif (action.lower() == "building"):
                 if (self.island.GetActiveZone().name.lower() != "region"):
                     print("Show building construction menu")
-                    # Now re-open the window to display everything
-                    self.display.SetWindow(0, 0, self.display.GetScreenWidth(), self.display.GetScreenHeight())
                     self.buildChoiceMenu.Run(self.island.GetActiveZone())
     # If no button pressed, check for button in ZoneMenu
         zone = self.zoneMenu.validSelectedMenu(event)

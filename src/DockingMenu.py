@@ -7,10 +7,12 @@ __author__ = 'SJS'
 
 import pygame
 from defines import COLORS
+import sys; sys.path.append("../lib")
+from pgu import gui
 
-
-class DockingMenu():
+class DockingMenu(gui.Widget):
     def __init__(self, display, items, pos=(0,0,10,10), bg_color= COLORS.BLACK, font=None, font_size=30, font_color= COLORS.WHITE):
+        gui.Widget.__init__(self, width=pos[2], height=pos[3])
         self.menuSurface =  display
         self.menuPos = pos
 
@@ -40,6 +42,8 @@ class DockingMenu():
             self.menuSurface.blit(label, (posx, posy))
             name, width, height
 
+    def paint(self, surf):
+        self.draw()
 
     def validSelectedMenu(self, event):
         # Read location and which buttons are down...

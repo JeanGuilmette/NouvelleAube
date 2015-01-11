@@ -3,7 +3,7 @@
 #  2. Dictionary of terrain type and their base value.
 #  3. Resource class used to trace resource state on a specific sector
 #
-# import EnjeuxSurvie
+# import EnjeuxSurvieEngine
 # import zone
 from numpy import prod
 __author__ = 'SJS'
