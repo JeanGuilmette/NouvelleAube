@@ -1,10 +1,8 @@
 import pygame
 import sys; sys.path.append("../lib")
 from pgu import gui
-import ZoneStatusDisplay
-import MapDisplay
-import DockingMenu
-from defines import COLORS
+import CustomWidget
+from defines import COLORS, FPS, FPS_MIN, FPS_MAX, FPS_DAY
 from Island import OVERVIEW_ZONE_NAME
 import Island
 import BuildMenu
@@ -14,49 +12,46 @@ import BuildMenu
 class MainScreen(gui.Desktop):
     
     def __init__(self, island, disp):
+#         t = gui.Theme("default")
         gui.Desktop.__init__(self)  
         self.connect(gui.QUIT,self.quit,None)
         self.island = island
-        disp.fill( COLORS.BLACK)
-        c = gui.Container(width=disp.get_width(), height=disp.get_height())
-
-        self.buildMenu = BuildMenu.BuildMenu(disp, self.island.GetActiveZone(), [50, 50, 550, 300])        
-        
+        self.gameTime = CustomWidget.GameClock()       
+         
         sizeX = disp.get_width()
-        sizeY = disp.get_height()
-        spacer = 8
-        btn_witdh = 157
+        sizeY = disp.get_height() 
+        btn_witdh = 160
         btn_heigth = 30 
         
-        ##Initializing the Menus, we connect to a number of Dialog.open methods for each of the dialogs.
-        menus = gui.Menus([
-            ('File/New',self.action_new,None),
-            ('File/Open',self.action_open,None),
-            ('File/Save',self.action_save,None),
-            ('File/Save As',self.action_saveas,None),
-            ('File/Exit',self.action_quit,None),
-            ('Help/Help',self.action_help,None),
-            ('Help/About',self.action_about,None),
-            ])
-        ##
-        c.add(menus,0,0)
-        menus.rect.w,menus.rect.h = menus.resize()
-        #print 'menus',menus.rect
+        c = gui.Container(width=sizeX, height=sizeY)
+
+        ###############################
+        # Game time control          
+        c.add(self.gameTime, sizeX-225, 0) 
+
+        e = gui.HSlider(value=FPS_DAY,min=FPS_MIN,max=FPS_MAX,size=32,width=128,height=15) 
+        e.connect(gui.CHANGE,self.adjustTime,e)
+        c.add(e, sizeX-128, 2)       
              
                   
+        ###############################
+        # Acitve Zone selection      
         self.region = gui.Select(value= OVERVIEW_ZONE_NAME, width=btn_witdh, height=btn_heigth)
         self.region.add('Island Overview',OVERVIEW_ZONE_NAME)        
         for item in Island.secteurDef:
             if(item != OVERVIEW_ZONE_NAME):
                 self.region.add(item, item)
         self.region.connect(gui.CHANGE, self.ChangeZone)
-        c.add(self.region, 0, menus.rect.bottom)
+        c.add(self.region, 0, 0)
 
-        offsetX = btn_witdh +10
-        tbl = MapDisplay.MapDisplay(island, sizeX-offsetX, sizeY-menus.rect.bottom-(4*btn_heigth))
-        c.add(tbl, 250, menus.rect.bottom)
+        ###############################
+        # Map Display
+        tbl = CustomWidget.MapDisplay(island, sizeX, sizeY-(6*btn_heigth))
+        c.add(tbl, 0, btn_heigth)
 
-        offsetY = sizeY - (4*btn_heigth) - 2
+        ###############################
+        # Action Button menu
+        offsetY = sizeY - (5*btn_heigth)
         offsetX = sizeX - btn_witdh
         btn = gui.Button("Building", width=btn_witdh, height=btn_heigth)
         btn.connect(gui.CLICK, self.action_building, None)
@@ -72,14 +67,26 @@ class MainScreen(gui.Desktop):
         
         btn = gui.Button("Quit", width=btn_witdh, height=btn_heigth )
         btn.connect(gui.CLICK, self.action_quit, None)
-        c.add(btn, offsetX, offsetY + (3*btn_heigth) )                     
+        c.add(btn, offsetX, offsetY + (3*btn_heigth) )     
         
+                
         
-
-        c.add(self.CreateStatus(), 0, 500)
+        ###############################
+        # Clock and time control
+                
+        ###############################
+        # Active Zone resource status      
+        c.add(self.CreateResourceStatus(), 0, offsetY)
+           
+        ###############################
+        # Active Zone population status      
+        c.add(self.CreatePopulationStatus(), 300, offsetY)
+        c.add(self.CreatePopulationStatus2(), 600, offsetY)        
         
-            
         self.init(c, disp)
+
+    def adjustTime(self, ctl):
+        self.gameTime.day = ctl.value
 
     def ChangeZone(self):
         print(self.region.value)
@@ -107,41 +114,67 @@ class MainScreen(gui.Desktop):
         self.quit()
 
     def action_building(self, value):
-#         self.buildMenu.Run(self.island.GetActiveZone())
-        self.buildMenu.open()
+        d = BuildMenu.BuildMenu(self.island.GetActiveZone())            
+        d.open()
+        
     def action_transfer(self, value):
         pass 
       
     def action_option(self, value):
         pass
 
-    def CreateStatus(self):
+    def CreateResourceStatus(self):
+        resList = ["Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"]
+        
         tbl = gui.Table()
         tbl.tr()
         tbl.td(gui.Label("Ressource:"))
         tbl.td(gui.Label("Current\Available\Max"))
         
-        tbl.tr()
-        tbl.td(gui.Label("Agriculture"))
-        tbl.td(ZoneStatusDisplay.RessourceLabel(self.island, "Agriculture"))
+        for res in resList:
+            tbl.tr()
+            tbl.td(gui.Label(res))
+            tbl.td(CustomWidget.RessourceLabel(self.island, res))
 
+        return tbl   
+    
+    def CreatePopulationStatus(self):
+        demographieList = ["Population", "Worker", "Bonheur", "Recherche", "Education", "Panique"]
+       
+        tbl = gui.Table()
         tbl.tr()
-        tbl.td(gui.Label("Chasse"))
-        tbl.td(ZoneStatusDisplay.RessourceLabel(self.island, "Chasse")) 
+        tbl.td(gui.Label("Demographie:"))
+        
+        for item in demographieList:
+            tbl.tr()
+            tbl.td(gui.Label(item))
+            tbl.td(CustomWidget.DemographieLabel(self.island, item))
+
+        return tbl      
+    
+    def CreatePopulationStatus2(self):
+        demographieList = ["Criminalite", "Influence", "Pollution", "Production", "Tresors"]
+        
+        tbl = gui.Table()
+        tbl.tr()
+        tbl.td(gui.Label("Demographie:"))
+        
+        for item in demographieList:
+            tbl.tr()
+            tbl.td(gui.Label(item))
+            tbl.td(CustomWidget.DemographieLabel(self.island, item))
+
+        return tbl  
+    def DrawGameClock(self):
+        # Windows characteristic
+        self.bgColor = COLORS.BLACK  
+        self.font = pygame.font.SysFont(None, 25)
+        self.fontColor = COLORS.WHITE
+        self.borderColor = COLORS.DARKGRAY   
                
-        tbl.tr()
-        tbl.td(gui.Label("Peche"))
-        tbl.td(ZoneStatusDisplay.RessourceLabel(self.island, "Peche")) 
-        
-        tbl.tr()
-        tbl.td(gui.Label("Bois"))
-        tbl.td(ZoneStatusDisplay.RessourceLabel(self.island, "Bois")) 
-        
-        tbl.tr()
-        tbl.td(gui.Label("Minerais"))
-        tbl.td(ZoneStatusDisplay.RessourceLabel(self.island, "Minerais")) 
-        
-        tbl.tr()
-        tbl.td(gui.Label("Petrole"))
-        tbl.td(ZoneStatusDisplay.RessourceLabel(self.island, "Petrole")) 
-        return tbl         
+        resString = ("%s - %s dps" % (self.gameTime.isoformat(), self.day))
+        label = self.font.render(resString, 1, self.fontColor, self.bgColor)
+        surface = self.display
+        posX =  surface.get_width() - 75 - (label.get_rect().width/2)
+        posY =  surface.get_height() - label.get_rect().height 
+        self.display.blit(label, (posX, posY))    

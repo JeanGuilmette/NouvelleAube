@@ -13,9 +13,9 @@ class COLORS(object):
 
 
 CELLSIZE = 100
-FPS = 30  # Input/output receptivity
-FPS_DAY = 30    # Number of input/output loop  calculate as 1 day.
-FPS_MIN = 1     # Minimum number of loop by day
-FPS_MAX = 30    # Maximum number of loop by day
-FPS_DELTA = 1   # Increment/decrement for number of loop by day
+FPS = 120  # Input/output receptivity
+FPS_DAY = 20    # Number of input/output loop  calculate as 1 day.
+FPS_MIN = 1    # Minimum number of loop by day
+FPS_MAX = 60    # Maximum number of loop by day
+
 

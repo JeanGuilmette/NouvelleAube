@@ -35,7 +35,7 @@ class WorkerLabel(gui.Label):
               
         
 class BuildMenu(gui.Dialog):
-    def __init__(self, display, zone, pos):
+    def __init__(self, zone):
         title = gui.Label("Building management")
         self.zone = zone
         t = gui.Table()

@@ -20,27 +20,25 @@ def CreateMainWindows():
         return disp
     
     
-    
 if __name__ == "__main__":
     # Create main windows
     disp = CreateMainWindows()
 
     # Display introduction splash screen
-#     Introduction.Introduction(disp)
+    Introduction.Introduction(disp)
   
     # Create and display Start menu
-#     mainMenu = MenuPrincipale.MenuPrincipale(disp)
-#     action = mainMenu.showMenuScreen()
+    mainMenu = MenuPrincipale.MenuPrincipale(disp)
+    action = mainMenu.showMenuScreen()
     
     game = EnjeuxSurvieEngine.EnjeuxSurvieEngine(disp) 
-    game.run()   
-#     if(action.lower() == "start"):
-# #         StoryTelling.StoryTelling(game.GetMainWindow())        
-#         game.run()
-#     elif(action.lower() == "continue"):
-#         game.run()
-#     elif(action.lower() == "option"):
-#         game.run()
+    if(action.lower() == "start"):
+        StoryTelling.StoryTelling(disp)        
+        game.run()
+    elif(action.lower() == "continue"):
+        game.run()
+    elif(action.lower() == "option"):
+        game.run()
 
     # Game Over
     EndGame.EndGame(disp, game.score)
