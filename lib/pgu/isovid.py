@@ -31,8 +31,8 @@ class Isovid(Vid):
         base_h2 = base_h/2
         base_w2 = base_w/2
         
-        bot = tile_h/base_h2
-        todo_max = sh/base_h2+bot
+        bot = round(tile_h/base_h2)
+        todo_max = round(sh/base_h2+bot)
         todo = [[] for y in range(0,todo_max)]
         
         self.view.w,self.view.h = sw,sh
@@ -65,13 +65,15 @@ class Isovid(Vid):
         sx,sy = self.iso_to_view((ox*iso_w,oy*iso_h))
         dx,dy = sx - self.view.x,sy - self.view.y
         
-        for i2 in range(-bot,self.view.h/base_h2+bot):
+        for i2 in range(-bot,round(self.view.h/base_h2+bot)):
             tx,ty = ox + i2/2 + i2%2,oy + i2/2
             x,y = (i2%2)*base_w2 + dx,i2*base_h2 + dy
             
             #to adjust for the -1 in i1
             x,tx,ty = x-base_w,tx-1,ty+1
-            for i1 in range(-1,self.view.w/base_w+2): #NOTE: not sure why +2
+            ty= round(ty)
+            tx = round(tx)
+            for i1 in range(-1,round(self.view.w/base_w+2)): #NOTE: not sure why +2
                 if ty >= 0 and ty < h and tx >= 0 and tx < w:
                     z = zlayer[ty][tx]*iso_z
                     if blayer != None:
@@ -89,7 +91,7 @@ class Isovid(Vid):
                 tx += 1
                 ty -= 1
                 x += base_w
-            for img,irect in todo[y/base_h2]:
+            for img,irect in todo[round(y/base_h2)]:
                 screen.blit(img,(irect.x+adj.x,irect.y+adj.y))
 
         return [pygame.Rect(0,0,screen.get_width(),screen.get_height())]

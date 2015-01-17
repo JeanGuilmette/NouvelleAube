@@ -11,7 +11,7 @@ from pgu import tilevid, timer
 SW,SH = 320,240
 TW,TH = 16,16
 SPEED = 2
-FPS = 40
+FPS = 120
 
 def init():
     g = tilevid.Tilevid()

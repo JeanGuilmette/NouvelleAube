@@ -37,10 +37,10 @@ class MainScreen(gui.Desktop):
         ###############################
         # Acitve Zone selection      
         self.region = gui.Select(value= OVERVIEW_ZONE_NAME, width=btn_witdh, height=btn_heigth)
-        self.region.add('Island Overview',OVERVIEW_ZONE_NAME)        
-        for item in Island.secteurDef:
-            if(item != OVERVIEW_ZONE_NAME):
-                self.region.add(item, item)
+        #self.region.add('Island Overview',OVERVIEW_ZONE_NAME)        
+        for item in sorted(Island.secteurDef):
+            #if(item != OVERVIEW_ZONE_NAME):
+            self.region.add(item, item)
         self.region.connect(gui.CHANGE, self.ChangeZone)
         c.add(self.region, 0, 0)
 

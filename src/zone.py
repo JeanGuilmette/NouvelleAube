@@ -155,12 +155,12 @@ class Secteur():
         self.population.PopulationAdjustment()
         
     def Initialize(self):
-        self.resources["Agriculture"].stock = 1000
+        self.resources["Agriculture"].stock = 5000
         self.resources["Chasse"].stock = 1000
         self.resources["Peche"].stock = 1000               
         self.resources["Bois"].stock = 1000
         self.resources["Minerais"].stock = 1000
-        self.population.SetCurrentPopulation(5000)
+        self.population.SetCurrentPopulation(1000)
 
     def UpdateExpandRessource(self):
         #Nourrire la population

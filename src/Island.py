@@ -2,11 +2,22 @@ __author__ = 'SJS'
 import zone
 
 OVERVIEW_ZONE_NAME = "Region"
+LANDING_REGION_NAME = "RegionA"
 
 secteurDef = dict(
-    Region = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/islandMap.jpg" ),
-    Saguenay = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region1.jpg" ),
-    Gaspesis = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),    
+    Region = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura .png" ),
+    RegionA = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_foest.png" ),
+    RegionB = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ), 
+    RegionC = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),   
+    RegionD = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),
+    RegionE = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),       
+    RegionF = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),   
+    RegionG = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),       
+    RegionH = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),   
+    RegionI = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),   
+    RegionJ = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),   
+    RegionK = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),   
+    RegionL = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/region2.jpg" ),   
     )
 
 class Island(object):
@@ -24,10 +35,9 @@ class Island(object):
 
     # Create new game with inital value
     def __create(self):
-        for sectorName in secteurDef:
+        for sectorName in sorted(secteurDef):
             self.secteur[sectorName] = zone.Secteur(sectorName, secteurDef[sectorName]["terType"], secteurDef[sectorName]["resList"], secteurDef[sectorName]["image"])
-            if(sectorName != OVERVIEW_ZONE_NAME): 
-                self.secteur[sectorName].Initialize()
+        self.secteur[LANDING_REGION_NAME].Initialize()
         self.__activeZone = OVERVIEW_ZONE_NAME
 
     def GetActiveZone(self):

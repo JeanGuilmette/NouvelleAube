@@ -447,9 +447,9 @@ class Vid:
                 y = ct/th*th
                 while y < cb:
                     x = cl/tw*tw
-                    yy = y/th
+                    yy = round(y/th)
                     while x < cr:
-                        xx = x/tw
+                        xx = round(x/tw)
                         t = tiles[layer[yy][xx]]
                         if (s.groups & t.agroups)!=0:
                             d = math.hypot(rect.centerx-(xx*tw+tw/2),

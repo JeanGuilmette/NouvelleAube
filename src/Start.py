@@ -25,7 +25,7 @@ if __name__ == "__main__":
     disp = CreateMainWindows()
 
     # Display introduction splash screen
-    Introduction.Introduction(disp)
+    #Introduction.Introduction(disp)
   
     # Create and display Start menu
     mainMenu = MenuPrincipale.MenuPrincipale(disp)
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     
     game = EnjeuxSurvieEngine.EnjeuxSurvieEngine(disp) 
     if(action.lower() == "start"):
-        StoryTelling.StoryTelling(disp)        
+        #StoryTelling.StoryTelling(disp)        
         game.run()
     elif(action.lower() == "continue"):
         game.run()
