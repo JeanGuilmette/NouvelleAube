@@ -23,9 +23,10 @@ class RessourceLabel(gui.Label):
         gui.Label.paint(self, surf)
        
 class DemographieLabel(gui.Label):
-    def __init__(self, island, popName):
+    def __init__(self, island, activeZone, popName):
         self.popName = popName
         self.island = island
+        self.zoneCtl = activeZone
         resString = self.BuildString()
         gui.Label.__init__(self, value=resString)
         
@@ -34,30 +35,32 @@ class DemographieLabel(gui.Label):
         gui.Label.paint(self, surf)      
       
     def BuildString(self):  
+        if(self.popName == "PopulationActive"):
+            return ("%6d" % (self.island.GetCurrentPopulation(self.zoneCtl.value)))
         if(self.popName == "Population"):
-            return ("%d/%d" % (self.island.GetCurrentPopulation(), self.island.GetPopulationMax()) )
+            return ("%d/%d" % (self.island.GetCurrentPopulation(self.zoneCtl.value), self.island.GetPopulationMax(self.zoneCtl.value)) )
         elif(self.popName == "Worker"):
-            return ("%d/%d/%d" % (self.island.GetCurrentWorker(), self.island.GetAvailableWorker(), self.island.GetMaxWorker()) )
+            return ("%d/%d/%d" % (self.island.GetCurrentWorker(self.zoneCtl.value), self.island.GetAvailableWorker(self.zoneCtl.value), self.island.GetMaxWorker(self.zoneCtl.value)) )
         elif("Sante"):
-            return ("%d" % self.island.GetSante())
+            return ("%2.2f" % self.island.GetSante(self.zoneCtl.value))
         elif(self.popName == "Bonheur"):
-            return ("%d" % self.island.GetBonheur())
+            return ("%2.2f" % self.island.GetBonheur(self.zoneCtl.value))
         elif(self.popName == "Recherche"):
-            return ("%d" % self.island.GetRecherche())
+            return ("%2.2f" % self.island.GetRecherche(self.zoneCtl.value))
         elif(self.popName == "Education"):
-            return ("%d" % self.island.GetEducation())
+            return ("%2,2f" % self.island.GetEducation(self.zoneCtl.value))
         elif(self.popName == "Panique"):
-            return ("%d" % self.island.GetPanique())
+            return ("%2,2f" % self.island.GetPanique(self.zoneCtl.value))
         elif(self.popName == "Criminalite"):
-            return ("%d" % self.island.GetCriminalite())
+            return ("%2.2f" % self.island.GetCriminalite(self.zoneCtl.value))
         elif(self.popName == "Influence"):
-            return ("%d" % self.island.GetInfluence())
+            return ("%2.2f" % self.island.GetInfluence(self.zoneCtl.value))
         elif(self.popName == "Pollution"):
-            return ("%d" % self.island.GetPollution())
+            return ("%2,2f" % self.island.GetPollution(self.zoneCtl.value))
         elif(self.popName == "Production"):
-            return ("%d" % self.island.GetProduction())
+            return ("%d" % self.island.GetProduction(self.zoneCtl.value))
         elif(self.popName == "Tresors"):
-            return ("%d" % self.island.GetTresors())        
+            return ("%d" % self.island.GetTresors(self.zoneCtl.value))        
         else:
             return "Not Applicable"  
                        
@@ -91,3 +94,4 @@ class GameClock(gui.Label):
             self.counter = 0
             return True
         return False
+           

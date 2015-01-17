@@ -47,163 +47,205 @@ class Island(object):
         print(zoneName)        
         self.__activeZone = zoneName
         
-    def GetCurrentPopulation(self):
+    def GetCurrentPopulation(self, zoneName="Active"):
         pop = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     pop += self.secteur[zone].GetCurrentPopulation()
         else:
-            pop = self.secteur[self.__activeZone].GetCurrentPopulation()
+            pop = self.secteur[zoneName].GetCurrentPopulation()
         return pop 
 
-    def GetPopulationMax(self):
+    def GetPopulationMax(self, zoneName="Active"):
         popMax = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):        
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone        
+        if(zoneName == OVERVIEW_ZONE_NAME):        
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):
                     popMax += self.secteur[zone].GetMaxPopulation()
         else:
-            popMax = self.secteur[self.__activeZone].GetMaxPopulation()                    
+            popMax = self.secteur[zoneName].GetMaxPopulation()                    
         return popMax 
 
-    def GetCurrentWorker(self):
+    def GetCurrentWorker(self, zoneName="Active"):
         pop = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     pop += self.secteur[zone].GetCurrentWorker()
         else:
-            pop = self.secteur[self.__activeZone].GetCurrentWorker()
+            pop = self.secteur[zoneName].GetCurrentWorker()
         return pop 
 
-    def GetAvailableWorker(self):
+    def GetAvailableWorker(self, zoneName="Active"):
         popMax = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):        
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):        
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):
                     popMax += self.secteur[zone].GetAvailableWorker()
         else:
-            popMax = self.secteur[self.__activeZone].GetAvailableWorker()                    
+            popMax = self.secteur[zoneName].GetAvailableWorker()                    
         return popMax 
  
-    def GetMaxWorker(self):
+    def GetMaxWorker(self, zoneName="Active"):
         popMax = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):        
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):        
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):
                     popMax += self.secteur[zone].GetMaxWorker()
         else:
-            popMax = self.secteur[self.__activeZone].GetMaxWorker()                    
+            popMax = self.secteur[zoneName].GetMaxWorker()                    
         return popMax     
     
     
-    def GetSante(self):
+    def GetSante(self, zoneName="Active"):
         retval = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     retval += self.secteur[zone].GetSante()
+            retval /= float(len(self.secteur))
         else:
-            retval = self.secteur[self.__activeZone].GetSante()
+            retval = self.secteur[zoneName].GetSante()
         return retval 
     
-    def GetBonheur(self):
+    def GetBonheur(self, zoneName="Active"):
         retval = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     retval += self.secteur[zone].GetBonheur()
+            retval /= len(self.secteur)                    
         else:
-            retval = self.secteur[self.__activeZone].GetBonheur()
+            retval = self.secteur[zoneName].GetBonheur()
         return retval     
     
-    def GetRecherche(self):
+    def GetRecherche(self, zoneName="Active"):
         retval = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     retval += self.secteur[zone].GetRecherche()
+            retval /= len(self.secteur)                    
         else:
-            retval = self.secteur[self.__activeZone].GetRecherche()
+            retval = self.secteur[zoneName].GetRecherche()
         return retval  
     
-    def GetEducation(self):
+    def GetEducation(self, zoneName="Active"):
         retval = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     retval += self.secteur[zone].GetEducation()
+            retval /= len(self.secteur)                    
         else:
-            retval = self.secteur[self.__activeZone].GetEducation()
+            retval = self.secteur[zoneName].GetEducation()
         return retval    
     
-    def GetPanique(self):
+    def GetPanique(self, zoneName="Active"):
         retval = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     retval += self.secteur[zone].GetPanique()
+            retval /= len(self.secteur)                       
         else:
-            retval = self.secteur[self.__activeZone].GetPanique()
+            retval = self.secteur[zoneName].GetPanique()
         return retval   
     
-    def GetCriminalite(self):
+    def GetCriminalite(self, zoneName="Active"):
         retval = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     retval += self.secteur[zone].GetCriminalite()
+            retval /= len(self.secteur)                       
         else:
-            retval = self.secteur[self.__activeZone].GetCriminalite()
+            retval = self.secteur[zoneName].GetCriminalite()
         return retval   
     
-    def GetInfluence(self):
+    def GetInfluence(self, zoneName="Active"):
         retval = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     retval += self.secteur[zone].GetInfluence()
+            retval /= len(self.secteur)                       
         else:
-            retval = self.secteur[self.__activeZone].GetInfluence()
+            retval = self.secteur[zoneName].GetInfluence()
         return retval   
     
-    def GetPollution(self):
+    def GetPollution(self, zoneName="Active"):
         retval = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     retval += self.secteur[zone].GetPollution()
+            retval /= len(self.secteur)                       
         else:
-            retval = self.secteur[self.__activeZone].GetPollution()
+            retval = self.secteur[zoneName].GetPollution()
         return retval  
     
-    def GetProduction(self):
+    def GetProduction(self, zoneName="Active"):
         retval = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     retval += self.secteur[zone].GetProduction()
+            retval /= len(self.secteur)                       
         else:
-            retval = self.secteur[self.__activeZone].GetProduction()
+            retval = self.secteur[zoneName].GetProduction()
         return retval  
     
-    def GetTresors(self):
+    def GetTresors(self, zoneName="Active"):
         retval = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     retval += self.secteur[zone].GetTresors()
+            retval /= float(len(self.secteur))                     
         else:
-            retval = self.secteur[self.__activeZone].GetTresors()
+            retval = self.secteur[zoneName].GetTresors()
         return retval              
                 
     
-    def GetRessourceInfo(self, resName):
+    def GetRessourceInfo(self, resName, zoneName="Active"):
         stock = 0
         available = 0
         stockMax = 0
-        if(self.__activeZone == OVERVIEW_ZONE_NAME):
+        if(zoneName == "Active"):
+            zoneName = self.__activeZone         
+        if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:
                 if(zone != OVERVIEW_ZONE_NAME):            
                     a, b, c = self.secteur[zone].GetRessourceInfo(resName)
@@ -211,7 +253,7 @@ class Island(object):
                     available += b
                     stockMax += c
         else:
-            stock, available, stockMax = self.secteur[self.__activeZone].GetRessourceInfo(resName)
+            stock, available, stockMax = self.secteur[zoneName].GetRessourceInfo(resName)
         return  stock, available, stockMax 
 
     def AddBuilding(self, zoneName, buildingName, pos):

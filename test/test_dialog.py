@@ -6,31 +6,40 @@ Created on Jan 11, 2015
 import sys
 sys.path.append("../src")
 sys.path.append("../lib")
-from BuildMenu import BuildMenu
+from BuildMenu import BuildMenu, TransferMenu
 from pgu import gui
 import zone
+import Island
 
 
 if __name__ in '__main__':
-    
+#     t = gui.Theme(["clean", "tools"])
+    t = gui.Theme(["default", "tools"])
+#     t = gui.Theme(["gray", "tools"])
 #     t = gui.Theme("gray")
-    
-
-    app = gui.Desktop()
+#     t = gui.Theme("default")   
+#     t = gui.Theme("clean")
+#    top = gui.Desktop(theme=gui.Theme(['default','tools']))
+  
+    app = gui.Desktop(theme=t)
     app.connect(gui.QUIT,app.quit,None)
     
-    c = gui.Table(width=640,height=480)
+    c = gui.Table(width=1024,height=800)
     
     ##The button CLICK event is connected to the dialog.open method.
-    ##::
-    sectorA = zone.Secteur("Saguenay",  "Foret",  ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), "../src/image/region2.jpg")
-    sectorA.Initialize()    
-    dialog = BuildMenu(None, sectorA, [50, 50, 550, 300])  
+    secteurA = Island.Island("new")
+ 
+    dialog = BuildMenu(secteurA)  
+    dialog2 = TransferMenu(secteurA)
             
+    c.tr() 
     e = gui.Button("Build Management")
     e.connect(gui.CLICK,dialog.open,None)
-    ##
-    c.tr()
     c.td(e)
+    
+    c.tr()
+    e = gui.Button("Transfert")    
+    e.connect(gui.CLICK,dialog2.open,None)      
+    c.td(e)    
     
     app.run(c)

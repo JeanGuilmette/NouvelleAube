@@ -163,22 +163,23 @@ class Secteur():
         self.population.SetCurrentPopulation(1000)
 
     def UpdateExpandRessource(self):
-        #Nourrire la population
-        self.resources["Agriculture"].stock -= 0.005 * self.population.current
-        self.resources["Chasse"].stock -= 0.005 * self.population.current
-        self.resources["Peche"].stock -= 0.005 * self.population.current
-        if(self.resources["Agriculture"].stock <= 0):
-            self.resources["Agriculture"].stock = 0
-            self.population.bonheur -= 0.5
-            self.population.criminalite += 0.5
-            self.population.sante -= 0.22
-        if(self.resources["Chasse"].stock <= 0):
-            self.resources["Chasse"].stock = 0
-#             self.population.bonheur -= 0.5
-#             self.population.criminalite += 0.5
-#             self.population.sante -= 0.2  
-        if(self.resources["Peche"].stock <= 0):
-            self.resources["Peche"].stock = 0
-#             self.population.bonheur -= 0.5
-#             self.population.criminalite += 0.5
-#             self.population.sante -= 0.2
+        if(self.population.current > 0):
+            #Nourrire la population
+            self.resources["Agriculture"].stock -= 0.005 * self.population.current
+            self.resources["Chasse"].stock -= 0.005 * self.population.current
+            self.resources["Peche"].stock -= 0.005 * self.population.current
+            if(self.resources["Agriculture"].stock <= 0):
+                self.resources["Agriculture"].stock = 0
+                self.population.bonheur -= 0.5
+                self.population.criminalite += 0.5
+                self.population.sante -= 0.22
+            if(self.resources["Chasse"].stock <= 0):
+                self.resources["Chasse"].stock = 0
+    #             self.population.bonheur -= 0.5
+    #             self.population.criminalite += 0.5
+    #             self.population.sante -= 0.2  
+            if(self.resources["Peche"].stock <= 0):
+                self.resources["Peche"].stock = 0
+    #             self.population.bonheur -= 0.5
+    #             self.population.criminalite += 0.5
+    #             self.population.sante -= 0.2

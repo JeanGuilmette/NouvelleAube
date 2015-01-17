@@ -84,7 +84,7 @@ class EnjeuxSurvieEngine(object):
 
 
     def isEndofGame(self):
-        pop = self.island.GetCurrentPopulation()
+        pop = self.island.GetCurrentPopulation(Island.OVERVIEW_ZONE_NAME)
         if(pop <= 0):
             print("Game Over, You have lost")
             self.score = -1

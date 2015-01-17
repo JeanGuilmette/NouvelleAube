@@ -23,7 +23,7 @@ class MainScreen(gui.Desktop):
         btn_witdh = 160
         btn_heigth = 30 
         
-        c = gui.Container(width=sizeX, height=sizeY)
+        c = gui.Container(width=sizeX, height=sizeY, background=(220, 220, 220))
 
         ###############################
         # Game time control          
@@ -131,7 +131,7 @@ class MainScreen(gui.Desktop):
         tbl.td(gui.Label("Ressource:"))
         tbl.td(gui.Label("Current\Available\Max"))
         
-        for res in resList:
+        for res in sorted(resList):
             tbl.tr()
             tbl.td(gui.Label(res))
             tbl.td(CustomWidget.RessourceLabel(self.island, res))
