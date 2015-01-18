@@ -1,5 +1,5 @@
 __author__ = 'SJS'
-import zone
+import Zone
 
 OVERVIEW_ZONE_NAME = "Region"
 LANDING_REGION_NAME = "RegionA"
@@ -36,7 +36,7 @@ class Island(object):
     # Create new game with inital value
     def __create(self):
         for sectorName in sorted(secteurDef):
-            self.secteur[sectorName] = zone.Secteur(sectorName, secteurDef[sectorName]["terType"], secteurDef[sectorName]["resList"], secteurDef[sectorName]["image"])
+            self.secteur[sectorName] = Zone.Secteur(sectorName, secteurDef[sectorName]["terType"], secteurDef[sectorName]["resList"], secteurDef[sectorName]["image"])
         self.secteur[LANDING_REGION_NAME].Initialize()
         self.__activeZone = OVERVIEW_ZONE_NAME
 

@@ -8,7 +8,7 @@ sys.path.append("../src")
 sys.path.append("../lib")
 from BuildMenu import BuildMenu, TransferMenu
 from pgu import gui
-import zone
+import Zone
 import Island
 
 

@@ -3,15 +3,18 @@ from pygame.tests import surflock_test
 __author__ = 'SJS'
 
 import pygame
-from defines import COLORS, FPS
+# from defines import COLORS, FPS
 import Building
 import CustomWidget
 import Island
+import Resources
 
 import sys; sys.path.append("../lib")
 from pgu import gui
 
-
+##########################################################
+#
+##########################################################
 class BuildingLabel(gui.Label):
     def __init__(self, island, activeZone, buildingName):
         self.buildingName = buildingName
@@ -24,7 +27,10 @@ class BuildingLabel(gui.Label):
         self.value = ("%2d  " % (self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].numberBuilding))
         gui.Label.paint(self, surf)
         
-        
+ 
+ ##########################################################
+#
+##########################################################       
 class WorkerLabel(gui.Label):
     def __init__(self, island, activeZone, buildingName):
         self.island = island
@@ -37,7 +43,10 @@ class WorkerLabel(gui.Label):
         self.value = ("%3d  " % (self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].worker))
         gui.Label.paint(self, surf)
      
-        
+ 
+##########################################################
+#
+##########################################################        
 class WorkerSlider(gui.HSlider):
     def __init__(self, island, activeZone, buildingName): 
         self.island = island
@@ -50,28 +59,74 @@ class WorkerSlider(gui.HSlider):
     def paint(self, surf):
         self.value = self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].worker
         gui.HSlider.paint(self, surf)
-  
+ 
+ 
+##########################################################
+#
+##########################################################
 class PopulationSlider(gui.HSlider):
     def __init__(self, island, zoneSrc, zoneDst): 
         self.island = island
         self.zoneCtlSrc = zoneSrc
-        self.zoneCtlDst = zoneDst   
-        maxVal =  self.island.GetCurrentPopulation(self.zoneCtlSrc.value) + self.island.GetCurrentPopulation((self.zoneCtlDst.value)) 
-        actual = self.island.GetCurrentPopulation((self.zoneCtlDst.value))
-        self.populationToMove = 0
-        gui.HSlider.__init__(self, value=actual,min=0,max=maxVal,size=32,width=128,height=15) 
+        self.zoneCtlDst = zoneDst 
+        gui.HSlider.__init__(self, value=0,min=0,max=100,size=32,width=128,height=15) 
+        self.SetInternalValue()        
         self.connect(gui.CHANGE, self.adjustPopulation)
             
     def paint(self, surf):
-        self.value =  self.island.GetCurrentPopulation(self.zoneCtlSrc.value)
+        self.value = self.populationToMove
         gui.HSlider.paint(self, surf)
         
     def adjustPopulation(self):
-        self.populationToMove = self.value - self.island.secteur[self.zoneCtlSrc.value].population.current
-        self.island.secteur[self.zoneCtlSrc.value].population.current -= self.populationToMove
-        self.island.secteur[self.zoneCtlDst.value].population.current += self.populationToMove
-                
+        self.populationToMove = self.value
+        self.island.secteur[self.zoneCtlSrc.value].population.current =  self.src - self.populationToMove
+        self.island.secteur[self.zoneCtlDst.value].population.current =  self.dst + self.populationToMove        
+          
+    def Refresh(self):
+        self.SetInternalValue()   
+        
+    def SetInternalValue(self): 
+        self.populationToMove = 0        
+        self.src = self.island.GetCurrentPopulation(self.zoneCtlSrc.value)
+        self.dst = self.island.GetCurrentPopulation(self.zoneCtlDst.value)  
+        self.max = self.src     
+      
+       
+##########################################################
+#
+##########################################################
+class ResourcesSlider(gui.HSlider):
+    def __init__(self, island, zoneSrc, zoneDst, resName): 
+        self.island = island
+        self.zoneCtlSrc = zoneSrc
+        self.zoneCtlDst = zoneDst 
+        self.resName = resName
+        gui.HSlider.__init__(self, value=0,min=0,max=100,size=32,width=128,height=15) 
+        self.SetInternalValue()        
+        self.connect(gui.CHANGE, self.adjusResource)
+            
+    def paint(self, surf):
+        self.value = self.resourceToMove
+        gui.HSlider.paint(self, surf)
+        
+    def adjusResource(self):
+        self.resourceToMove = self.value
+        self.island.secteur[self.zoneCtlSrc.value].resources[self.resName].stock =  self.src - self.resourceToMove
+        self.island.secteur[self.zoneCtlDst.value].resources[self.resName].stock =  self.dst + self.resourceToMove        
+          
+    def Refresh(self):
+        self.SetInternalValue()   
+        
+    def SetInternalValue(self): 
+        self.resourceToMove = 0        
+        self.src, a, m = self.island.GetRessourceInfo(self.resName, self.zoneCtlSrc.value)
+        self.dst, a, m = self.island.GetRessourceInfo(self.resName, self.zoneCtlDst.value)  
+        self.max = self.src   
 
+
+##########################################################
+#
+##########################################################
 class BuildMenu(gui.Dialog):
     def __init__(self, island):
         title = gui.Label("Building management")
@@ -134,7 +189,9 @@ class BuildMenu(gui.Dialog):
             else:
                 zone.AddWorker(building)   
 
-                                                        
+##########################################################
+#
+##########################################################                                                        
 class TransferMenu(gui.Dialog):  
     def __init__(self, island):
         title = gui.Label("Resources Management")
@@ -143,6 +200,7 @@ class TransferMenu(gui.Dialog):
         self.ZoneDst = gui.Select(value="RegionB" , width=160, height=20)        
         t = gui.Table()
         self.value = gui.Form()
+        self.widgetList = []
         
         # Origin and destination zone
         t.tr()
@@ -150,6 +208,8 @@ class TransferMenu(gui.Dialog):
             if(item != Island.OVERVIEW_ZONE_NAME):
                 self.ZoneSrc.add(item, item)
                 self.ZoneDst.add(item, item)
+        self.ZoneSrc.connect(gui.CHANGE, self.action_ChangeZone, "src")
+        self.ZoneDst.connect(gui.CHANGE, self.action_ChangeZone, "dst")        
         t.td(self.ZoneSrc)
         t.td(gui.Label("Origine"))
         t.td(gui.Label(""))   
@@ -160,15 +220,35 @@ class TransferMenu(gui.Dialog):
         t.tr()
         t.td(gui.Label("Population"))
         t.td(CustomWidget.DemographieLabel(self.island, self.ZoneSrc, "PopulationActive"))
-        t.td(PopulationSlider(self.island, self.ZoneSrc, self.ZoneDst))
+        s = PopulationSlider(self.island, self.ZoneSrc, self.ZoneDst)
+        self.widgetList.append(s)
+        t.td(s)
         t.td(CustomWidget.DemographieLabel(self.island, self.ZoneDst, "PopulationActive"))     
-        b = gui.Button("Add")
-        b.connect(gui.CLICK, self.action_TransferPopulation)
-        t.td(b)
+
         
+        # Resources
+        for item in sorted(Resources.resourceDef):         
+            t.tr()
+            t.td(gui.Label(item))
+            t.td(CustomWidget.StockLabel(self.island, self.ZoneSrc, item))
+            s = ResourcesSlider(self.island, self.ZoneSrc, self.ZoneDst, item)
+            self.widgetList.append(s)
+            t.td(s)
+            t.td(CustomWidget.StockLabel(self.island, self.ZoneDst, item))     
 
         gui.Dialog.__init__(self,title,t)
 
-    def action_TransferPopulation(self):
-        pass
-        
+    def action_TransferPopulation(self, slider):
+        slider.populationToMove
+        self.island.secteur[self.ZoneSrc.value].population.current -=  slider.populationToMove
+        self.island.secteur[self.ZoneDst.value].population.current +=  slider.populationToMove
+    
+    def action_ChangeZone(self, origin):
+        if(self.ZoneSrc.value == self.ZoneDst.value):
+            zoneCtl = self.ZoneDst if(origin == "src") else self.ZoneSrc  
+            i =  zoneCtl.values.index(zoneCtl.top_selected.value)
+            i = 0 if(i+1 >= len(zoneCtl.values)) else (i+1)
+            zoneCtl.value =  zoneCtl.values[i].value 
+        for w in self.widgetList:
+            w.Refresh()
+ 

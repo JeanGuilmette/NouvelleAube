@@ -16,10 +16,6 @@ resourceDef = dict(
     Bois = dict(unitMax = 10000, delay = 365, ratio = 100, rate = 40),
     Minerais = dict(unitMax = 10000, delay = -10000, ratio = 100, rate = 0),
     Petrole = dict(unitMax = 2000, delay = -310000, ratio = 100, rate = 0),  # il n'y a pas vraiment de maximun d'energie produit. Devrait etre ailleurs, avec l'argent    
-    Nourriture = dict(unitMax = 2000, delay = -310000, ratio = 100, rate = 0),  # nourriture prepare pour etre mangeable pour la population (ransforme)
-    Materiaux = dict(unitMax = 2000, delay = -310000, ratio = 100, rate = 0),  # il va vraiment falloir utuliser les ressouces decrite plus haut, sinon perte de l'ampleur des catastrophes
-    TestResA = dict(unitMax = 1000, delay = 31, ratio = 100, rate = 1),  # Should not be modified, used to valid internal mechanic of the game
-    TestResB = dict(unitMax = 5000, delay = 31, ratio = 100, rate = 10)  # Should not be modified, used to valid internal mechanic of the game
     )
 
 

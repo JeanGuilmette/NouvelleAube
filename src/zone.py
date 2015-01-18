@@ -1,10 +1,10 @@
 __author__ = 'SJS'
 
 import pygame
-import resources
+import Resources
 import Population
 import Building
-from defines import COLORS
+from Defines import COLORS
 
 ########################################
 class Secteur():
@@ -20,7 +20,7 @@ class Secteur():
         self.resources = dict()        # Available resource in the zone
         self.batiments = dict()        # List of building in the zone
         self.population = Population.Population(100000, 0.05)
-        self.TypeTerrain = resources.terrainType[terrain]
+        self.TypeTerrain = Resources.terrainType[terrain]
         self.map = map
         
         self.ConstructResourcesList(resList)
@@ -31,7 +31,7 @@ class Secteur():
 
     def ConstructResourcesList(self, resList):
         for resName in resList:
-            self.resources[resName] = resources.Resource(resName)
+            self.resources[resName] = Resources.Resource(resName)
 
     def AddBuilding(self, buildingType, pos):
         #Check if resources are availble

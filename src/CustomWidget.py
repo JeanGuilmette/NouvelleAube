@@ -2,26 +2,42 @@ __author__ = 'SJS'
 import time
 import datetime
 import pygame
-from defines import COLORS, FPS, FPS_MIN, FPS_MAX, FPS_DAY
-import resources
+from Defines import COLORS, FPS, FPS_MIN, FPS_MAX, FPS_DAY
+import Resources
 import Island
-import zone
+import Zone
 import sys; sys.path.append("../lib")
 from pgu import gui
 
 class RessourceLabel(gui.Label):
-    def __init__(self, island, resName):
+    def __init__(self, island, activeZone, resName):
         self.resource = resName
         self.island = island
-        stock, available, stockMax = self.island.GetRessourceInfo(self.resource)
+        self.zoneCtl = activeZone
+        stock, available, stockMax = self.island.GetRessourceInfo(self.resource, self.zoneCtl.value)
         resString = ("{:0>6d} / {:0>6d} / {:0>6d}".format(stock, available, stockMax ))
         gui.Label.__init__(self, value=resString)
         
     def paint(self, surf):
-        stock, available, stockMax = self.island.GetRessourceInfo(self.resource)
+        stock, available, stockMax = self.island.GetRessourceInfo(self.resource, self.zoneCtl.value)
         self.value = ("{:0>6d} / {:0>6d} / {:0>6d}".format(stock, available, stockMax ))
         gui.Label.paint(self, surf)
        
+class StockLabel(gui.Label):
+    def __init__(self, island, activeZone, resName):
+        self.resource = resName
+        self.island = island
+        self.zoneCtl = activeZone
+        stock, available, stockMax = self.island.GetRessourceInfo(self.resource, self.zoneCtl.value)
+        resString = ("{:0>6d}".format(stock))
+        gui.Label.__init__(self, value=resString)
+        
+    def paint(self, surf):
+        stock, available, stockMax = self.island.GetRessourceInfo(self.resource, self.zoneCtl.value)
+        self.value = ("{:0>6d}".format(stock))
+        gui.Label.paint(self, surf)
+        
+              
 class DemographieLabel(gui.Label):
     def __init__(self, island, activeZone, popName):
         self.popName = popName
