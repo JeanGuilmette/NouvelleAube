@@ -6,7 +6,7 @@ __author__ = 'SJS'
 # Use validSelectedMenu() on mouse click event to determine which button has been clicked.
 
 import pygame
-from defines import COLORS
+from Defines import COLORS
 import sys; sys.path.append("../lib")
 from pgu import gui
 

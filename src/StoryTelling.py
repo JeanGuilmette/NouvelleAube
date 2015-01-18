@@ -4,7 +4,7 @@ import random
 import conda
 import pygame
 import math
-from defines import COLORS
+from Defines import COLORS
 from pygame.locals import *
 
 def FacteurHasard():

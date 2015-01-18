@@ -1,7 +1,7 @@
 __author__ = 'SJS'
 
 import pygame
-from defines import COLORS
+from Defines import COLORS
 
 
 class EndGame():

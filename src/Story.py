@@ -1,5 +1,5 @@
 __author__ = 'Jean-Alexandre'
-from defines import COLORS
+from Defines import COLORS
 import MainScreen
 import DockingMenu
 import conda

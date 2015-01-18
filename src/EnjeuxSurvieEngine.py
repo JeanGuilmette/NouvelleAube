@@ -7,8 +7,8 @@ import yaml
 import MainScreen
 import CustomWidget
 import Island
-import zone
-from defines import COLORS, FPS
+import Zone
+from Defines import COLORS, FPS
 import sys; sys.path.append("../pgu")
 from pgu import gui
 

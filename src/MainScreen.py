@@ -2,7 +2,7 @@ import pygame
 import sys; sys.path.append("../lib")
 from pgu import gui
 import CustomWidget
-from defines import COLORS, FPS, FPS_MIN, FPS_MAX, FPS_DAY
+from Defines import COLORS, FPS, FPS_MIN, FPS_MAX, FPS_DAY
 from Island import OVERVIEW_ZONE_NAME
 import Island
 import BuildMenu
@@ -114,11 +114,12 @@ class MainScreen(gui.Desktop):
         self.quit()
 
     def action_building(self, value):
-        d = BuildMenu.BuildMenu(self.island.GetActiveZone())            
+        d = BuildMenu.BuildMenu(self.island)            
         d.open()
         
     def action_transfer(self, value):
-        pass 
+        d = BuildMenu.TransferMenu(self.island)            
+        d.open() 
       
     def action_option(self, value):
         pass
@@ -134,7 +135,7 @@ class MainScreen(gui.Desktop):
         for res in sorted(resList):
             tbl.tr()
             tbl.td(gui.Label(res))
-            tbl.td(CustomWidget.RessourceLabel(self.island, res))
+            tbl.td(CustomWidget.RessourceLabel(self.island, self.region,  res))
 
         return tbl   
     
@@ -148,7 +149,7 @@ class MainScreen(gui.Desktop):
         for item in demographieList:
             tbl.tr()
             tbl.td(gui.Label(item))
-            tbl.td(CustomWidget.DemographieLabel(self.island, item))
+            tbl.td(CustomWidget.DemographieLabel(self.island, self.region, item))
 
         return tbl      
     
@@ -162,7 +163,7 @@ class MainScreen(gui.Desktop):
         for item in demographieList:
             tbl.tr()
             tbl.td(gui.Label(item))
-            tbl.td(CustomWidget.DemographieLabel(self.island, item))
+            tbl.td(CustomWidget.DemographieLabel(self.island, self.region, item))
 
         return tbl  
     def DrawGameClock(self):

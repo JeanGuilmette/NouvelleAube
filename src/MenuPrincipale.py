@@ -2,7 +2,7 @@ __author__ = 'SJS'
 
 import pygame
 import DockingMenu
-from defines import COLORS
+from Defines import COLORS
 
 class MenuPrincipale(object):
     __menu_items = ('Start', 'Continue', 'Options', 'Quit')
