@@ -25,8 +25,8 @@ terrainType = dict(
     Collines = dict(Agriculture = 0.5, Chasse  = 0.75, Peche  =  0, Bois = 0.5, Minerais = 4.0 , Petrole = 5.0 ),
     Volcan = dict(Agriculture = 0, Chasse  = 0.1, Peche  =  0, Bois = 0.1, Minerais = 5.0 , Petrole = 5.0 ),
     Marecage = dict(Agriculture = 0.4, Chasse  = 1.0, Peche  =  1.0, Bois = 0.5, Minerais = 0.1 , Petrole = 0.1 ),
-    EauxDouces = dict(Agriculture = 0, Chasse  = 0, Peche  =  6.0, Bois = 0, Minerais = 0 , Petrole = 0 ),
-    EauxSalees = dict(Agriculture = 0, Chasse  = 0, Peche  =  8.0, Bois = 0 , Minerais = 0 , Petrole = 0 )
+    EauxSalees = dict(Agriculture = 0.5, Chasse  = 0.2, Peche  =  8.0, Bois = 0.1 , Minerais = 0 , Petrole = 0 ),
+    Lac = dict(Agriculture = 6.0, Chasse  = 1.3, Peche  =  6.0, Bois = 0.50 , Minerais = 0.1 , Petrole = 10 )
     )
 
 

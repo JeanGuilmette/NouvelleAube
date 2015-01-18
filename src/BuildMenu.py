@@ -3,7 +3,6 @@ from pygame.tests import surflock_test
 __author__ = 'SJS'
 
 import pygame
-# from defines import COLORS, FPS
 import Building
 import CustomWidget
 import Island
