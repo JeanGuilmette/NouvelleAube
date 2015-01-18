@@ -56,21 +56,20 @@ class PopulationSlider(gui.HSlider):
         self.island = island
         self.zoneCtlSrc = zoneSrc
         self.zoneCtlDst = zoneDst   
-        maxVal = self.island.GetCurrentPopulation(self.zoneCtlSrc.value) + self.island.GetCurrentPopulation((self.zoneCtlDst.value))
-        actual = maxVal - self.island.GetCurrentPopulation(self.zoneCtlSrc.value)
-
+        maxVal =  self.island.GetCurrentPopulation(self.zoneCtlSrc.value) + self.island.GetCurrentPopulation((self.zoneCtlDst.value)) 
+        actual = self.island.GetCurrentPopulation((self.zoneCtlDst.value))
+        self.populationToMove = 0
         gui.HSlider.__init__(self, value=actual,min=0,max=maxVal,size=32,width=128,height=15) 
         self.connect(gui.CHANGE, self.adjustPopulation)
             
     def paint(self, surf):
-        self.max =  self.island.GetCurrentPopulation(self.zoneCtlSrc.value) + self.island.GetCurrentPopulation((self.zoneCtlDst.value))        
-        self.value = self.max - self.island.GetCurrentPopulation(self.zoneCtlSrc.value)
-
+        self.value =  self.island.GetCurrentPopulation(self.zoneCtlSrc.value)
         gui.HSlider.paint(self, surf)
         
     def adjustPopulation(self):
-        self.island.secteur[self.zoneCtlSrc.value].population.current = self.value
-        self.island.secteur[self.zoneCtlDst.value].population.current = (self.max - self.value)
+        self.populationToMove = self.value - self.island.secteur[self.zoneCtlSrc.value].population.current
+        self.island.secteur[self.zoneCtlSrc.value].population.current -= self.populationToMove
+        self.island.secteur[self.zoneCtlDst.value].population.current += self.populationToMove
                 
 
 class BuildMenu(gui.Dialog):
@@ -163,6 +162,13 @@ class TransferMenu(gui.Dialog):
         t.td(CustomWidget.DemographieLabel(self.island, self.ZoneSrc, "PopulationActive"))
         t.td(PopulationSlider(self.island, self.ZoneSrc, self.ZoneDst))
         t.td(CustomWidget.DemographieLabel(self.island, self.ZoneDst, "PopulationActive"))     
+        b = gui.Button("Add")
+        b.connect(gui.CLICK, self.action_TransferPopulation)
+        t.td(b)
         
 
         gui.Dialog.__init__(self,title,t)
+
+    def action_TransferPopulation(self):
+        pass
+        

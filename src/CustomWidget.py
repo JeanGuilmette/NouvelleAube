@@ -32,11 +32,12 @@ class DemographieLabel(gui.Label):
         
     def paint(self, surf):
         self.value = self.BuildString()
-        gui.Label.paint(self, surf)      
+        gui.Label.paint(self, surf)     
+        self.resize() 
       
     def BuildString(self):  
         if(self.popName == "PopulationActive"):
-            return ("%6d" % (self.island.GetCurrentPopulation(self.zoneCtl.value)))
+            return ("%6d   " % (self.island.GetCurrentPopulation(self.zoneCtl.value)))
         if(self.popName == "Population"):
             return ("%d/%d" % (self.island.GetCurrentPopulation(self.zoneCtl.value), self.island.GetPopulationMax(self.zoneCtl.value)) )
         elif(self.popName == "Worker"):
