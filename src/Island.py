@@ -273,3 +273,96 @@ class Island(object):
         for zone in self.secteur:
             if(zone != OVERVIEW_ZONE_NAME):
                 self.secteur[zone].UpdateExpandRessource()
+
+    def EvaluateEvent(self, evt):
+        pass
+    
+    def ModifyPopulation(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyPopulation(newVal)   
+        else:
+            self.secteur[zoneName].ModifyPopulation(newVal)                  
+
+    def ModifySante(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifySante(newVal)   
+        else:
+            self.secteur[zoneName].ModifySante(newVal) 
+            
+    def ModifyBonheur(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyBonheur(newVal)   
+        else:
+            self.secteur[zoneName].ModifyBonheur(newVal)  
+            
+    def ModifyInfluence(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyInfluence(newVal)   
+        else:
+            self.secteur[zoneName].ModifyInfluence(newVal)  
+            
+    def ModifyRecherche(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyRecherche(newVal)   
+        else:
+            self.secteur[zoneName].ModifyRecherche(newVal)                                      
+                              
+    def ModifyEducation(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyEducation(newVal)   
+        else:
+            self.secteur[zoneName].ModifyEducation(newVal)
+            
+    def ModifyCriminalite(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyCriminalite(newVal)   
+        else:
+            self.secteur[zoneName].ModifyCriminalite(newVal)
+            
+    def ModifyPanic(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyPanic(newVal)   
+        else:
+            self.secteur[zoneName].ModifyPanic(newVal)  
+
+    def ModifyCroissance(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyCroissance(newVal)   
+        else:
+            self.secteur[zoneName].ModifyCroissance(newVal)  
+            
+    def ModifyPopulationMax(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyPopulationMax(newVal)   
+        else:
+            self.secteur[zoneName].ModifyPopulationMax(newVal)  
+                                    
+    def ModifyRessource(self, zoneName, resName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyRessource(resName, newVal)   
+        else:
+            self.secteur[zoneName].ModifyRessource(resName, newVal)          
+            
+            

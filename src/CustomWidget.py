@@ -58,22 +58,22 @@ class DemographieLabel(gui.Label):
             return ("%d/%d" % (self.island.GetCurrentPopulation(self.zoneCtl.value), self.island.GetPopulationMax(self.zoneCtl.value)) )
         elif(self.popName == "Worker"):
             return ("%d/%d/%d" % (self.island.GetCurrentWorker(self.zoneCtl.value), self.island.GetAvailableWorker(self.zoneCtl.value), self.island.GetMaxWorker(self.zoneCtl.value)) )
-        elif("Sante"):
+        elif(self.popName == "Sante"):
             return ("%2.2f" % self.island.GetSante(self.zoneCtl.value))
         elif(self.popName == "Bonheur"):
             return ("%2.2f" % self.island.GetBonheur(self.zoneCtl.value))
         elif(self.popName == "Recherche"):
             return ("%2.2f" % self.island.GetRecherche(self.zoneCtl.value))
         elif(self.popName == "Education"):
-            return ("%2,2f" % self.island.GetEducation(self.zoneCtl.value))
+            return ("%2.2f" % self.island.GetEducation(self.zoneCtl.value))
         elif(self.popName == "Panique"):
-            return ("%2,2f" % self.island.GetPanique(self.zoneCtl.value))
+            return ("%2.2f" % self.island.GetPanique(self.zoneCtl.value))
         elif(self.popName == "Criminalite"):
             return ("%2.2f" % self.island.GetCriminalite(self.zoneCtl.value))
         elif(self.popName == "Influence"):
             return ("%2.2f" % self.island.GetInfluence(self.zoneCtl.value))
         elif(self.popName == "Pollution"):
-            return ("%2,2f" % self.island.GetPollution(self.zoneCtl.value))
+            return ("%2.2f" % self.island.GetPollution(self.zoneCtl.value))
         elif(self.popName == "Production"):
             return ("%d" % self.island.GetProduction(self.zoneCtl.value))
         elif(self.popName == "Tresors"):

@@ -6,6 +6,7 @@ from Defines import COLORS, FPS, FPS_MIN, FPS_MAX, FPS_DAY
 from Island import OVERVIEW_ZONE_NAME
 import Island
 import BuildMenu
+import Events
         
         
                     
@@ -123,6 +124,14 @@ class MainScreen(gui.Desktop):
       
     def action_option(self, value):
         pass
+    
+    def action_event(self, evt):
+        dialog = Events.EventsMenu(self.island, evt)
+        dialog.open()
+        while(dialog.is_open()):
+            self.paint()
+#             pygame.time.wait(100) 
+        return evt       
 
     def CreateResourceStatus(self):
         resList = ["Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"]

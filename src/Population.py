@@ -12,7 +12,7 @@ class Population():
         self.recherche = 0              # 
         self.education =  50            #
         self.panique = 50               #
-        self.paniquedecatastrophe = 50  #
+        #self.paniquedecatastrophe = 50  #
         self.criminalite = 50           #
         self.current = 0                #
         self.counter = 0                # Count number of day passed
@@ -34,7 +34,7 @@ class Population():
             
     def UpdateCroissance(self):
         pos = self.sante + self.bonheur + self.education
-        neg = self.criminalite + self.panique + self.paniquedecatastrophe 
+        neg = self.criminalite + self.panique 
         self.croissance += float(pos - neg)/100.0
         print("Croissant: %f" % self.croissance)
         

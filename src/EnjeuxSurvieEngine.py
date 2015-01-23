@@ -11,6 +11,9 @@ import Zone
 from Defines import COLORS, FPS
 import sys; sys.path.append("../pgu")
 from pgu import gui
+import Events
+import EventEffectAnalyse
+import EventGenerator
 
         
 class EnjeuxSurvieEngine(object):
@@ -24,10 +27,13 @@ class EnjeuxSurvieEngine(object):
         self.quitFlag = False                       # Player want to leave game?
         self.tick = FPS
         self.score = 0
-        
+        self.evtMgr = Events.EventsMgr()            #List of occurred events.
+        self.evtGenerator = EventGenerator.GenerateEvents()
+
     # Build initial island at beginning of a new game
     def ConstructZone(self, filename="new"):
         self.island = Island.Island(filename)
+        self.evtEffect = EventEffectAnalyse.EventImpact(self.island)        
 
     # Build reference to all menu
     def CreateAllMenu(self):
@@ -57,14 +63,25 @@ class EnjeuxSurvieEngine(object):
             self.island.UpdatePopulation()
                          
             # Update reserve  based on consomation and entretient
+            # Update modifer for production/moral/natalite... science, building
             self.island.UpdateExpandRessource()
             
             # Verify if a catastrophe occur
-            # Update modifer for production/moral/natalite... science, building
             # Verify if construction is completed
             # New decovery completed
-            # Histoire principal Event  
-      
+            # Histoire principal Event
+            moreEvent = True
+            while(moreEvent == True):
+                evt = self.evtMgr.pop()  
+                if(evt == False):
+                    moreEvent = False
+                else:
+                    evt = self.mainGUI.action_event(evt)
+                    self.evtEffect.Apply(evt)      
+
+            evt =self.evtGenerator.Generate() 
+            if(evt != False):
+                self.evtMgr.add(evt)     
 
     # Build initial island at beginning of a new game
     def LoadGame(self, saveFile):

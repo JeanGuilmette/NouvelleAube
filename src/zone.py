@@ -183,3 +183,47 @@ class Secteur():
     #             self.population.bonheur -= 0.5
     #             self.population.criminalite += 0.5
     #             self.population.sante -= 0.2
+    
+    def ModifyRessource(self, resName, newVal):
+        if resName in self.resources:
+            stock = int(self.resources[resName].stock) + int(newVal)
+            stockMax = int(self.resources[resName].max)  
+        if(stock < 0): stock = 0
+        if(stock > stockMax): stock = stockMax
+        self.resources[resName].stock = stock
+
+    def ModifyPopulation(self, newVal):
+        newPop = self.population.current + int(newVal)
+        if(newPop < 0): newPop = 0
+        if(newPop > self.population.popMax): newPop = self.population.popMax
+        self.population.SetCurrentPopulation(newPop)
+        
+    def ModifySante(self, newVal):
+        self.population.sante += int(newVal)
+        
+    def ModifyBonheur(self, newVal):
+        self.population.bonheur += int(newVal)       
+        
+    def ModifyInfluence(self, newVal):
+        self.population.influence += int(newVal) 
+        
+    def ModifyRecherche(self, newVal):
+        self.population.recherche += int(newVal) 
+        
+    def ModifyEducation(self, newVal):
+        self.population.education += int(newVal) 
+        
+    def ModifyCriminalite(self, newVal):
+        self.population.criminalite += int(newVal) 
+        
+    def ModifyCroissance(self, newVal):
+        self.population.croissance += int(newVal)  
+        
+    def ModifyPopulationMax(self, newVal):
+        self.population.popMax += int(newVal)  
+                                                                        
+    def ModifyPanic(self, newVal):
+        self.population.panique += int(newVal)
+        
+    
+        
