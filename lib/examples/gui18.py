@@ -174,8 +174,8 @@ class GameEngine(object):
         return (rect,)
 
     def run(this):
-#         this.app.update()
-#         pygame.display.flip()
+        this.app.update()
+        pygame.display.flip()
 
         this.font = pygame.font.SysFont("", 16)
 

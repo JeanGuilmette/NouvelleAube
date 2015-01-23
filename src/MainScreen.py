@@ -128,9 +128,24 @@ class MainScreen(gui.Desktop):
     def action_event(self, evt):
         dialog = Events.EventsMenu(self.island, evt)
         dialog.open()
-        while(dialog.is_open()):
+        self.update()
+        pygame.display.flip() 
+        done = False
+        while not done:
+            # Process events
+            for ev in pygame.event.get():
+                if (ev.type == pygame.QUIT or 
+                    ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE):
+                    done = True
+                else:
+                    # Pass the event off to pgu
+                    self.event(ev)
+            self.update()
             self.paint()
-#             pygame.time.wait(100) 
+            pygame.display.update()
+            pygame.display.flip()              
+            pygame.time.wait(5) 
+#             if(dialog.is_open()): done = True
         return evt       
 
     def CreateResourceStatus(self):

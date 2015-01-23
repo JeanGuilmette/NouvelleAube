@@ -158,7 +158,7 @@ class EventsMenu(gui.Dialog):
         c.add(self.displayOption, 200, y)
          
         t = gui.Table()
-        g = gui.Group(name='options',value='0')   
+        g = gui.Group(name='options',value=0)   
         index = 0     
         for opt, doc, effect in self.gameEvent.options:
             t.tr()
@@ -166,8 +166,9 @@ class EventsMenu(gui.Dialog):
             t.td(gui.Label(opt))
             index += 1
         c.add(t, 10, y)
-        g.value = "0"
+        g.value = 0
         g.connect(gui.CHANGE, self.action_SelectOption, g)
+
          
         b = gui.Button("Confirmez votre choix", width=150, height=50)
         b.connect(gui.CLICK, self.action_ConfirmChoice, g)
@@ -181,8 +182,7 @@ class EventsMenu(gui.Dialog):
         print(ctl.value)
         print(self.gameEvent.options[ctl.value][2])
         self.gameEvent.effects = self.gameEvent.options[ctl.value][2]
-        self.gameEvent.regions = "RegionA"
- 
+        pygame.event.post(pygame.event.Event(pygame.QUIT))
         self.close()
          
 #     def paint(self, surf):

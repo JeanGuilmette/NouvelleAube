@@ -12,7 +12,7 @@ except KeyError:
 
 from .errors import *
 
-from .theme import Theme
+from .theme import Theme, Background
 from .style import Style
 from .widget import Widget
 from .surface import subsurface, ProxySurface

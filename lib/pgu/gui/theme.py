@@ -428,7 +428,9 @@ class Theme:
         """
 
         if box == 0: return
-
+        surf.fill(box)
+        return
+    
         if is_color(box):
             surf.fill(box,r)
             return
@@ -506,4 +508,5 @@ class Background(widget.Widget):
         r = pygame.Rect(0,0,s.get_width(),s.get_height())
         v = self.value.style.background
         self.theme.render(s,v,r, size=size, offset=offset)
+
 
