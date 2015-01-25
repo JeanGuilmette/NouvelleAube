@@ -23,3 +23,8 @@ class EventImpact(object):
         elif(token == "panic"):
             self.island.ModifyPanic(secteur, value)
             print("%s modify %s panic by %s" % (evtName, secteur, value) )               
+        elif(token == "MultiplyPop"):
+            pop = self.island.GetCurrentPopulation(secteur)
+            mod = pop * value
+            self.island.ModifyPanic(secteur, (mod-pop)
+            print("%s modify %s population multiplied by %s" % (evtName, secteur, value) )  

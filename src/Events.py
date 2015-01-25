@@ -53,16 +53,30 @@ class Event(object):
 ##########################################################      
 class EventsMgr(object):
     def __init__(self):
-        self.eventList = []
+        self.eventList = dict()
     
     def add(self, evt ):
-        self.eventList.append(evt) 
-    
-    def pop(self):
-        if(len(self.eventList) > 0):
-            return self.eventList.pop(0)
+        if(evt.date in self.eventList):
+            self.eventList[evt.date].append(evt) 
         else:
-            return False
+            self.eventList[evt.date] = [evt]
+    
+    def pop(self, date):
+        # Return event always trigged
+        if("now" in self.eventList):
+            if(len(self.eventList["now"]) > 0):
+                return self.eventList["now"].pop(0)
+            else:
+                del self.eventList["now"]
+        
+        # Return event trigged for a specific date
+        if(date in self.eventList):
+            if(len(self.eventList[date]) > 0):
+                return self.eventList[date].pop(0)
+            else:
+                del self.eventList[date]
+        
+        return False
         
     
     
@@ -144,19 +158,20 @@ class EventsMenu(gui.Dialog):
         label_heigth = 20 
         width = 640
         height=400
-        c = gui.Container(width=width, height=height, background=(220, 220, 220))        
-         
+        c = gui.Container(width=width, height=height)            
         # Title
         c.add(gui.Label("Event: %s" % self.gameEvent.name), 10, 10)
            
         # Description
-        c.add(gui.ScrollArea(self.gameEvent.desc, width, 100, hscrollbar=False, vscrollbar=False), 0, 40)
-     
+#         c.add(gui.ScrollArea(self.gameEvent.desc, width, 100, hscrollbar=False, vscrollbar=False), 0, 40)        
+        c.add(self.gameEvent.desc, 0, 40)   
+           
         # Option
         y = 150
-        self.displayOption = gui.ScrollArea(self.gameEvent.options[0][1], 440, 300, hscrollbar=False,  vscrollbar=False)
+        self.displayOption = gui.ScrollArea(self.gameEvent.options[0][1], 440, 250, hscrollbar=False,  vscrollbar=False)
+#         self.displayOption = self.gameEvent.options[0][1]
         c.add(self.displayOption, 200, y)
-         
+          
         t = gui.Table()
         g = gui.Group(name='options',value=0)   
         index = 0     
@@ -170,9 +185,9 @@ class EventsMenu(gui.Dialog):
         g.connect(gui.CHANGE, self.action_SelectOption, g)
 
          
-        b = gui.Button("Confirmez votre choix", width=150, height=50)
+        b = gui.Button("Confirmez votre choix", width=125, height=40)
         b.connect(gui.CLICK, self.action_ConfirmChoice, g)
-        c.add(b, 5, 400)
+        c.add(b, 10, 400)
         gui.Dialog.__init__(self, title, c)
  
     def action_SelectOption(self, ctl):
@@ -185,11 +200,5 @@ class EventsMenu(gui.Dialog):
         pygame.event.post(pygame.event.Event(pygame.QUIT))
         self.close()
          
-#     def paint(self, surf):
-#         gui.Dialog.paint(self, surf)
-#         s = surf.copy()
-#         s.blit(self.bgImage, [0, 20])
-#         s.set_alpha(150)
-#         surf.blit(s, [0, 0])
         
         

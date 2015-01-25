@@ -274,8 +274,6 @@ class Island(object):
             if(zone != OVERVIEW_ZONE_NAME):
                 self.secteur[zone].UpdateExpandRessource()
 
-    def EvaluateEvent(self, evt):
-        pass
     
     def ModifyPopulation(self, zoneName, newVal):
         if(zoneName == OVERVIEW_ZONE_NAME):

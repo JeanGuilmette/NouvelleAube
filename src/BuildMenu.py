@@ -160,7 +160,7 @@ class BuildMenu(gui.Dialog):
             e.connect(gui.CHANGE,self.adjustWorker,e, item) 
             t.td(e)
 
-        gui.Dialog.__init__(self,title,t)
+        gui.Dialog.__init__(self,title,t, background=( 255, 255, 255))
         
     def action_addBuilding(self, Value):
         self.island.secteur[self.ActiveZone.value].AddBuilding(Value, (10,340))

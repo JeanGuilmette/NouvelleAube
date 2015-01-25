@@ -16,13 +16,13 @@ import pygame
 
 if __name__ in '__main__':
 #     t = gui.Theme(["clean", "tools"])
-    t = gui.Theme(["default", "tools"])
+    t = gui.Theme(["NouvelleAube"])
 #     t = gui.Theme(["gray", "tools"])
 #     t = gui.Theme("gray")
 #     t = gui.Theme("default")   
 #     t = gui.Theme("clean")
 #    top = gui.Desktop(theme=gui.Theme(['default','tools']))
-    backg = gui.Background((255, 255, 255), t)
+#     backg = gui.Background(gui.Color((255, 255, 255)), t)
 
     ##################################
     # Epidemie
@@ -45,8 +45,10 @@ if __name__ in '__main__':
     evt_epidemie = Events.Event("now", "Epidemie", desc, options)          
     #####################################  
 
-
-    app = gui.Desktop(theme=t, width=1024, height=800, background=backg)
+#     app = gui.Desktop(theme=None, width=1024, height=800, background=backg)
+    app = gui.Desktop(theme=t, width=1024, height=800)
+#     app = gui.App(theme=t, width=1024, height=800)
+    
     app.connect(gui.QUIT,app.quit,None)
     
     c = gui.Table(width=200,height=100)

@@ -13,8 +13,8 @@ import Events
 class MainScreen(gui.Desktop):
     
     def __init__(self, island, disp):
-#         t = gui.Theme("default")
-        gui.Desktop.__init__(self)  
+        t = gui.Theme(["NouvelleAube"])
+        gui.Desktop.__init__(self, theme=t)  
         self.connect(gui.QUIT,self.quit,None)
         self.island = island
         self.gameTime = CustomWidget.GameClock()       
@@ -24,7 +24,7 @@ class MainScreen(gui.Desktop):
         btn_witdh = 160
         btn_heigth = 30 
         
-        c = gui.Container(width=sizeX, height=sizeY, background=(220, 220, 220))
+        c = gui.Container(width=sizeX, height=sizeY)
 
         ###############################
         # Game time control          

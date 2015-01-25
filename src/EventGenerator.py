@@ -8,7 +8,7 @@ class GenerateEvents(object):
     
     def Generate(self):
         a = random.random()
-        print("random: %f", a)
+        print("random: %f"% a)
         if(a < 0.005):
             EventDef.evt_epidemie.regions = ["RegionA"]
             EventDef.evt_epidemie.effects = ["population=-100", "panic=12"]
@@ -16,6 +16,6 @@ class GenerateEvents(object):
         
         if(a > 0.999):
             EventDef.evt_seisme.regions = ["RegionA", "RegionB", "RegionC", "RegionF"]
-            EventDef.evt_seisme.effects = ["population=-100", "panic=50"]
+            EventDef.evt_seisme.effects = ["population=-100", "panic=50", "MultiplyPop=0"]
             return EventDef.evt_seisme
         return False

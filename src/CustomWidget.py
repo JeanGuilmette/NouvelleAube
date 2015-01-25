@@ -111,4 +111,7 @@ class GameClock(gui.Label):
             self.counter = 0
             return True
         return False
+    
+    def GetDateString(self):
+        return self.value
            

@@ -10,7 +10,7 @@ from pgu import layout
 pygame.font.init()
 
 screen = pygame.display.set_mode((320,320),SWSURFACE)
-bg = (255,255,255)
+bg = (0,255,255)
 fg = (0,0,0)
 screen.fill(bg)
 

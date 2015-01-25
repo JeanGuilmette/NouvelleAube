@@ -72,7 +72,7 @@ class EnjeuxSurvieEngine(object):
             # Histoire principal Event
             moreEvent = True
             while(moreEvent == True):
-                evt = self.evtMgr.pop()  
+                evt = self.evtMgr.pop(self.mainGUI.gameTime.GetDateString())  
                 if(evt == False):
                     moreEvent = False
                 else:
@@ -110,4 +110,3 @@ class EnjeuxSurvieEngine(object):
             print("You have Win Game over")
             self.score = 100
             self.quitFlag = True
-            time.sleep(10)

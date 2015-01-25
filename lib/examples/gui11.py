@@ -36,7 +36,7 @@ def add_list_item(arg):
 app = gui.Desktop()
 app.connect(gui.QUIT,app.quit,None)
 
-main = gui.Container(width=500, height=400) #, background=(220, 220, 220) )
+main = gui.Container(width=500, height=400, background=(220, 220, 220) )
 
 
 main.add(gui.Label("List Example", cls="h1"), 20, 20)

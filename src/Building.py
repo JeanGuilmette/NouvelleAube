@@ -1,14 +1,27 @@
 __author__ = 'SJS'
 
+
 buildingDef = dict( \
-    Farm = dict(resType = "Agriculture", imgName = "image/farm.jpg", workerMax = 10, secteur = "primaire", space = 40, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Mines  =  dict(resType = "Metaux", imgName = "image/mine.jpg", workerMax = 100, secteur = "primaire", space = 2, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Moulin = dict(resType = "Agriculture", imgName = "image/moulin.jpg", workerMax = 100, secteur = "secondaire", space = 1, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Boulangerie = dict(resType = "Agriculture", imgName = "image/boulangerie.jpg", workerMax = 100, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Bucheron = dict(resType = "Bois", imgName = "image/Camp.jpg", workerMax = 20, secteur = "primaire", space = 5, buildcost = dict( Bois = 0, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" )
+    Ferme = dict(resType = "Agriculture", imgName = "image/building_image/ferme.png", workerMax = 10, secteur = "primaire", space = 40, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Mine  =  dict(resType = "Metaux", imgName = "image/building_image/mine.png", workerMax = 100, secteur = "primaire", space = 2, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Scierie = dict(resType = "Bois", imgName = "image/building_image/usine_de_transformation_du_bois.png", workerMax = 20, secteur = "primaire", space = 5, buildcost = dict( Bois = 0, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+
+    Forage_petrolier = dict(resType = "Petrole", imgName = "image/building_image/Station de forage.png", workerMax = 3000, secteur = "primaire", space = 1, buildcost = dict( Bois = 0, Minerais = 800), buildTime = 5, entretient = 0.1, prerequis = "gisement" ),
+    campp_de_chasse  =  dict(resType = "Chasse", imgName = "image/building_image/camp de chasse.png", workerMax = 600, secteur = "primaire", space = 1, buildcost = dict( Bois = 345, Minerais = 60), buildTime = 5, entretient = 0.05, prerequis = "" ),
+    port = dict(resType = "Peche", imgName = "image/building_image/port.png", workerMax = 1500, secteur = "primaire", space = 1, buildcost = dict( Bois = 300, Minerais = 300), buildTime = 5, entretient = 0.15, prerequis = "" ),
+    Zone_residentielle_importante= dict(resType = "population max", imgName = "image/building_image/quartier residentielle.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 500, Minerais = 500), buildTime = 5, entretient = 0.2, prerequis = "" ),
+    Ecole  =  dict(resType = "Travailleurs", imgName = "image/building_image/ecole.png", workerMax = 400, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 800, Minerais = 500), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Stade = dict(resType = "Bonheur", imgName = "image/building_image/stade.png", workerMax = 1700, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 100, Minerais = 2000), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Centrale_de_surveillance = dict(resType = "Panique", imgName = "image/building_image/centre de recherche.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 300, Minerais = 2000), buildTime = 5, entretient = 0.4, prerequis = "" ),
+    Prison  =  dict(resType = "Criminalite", imgName = "image/building_image/prison.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 600, Minerais = 800), buildTime = 5, entretient = 0.2, prerequis = "" ),
+    Bureaux_journalistiques = dict(resType = "Influence", imgName = "image/building_image/centre journalistique.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 700, Minerais = 400), buildTime = 5, entretient = 0.15, prerequis = "" ),
+    Parc= dict(resType = "Pollution", imgName = "image/building_image/parc.png", workerMax = 200, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 1200, Minerais = 200), buildTime = 5, entretient = 0.05, prerequis = "" ),
+    Hopital  =  dict(resType = "Sante", imgName = "image/building_image/hopital.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 500, Minerais = 500), buildTime = 5, entretient = 0.2, prerequis = "" ),
+
+    Entrepot = dict(resType = "Stockage", imgName = "image/building_image/entrepot.png", workerMax = 1000000, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 800, Minerais = 500), buildTime = 5, entretient = (0.15), prerequis = "" ), # ajouter +2% par 100 worker
+    Centre_de_logistique_routiere = dict(resType = "Transport", imgName = "image/building_image/centre_logistique_routier.png", workerMax = 4000, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 300, Minerais = 500), buildTime = 5, entretient = 0.15, prerequis = "" ), #PRIX PETROLE
+    Centre_de_logistique_aeroportee  =  dict(resType = "Tranport", imgName = "image/building_image/aeroport.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 1000, Minerais = 2300), buildTime = 5, entretient = 0.35, prerequis = "centre_de_logistique_routière" )
     )
-
-
 class Batiment(object):
     def __init__(self, name, pos):
         self.name = name                                 # Name to identify building

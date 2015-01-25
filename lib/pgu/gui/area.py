@@ -165,6 +165,9 @@ class ScrollArea(table.Table):
     def widget(self):
         return self._widget
 
+    def paint(self, s):
+        table.Table.paint(self, s)
+        
     @widget.setter
     def widget(self, val):
         self._widget = val

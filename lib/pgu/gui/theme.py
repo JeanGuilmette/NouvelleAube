@@ -428,8 +428,6 @@ class Theme:
         """
 
         if box == 0: return
-        surf.fill(box)
-        return
     
         if is_color(box):
             surf.fill(box,r)

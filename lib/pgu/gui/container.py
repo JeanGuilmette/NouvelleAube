@@ -64,20 +64,20 @@ class Container(widget.Widget):
                 while (cnt and not cnt.background):
                     cnt = cnt.container
 
-#                if (cnt and cnt.background):
-#                    if (cnt._rect_content):
-#                        x += cnt._rect_content.left
-#                        y += cnt._rect_content.top
-#                    r1 = cnt.get_abs_rect()
-#                    r2 = w.get_abs_rect()
-#                    x = r2.left - r1.left
-#                    y = r2.top - r1.top
-#                    subrect = (x, y, sub.get_width(), sub.get_height())
-#                    tmp = pygame.Surface(r1.size).convert_alpha()
-#                    tmp.set_clip(subrect)
-#                    cnt.background.paint(tmp)
-#                    tmp.set_clip()
-#                    sub.blit(tmp, (0,0), subrect)
+#                 if (cnt and cnt.background):
+#                     if (cnt._rect_content):
+#                         x += cnt._rect_content.left
+#                         y += cnt._rect_content.top
+#                     r1 = cnt.get_abs_rect()
+#                     r2 = w.get_abs_rect()
+#                     x = r2.left - r1.left
+#                     y = r2.top - r1.top
+#                     subrect = (x, y, sub.get_width(), sub.get_height())
+#                     tmp = pygame.Surface(r1.size).convert_alpha()
+#                     tmp.set_clip(subrect)
+#                     cnt.background.paint(tmp)
+#                     tmp.set_clip()
+#                     sub.blit(tmp, (0,0), subrect)
                 if (cnt):
                     # Paint the background. This works reasonably okay but it's not exactly correct.
                     r1 = cnt.get_abs_rect()
