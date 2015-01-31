@@ -8,6 +8,7 @@ import pygame
 import sys; sys.path.append("../lib")
 
 from pgu import gui
+from pygame.transform import smoothscale
 # from pygame.tests import surflock_test
 
 
@@ -20,16 +21,15 @@ class Event(object):
         self.name = title
         self.font = pygame.font.SysFont(None, 30)        
         self.space = self.font.size(" ")         
-        self.desc = self.CreateDescription(description)
+        self.desc = self.CreateDescription(description, 640, 0)
         self.options = self.CreateOptions(options)
         self.effects = []
-        self.regions = []        
+        self.regions = []               
 
              
-    def CreateDescription(self, text):
-        doc = gui.Document(width=640) 
-     
-        doc.block(align=0)
+    def CreateDescription(self, text, width, align=0):
+        doc = gui.Document(width=width) 
+        doc.block(align=align)
         for word in text.split(" "): 
             doc.add(gui.Label(word))
             doc.space(self.space)
@@ -38,15 +38,12 @@ class Event(object):
     
     def CreateOptions(self, options): 
         docs = []
-        for id, desc, effects in options:
-            doc = gui.Document(width=400) 
-            doc.block(align=-1)
-            for word in desc.split(" "): 
-                doc.add(gui.Label(word))
-                doc.space(self.space)
-            doc.br(self.space[1])                
-            docs.append((id, doc, effects)) 
+        for id, desc, effects, result in options:
+            docDesc = self.CreateDescription(desc, 400, -1)
+            docResult = self.CreateDescription(result, 400, -1)
+            docs.append((id, docDesc, effects, docResult)) 
         return docs
+    
     
 ##########################################################
 #
@@ -78,74 +75,8 @@ class EventsMgr(object):
         
         return False
         
-    
-    
-##########################################################
-#
-##########################################################                                                        
-# class EventsViewerMenu(gui.Container):  
-#     def __init__(self, island, event):
-#         self.island = island
-#         self.gameEvent = event
-#         self.value = gui.Form()
-#         self.widgetList = []
-#         self.bgImage = pygame.image.load("../Src/image/Nouvelle_Aube.jpg")
-#         
-#         
-#         self.params.setdefault('cls','dialog')
-#         title = gui.Label("Events")
-#         label_heigth = 20 
-#         width = 640
-#         height=400
-#         gui.Container.__init__(self, width=width, height=height, background=(220, 220, 220))        
-#         
-#         # Title
-#         self.add(gui.Label("Event: %s" % self.gameEvent.name), 10, 10)
-#           
-#         # Description
-#         self.add(gui.ScrollArea(self.gameEvent.desc, width, 100, hscrollbar=False, vscrollbar=False), 0, 40)
-#     
-#         # Option
-#         y = 150
-#         self.displayOption = gui.ScrollArea(self.gameEvent.options[0][1], 440, 300, hscrollbar=False,  vscrollbar=False)
-#         self.add(self.displayOption, 200, y)
-#         
-#         t = gui.Table()
-#         g = gui.Group(name='options',value='0')   
-#         index = 0     
-#         for opt, doc, effect in self.gameEvent.options:
-#             t.tr()
-#             t.td(gui.Radio(g,index))
-#             t.td(gui.Label(opt))
-#             index += 1
-#         self.add(t, 10, y)
-#         g.value = "0"
-#         g.connect(gui.CHANGE, self.action_SelectOption, g)
-#         
-#         b = gui.Button("Confirmez votre choix", width=150, height=50)
-#         b.connect(gui.CLICK, self.action_ConfirmChoice, g)
-#         self.add(b, 5, 400)
-# 
-# 
-#     def action_SelectOption(self, ctl):
-#         self.displayOption.widget = self.gameEvent.options[ctl.value][1]
-#         
-#     def action_ConfirmChoice(self, ctl):
-#         print(ctl.value)
-#         print(self.gameEvent.options[ctl.value][2])
-# 
-#         self.close()
-#         
-# #     def paint(self, surf):
-# #         gui.Container.paint(self, surf)
-# #         s = surf.copy()
-# #         surf.blit(self.bgImage, [0, 20])
-# #         s.set_alpha(100)
-# #         surf.blit(s, [0, 0])
-#         
-#         
-         
-class EventsMenu(gui.Dialog):          
+                 
+class EventsViewer(gui.Dialog):          
     def __init__(self, island, event):
         title = gui.Label("Events")
         self.island = island
@@ -153,6 +84,14 @@ class EventsMenu(gui.Dialog):
         self.value = gui.Form()
         self.widgetList = []
         self.bgImage = pygame.image.load("../Src/image/Nouvelle_Aube.jpg")
+        self.isClosing = False
+        self.isOpenning = False
+        self.isFirst = True 
+        self.winWidth = 640
+        self.winHeight = 400
+        self.winMaxWidth = 640
+        self.winMaxHeight = 400
+        self.delta = -20 
 
  
         label_heigth = 20 
@@ -175,7 +114,7 @@ class EventsMenu(gui.Dialog):
         t = gui.Table()
         g = gui.Group(name='options',value=0)   
         index = 0     
-        for opt, doc, effect in self.gameEvent.options:
+        for opt, doc, effect, result in self.gameEvent.options:
             t.tr()
             t.td(gui.Radio(g,index))
             t.td(gui.Label(opt))
@@ -186,19 +125,81 @@ class EventsMenu(gui.Dialog):
 
          
         b = gui.Button("Confirmez votre choix", width=125, height=40)
-        b.connect(gui.CLICK, self.action_ConfirmChoice, g)
+        b.connect(gui.CLICK, self.action_ConfirmChoice, g, b)
         c.add(b, 10, 400)
         gui.Dialog.__init__(self, title, c)
  
     def action_SelectOption(self, ctl):
         self.displayOption.widget = self.gameEvent.options[ctl.value][1]
          
-    def action_ConfirmChoice(self, ctl):
-        print(ctl.value)
-        print(self.gameEvent.options[ctl.value][2])
-        self.gameEvent.effects = self.gameEvent.options[ctl.value][2]
-        pygame.event.post(pygame.event.Event(pygame.QUIT))
-        self.close()
+    def action_ConfirmChoice(self, ctl, btn):
+        if(self.isFirst == True):
+            print(ctl.value)
+            print(self.gameEvent.options[ctl.value][2])
+            self.gameEvent.effects = self.gameEvent.options[ctl.value][2]
+            self.displayOption.widget = self.gameEvent.options[ctl.value][3]
+            self.isFirst = False
+            btn.value = "Fermez"
+        else:
+            self.isClosing = True
+
+        
+
+    def EvaluateNewDialogSize(self):
+        w = self.winWidth + self.delta
+        self.winWidth = w if w > 0 else 0
+        self.winWidth = w if w < self.winMaxWidth else self.winMaxWidth
+        h = self.winHeight + self.delta
+        self.winHeight = h if h > 0 else 0
+        self.winHeight = h if h < self.winMaxHeight else self.winMaxHeight
+        if( self.winWidth <= 0):
+            self.isClosing = False
+            pygame.event.post(pygame.event.Event(pygame.QUIT))
+            self.close()            
+
+
+    def render(self):
+        self.EvaluateNewDialogSize()
+        surf = self.get_toplevel().screen        
+        r = self.get_abs_rect()
+        s1 = surf.subsurface(r)
+        s1 = pygame.transform.smoothscale(s1,(self.winWidth, self.winHeight))
+        surf.blit(s1, (r.x, r.y))
+        self.resize(width=self.winWidth, height=self.winHeight)
+        pygame.display.update()
+        pygame.display.flip() 
+        pygame.time.wait(100)
+
+
+#     def close(self):
+#         self.render()
+#         gui.Dialog.close(self)
+        
+    def paint(self, surf):
+        if(self.isClosing == True):
+            surf.fill(0xFF0000)
+            self.render()
+        elif(self.isOpenning == True):
+            pass
+
+#         gui.Dialog.paint(self, surf)
+        
          
-        
-        
+           
+#     def paint(self, surf):
+#         gui.Dialog.paint(self, surf)
+#         s = surf.copy()
+#         s.blit(self.bgImage, [0, 20])
+#         s.set_alpha(150)
+#         surf.blit(s, [0, 0])
+      
+#         surf = self.get_toplevel().screen
+#         for i in range(640, 0, -20):
+#             r = self.get_abs_rect()
+#             s1 = surf.subsurface(r)
+#             s1 = pygame.transform.smoothscale(s1,(i, 400))
+#             surf.blit(s1, (r.x, r.y))
+#             pygame.display.update()
+#             pygame.display.flip() 
+#             pygame.time.wait(100)
+#         self.isClosing = False        

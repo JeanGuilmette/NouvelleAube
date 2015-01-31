@@ -126,7 +126,7 @@ class MainScreen(gui.Desktop):
         pass
     
     def action_event(self, evt):
-        dialog = Events.EventsMenu(self.island, evt)
+        dialog = Events.EventsViewer(self.island, evt)
         dialog.open()
         self.update()
         pygame.display.flip() 

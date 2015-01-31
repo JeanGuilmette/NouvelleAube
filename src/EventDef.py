@@ -11,7 +11,7 @@ effect_B = ["population=-200", "panic=12"]
 choix_C=("Par conséquent, pour éviter de créer des perturbations au seins de l'équipage et nuire à son efficacité, ainsi qu'au moral de la population, à cause de rumeurs sur ce qui ne semble qu'être que des rhumes des plus banals, il faudra étouffer les rumeurs et rassuré tout le monde.")
 effect_C = ["population=-300", "panic=12"]
 choix_D=("Ce qui réduirait à néant toutes chances de re-bâtir notre monde! C'est inadmissible. Pour le bien du plus grand nombre et pour éviter tout risques, nous lancerons par dessus bord tout individu suspecté de maladie, discrètement, bien sûr.")
-effect_D = ["population=-400", "panic=12"]
+effect_D = ["MultiplyPop=0.5", "panic=12"]
 options =[]
 options.append(("Option A", choix_A, effect_A))
 options.append(("Option B", choix_B, effect_B))
