@@ -145,7 +145,7 @@ class BuildMenu(gui.Dialog):
         t.td(gui.Label("Current"))
         for item in sorted(Building.buildingDef):
             t.tr()
-            t.td(gui.Label(item))
+            t.td(gui.Label(item), align = 1)
             t.td(BuildingLabel(self.island, self.ActiveZone, item))
             b = gui.Button("Add")
             b.connect(gui.CLICK, self.action_addBuilding, item)
