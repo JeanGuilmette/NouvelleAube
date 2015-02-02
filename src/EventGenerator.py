@@ -9,7 +9,7 @@ class GenerateEvents(object):
     def Generate(self):
         a = random.random()
         print("random: %f"% a)
-        if(a < 0.9):
+        if(a < 0.5):
             EventDef.evt_epidemie.regions = ["RegionA"]
             EventDef.evt_epidemie.effects = ["population=-100", "panic=12"]
             return EventDef.evt_epidemie

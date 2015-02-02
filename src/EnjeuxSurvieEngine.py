@@ -28,22 +28,22 @@ class EnjeuxSurvieEngine(object):
         self.tick = FPS
         self.score = 0
         self.evtMgr = Events.EventsMgr()            #List of occurred events.
-        self.evtGenerator = EventGenerator.GenerateEvents()
+        self.evtGenerator = None
 
     # Build initial island at beginning of a new game
     def ConstructZone(self, filename="new"):
         self.island = Island.Island(filename)
         self.evtEffect = EventEffectAnalyse.EventImpact(self.island)        
-
+        self.evtGenerator = EventGenerator.GenerateEvents(self.island)
+        
     # Build reference to all menu
     def CreateAllMenu(self):
         self.mainGUI = MainScreen.MainScreen(self.island, self.display)        
 
     def DrawWorld(self):
         self.mainGUI.paint()
-#         self.mainGUI.update()
         pygame.display.update()
-        pygame.display.flip()        
+#         pygame.display.flip()        
 
     def ValidPlayerInput(self):
         for event in pygame.event.get():

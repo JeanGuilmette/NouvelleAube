@@ -12,18 +12,21 @@ import Zone
 import Island
 import Events
 import pygame
+# import EventDef
 
-
+ 
+  
+##########################################################    
 if __name__ in '__main__':
-#     t = gui.Theme(["clean", "tools"])
-    t = gui.Theme(["NouvelleAube"])
-#     t = gui.Theme(["gray", "tools"])
-#     t = gui.Theme("gray")
-#     t = gui.Theme("default")   
-#     t = gui.Theme("clean")
-#    top = gui.Desktop(theme=gui.Theme(['default','tools']))
-#     backg = gui.Background(gui.Color((255, 255, 255)), t)
 
+    pygame.display.set_caption('Enjeux-Survie')        
+    pygame.display.set_icon(pygame.image.load("../src/image/pygame.bmp"))
+    disp = pygame.display.set_mode((1027, 768), 0, 32)
+    disp.convert_alpha()
+
+    t = gui.Theme(["NouvelleAube"])
+    app = gui.Desktop(theme=t, width=1024, height=800)
+        
     ##################################
     # Epidemie
     ##################################
@@ -47,13 +50,9 @@ if __name__ in '__main__':
     options.append(("Option C", choix_C, effect_C, result_C))
     options.append(("Option D", choix_D, effect_D, result_D))
     
-    
     evt_epidemie = Events.Event("now", "Epidemie", desc, options)
-    ##################################### 
+    #####################################   
 
-#     app = gui.Desktop(theme=None, width=1024, height=800, background=backg)
-    app = gui.Desktop(theme=t, width=1024, height=800)
-#     app = gui.App(theme=t, width=1024, height=800)
     
     app.connect(gui.QUIT,app.quit,None)
     
@@ -65,7 +64,7 @@ if __name__ in '__main__':
     dialog = BuildMenu(secteurA)  
     dialog2 = TransferMenu(secteurA)
 
-    dialog3 = Events.EventsViewer(secteurA, evt_epidemie)
+    dialog3 = Events.EventsViewer2(secteurA, evt_epidemie)
             
     c.tr() 
     e = gui.Button("Build Management")
@@ -82,6 +81,6 @@ if __name__ in '__main__':
     e.connect(gui.CLICK,dialog3.open,None)      
     c.td(e)  
     
-    app.run(c)
+    app.run(c, screen=disp)
 
 

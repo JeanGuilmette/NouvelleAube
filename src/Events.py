@@ -5,12 +5,13 @@ Created on Dec 24, 2014
 '''
 # Pour permettre <aparition des evenements
 import pygame
-import sys; sys.path.append("../lib")
+import sys; 
+sys.path.append("../lib")
+sys.path.append("../src")
 
 from pgu import gui
 from pygame.transform import smoothscale
 from pygame.tests import surflock_test
-# from pygame.tests import surflock_test
 
 
 ##########################################################
@@ -25,7 +26,9 @@ class Event(object):
         self.desc = self.CreateDescription(description, 600, 0)
         self.options = self.CreateOptions(options)
         self.effects = []
-        self.regions = []               
+        self.regions = []   
+        self.surf = "" 
+        self.surfRect = ""         
 
              
     def CreateDescription(self, text, width, align=0):
@@ -34,7 +37,6 @@ class Event(object):
         for word in text.split(" "): 
             doc.add(gui.Label(word))
             doc.space(self.space)
-#         doc.br(self.space[1])
         return doc
     
     def CreateOptions(self, options): 
@@ -92,7 +94,8 @@ class EventsViewer(gui.Dialog):
         self.gameEvent = event
         self.value = gui.Form()
         self.isFirst = True 
-        title = gui.Label("Event: %s" % self.gameEvent.name)        
+        self.ipOpen = False
+        title = gui.Label("Event: %s les régions touché sont: %s" % (self.gameEvent.name, self.gameEvent.regions) )        
         
  
         label_heigth = 20 
@@ -140,25 +143,190 @@ class EventsViewer(gui.Dialog):
             btn.value = "Fermez"
             btn.resize(width=self.btnCoord.width, height=self.btnCoord.height)
         else:
+            surf = self.get_toplevel().screen        
+            self.gameEvent.surfRect = self.get_abs_rect()
+            s = surf.subsurface(self.gameEvent.surfRect)  
+            self.gameEvent.surf = s.copy()
+#             disp = pygame.display.get_surface()
             pygame.event.post(pygame.event.Event(pygame.QUIT))
             self.close()  
+            closeScreen(self.get_toplevel(), surf, self.gameEvent.surf, self.gameEvent.surfRect)            
 
     def close(self):
         if(self.isFirst == False):
             gui.Dialog.close(self)
             
+    def open(self, w=None, x=None, y=None):
+        gui.Dialog.open(self)
+        surf = self.get_toplevel().screen 
+        self.gameEvent.surfRect = self.get_abs_rect()
+        s = surf.subsurface(self.gameEvent.surfRect)  
+        self.gameEvent.surf = s.copy()                
+        openScreen(self.get_toplevel(), surf, self.gameEvent.surf, self.gameEvent.surfRect)
+        self.isOpen = True
+
     def paint(self, surf):
         gui.Dialog.paint(self, surf)
         self.DrawBorder(self.descCoord, surf)
         self.DrawBorder(self.OptCoord, surf)
-        self.DrawBorder(self.OptIdCoord, surf)        
-        pygame.display.update()
-        pygame.display.flip() 
+        self.DrawBorder(self.OptIdCoord, surf)     
+        if(self.isOpen == True):  
+            pygame.display.update()
+
         
     def DrawBorder(self, r, s):
-        colorList = [0x000000, 0x778899, 0xd3d3d3, 0xd3d3d3, 0x778899, 0x000000 ]
+#         colorList = [0x000000, 0x778899, 0xd3d3d3, 0xd3d3d3, 0x778899, 0x000000 ] #Black/Grey
+        colorList = [0x87ceeb, 0xadd8e6, 0xafeeee, 0xafeeee, 0xafeeee, 0xadd8e6, 0xadd8e6, 0x87ceeb ] #Blue
         for color in colorList:
             pygame.draw.rect(s, color, r, 1) 
             r = pygame.Rect(r.x-1, r.top-1, r.width+2, r.height+2)        
-                             
+   
+ 
+ 
+# //////////////////////////////////////////////////////////////////////////////////////
+# def flipScreen(ctl, display, surf, r):
+#     for i in range(640, 0, -20):
+#         ctl.paint()         
+#         surf = pygame.transform.smoothscale(surf,(i, 400))
+#         display.blit(surf, (r.x, r.y))
+#         pygame.display.update(r)
+#         pygame.time.wait(10) 
+  
+
+def closeScreen(ctl, display, surf, r):
+    # Erase dialog and get a snapshot as background.
+    ctl.paint()    
+    backg = display.copy() 
+    # Draw background and resized dialog
+    for i in range(r.width, 0, -10):
+        display.blit(backg, (0,0))
+        surf = pygame.transform.smoothscale(surf,(i, r.height))
+        display.blit(surf, (r.x, r.y))
+        pygame.display.update(r)
+        pygame.time.wait(5) 
+    
+def openScreen(ctl, display, surf, r):
+    # Erase dialog and get a snapshot as background.
+    backg = display.copy()
+    bgImage = pygame.image.load("../lib/data/themes/NouvelleAube/glassPanel.png")    
+    # Draw background and resized dialog
+    for i in range(0, r.width, 10):
+        display.blit(backg, (0,0))
+        surf = pygame.transform.smoothscale(bgImage, (i, r.height))
+        display.blit(surf, (r.x, r.y))
+        pygame.display.update(r)
+        pygame.time.wait(5) 
+     
+     
+##########################################################
+#
+##########################################################                 
+class EventsViewer2(gui.Container):  
+    winWidth = 640
+    winHeigth = 400
+    descCoord = pygame.Rect(20, 60, 635, 158)  
+    OptCoord = pygame.Rect(220, 200, 380, 200) 
+    OptIdCoord = pygame.Rect(20, 200, 198, 180)  
+    btnCoord = pygame.Rect(30, 325, 100, 40)   
+     
+    def __init__(self, island, event, **params):
+        # Initialize internal object
+        params.setdefault('cls', 'dialog')
+#         params.setdefault('x', '0')
+#         params.setdefault('y', '0')
+#         params.setdefault('width', 640)
+#         params.setdefault('height', 400)                
+        gui.Container.__init__(self, **params)
+        self.value = gui.Form()
+#         self.rect = pygame.Rect(0, 0, 640, 400)  
         
+        self.island = island
+        self.gameEvent = event
+        self.isFirst = True 
+        self.ipOpen = False   
+    
+        # Title
+        title = gui.Label("Event: %s les régions touché sont: %s" % (self.gameEvent.name, self.gameEvent.regions) )        
+        self.add(title, 10, 10)
+ 
+        label_heigth = 20 
+          
+        # Description
+        self.add(self.gameEvent.desc, self.descCoord.x, self.descCoord.y - label_heigth)   
+            
+        # Option
+        self.displayOption = gui.ScrollArea(self.gameEvent.options[0][1], self.OptCoord.width, self.OptCoord.height, hscrollbar=False,  vscrollbar=True)
+        self.add(self.displayOption, self.OptCoord.x-7, self.OptCoord.y -label_heigth-5)
+           
+        t = gui.Table()
+        g = gui.Group(name='options',value=0)   
+        index = 0  
+        y = self.OptIdCoord.y - label_heigth
+        for opt, doc, effect, result in self.gameEvent.options:
+            t.tr()
+            t.td(gui.Radio(g,index))
+            t.td(gui.Label(opt))
+            index += 1
+        self.add(t, self.OptIdCoord.x, y)
+        g.value = 0
+        g.connect(gui.CHANGE, self.action_SelectOption, g)
+ 
+          
+        b = gui.Button("Confirmez votre choix", width=self.btnCoord.width, height=self.btnCoord.height)
+        b.connect(gui.CLICK, self.action_ConfirmChoice, g, b)
+        self.add(b, self.btnCoord.x, self.btnCoord.y)
+       
+ 
+    def action_SelectOption(self, ctl):
+        if(self.isFirst == True):
+            self.displayOption.widget = self.gameEvent.options[ctl.value][1]
+         
+    def action_ConfirmChoice(self, ctl, btn):
+        if(self.isFirst == True):
+            print(ctl.value)
+            print(self.gameEvent.options[ctl.value][2])
+            self.gameEvent.effects = self.gameEvent.options[ctl.value][2]
+            self.displayOption.widget = self.gameEvent.options[ctl.value][3]
+            self.isFirst = False
+            btn.value = "Fermez"
+            btn.resize(width=self.btnCoord.width, height=self.btnCoord.height)
+        else:
+            surf = self.get_toplevel().screen        
+            self.gameEvent.surfRect = self.get_abs_rect()
+            s = surf.subsurface(self.gameEvent.surfRect)  
+            self.gameEvent.surf = s.copy()
+#             disp = pygame.display.get_surface()
+            pygame.event.post(pygame.event.Event(pygame.QUIT))
+            self.close()  
+            closeScreen(self.get_toplevel(), surf, self.gameEvent.surf, self.gameEvent.surfRect)            
+
+    def close(self):
+        if(self.isFirst == False):
+            gui.Dialog.close(self)
+             
+    def open(self, w=None, x=None, y=None):
+        gui.Dialog.open(self)
+        surf = self.get_toplevel().screen 
+        self.gameEvent.surfRect = self.get_abs_rect()
+        s = surf.subsurface(self.gameEvent.surfRect)  
+        self.gameEvent.surf = s.copy()                
+        openScreen(self.get_toplevel(), surf, self.gameEvent.surf, self.gameEvent.surfRect)
+        self.isOpen = True
+
+#     def paint(self, surf):
+#         gui.Dialog.paint(self, surf)
+#         self.DrawBorder(self.descCoord, surf)
+#         self.DrawBorder(self.OptCoord, surf)
+#         self.DrawBorder(self.OptIdCoord, surf)     
+#         if(self.isOpen == True):  
+#             pygame.display.update()
+  
+         
+    def DrawBorder(self, r, s):
+#         colorList = [0x000000, 0x778899, 0xd3d3d3, 0xd3d3d3, 0x778899, 0x000000 ] #Black/Grey
+        colorList = [0x87ceeb, 0xadd8e6, 0xafeeee, 0xafeeee, 0xafeeee, 0xadd8e6, 0xadd8e6, 0x87ceeb ] #Blue
+        for color in colorList:
+            pygame.draw.rect(s, color, r, 1) 
+            r = pygame.Rect(r.x-1, r.top-1, r.width+2, r.height+2)        
+   
+          

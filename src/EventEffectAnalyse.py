@@ -28,3 +28,30 @@ class EventImpact(object):
             mod = pop * float(value)
             self.island.ModifyPopulation(secteur, (mod-pop))
             print("%s modify %s population multiplied by %s" % (evtName, secteur, value) )  
+            
+
+        # elif(token == "sante"):
+        #     self.island.ModifyPanic(secteur, value)
+        #     print("%s modify %s panic by %s" % (evtName, secteur, value) )
+        #
+        # elif(token == "panic"):
+        #     self.island.ModifyPanic(secteur, value)
+        #     print("%s modify %s panic by %s" % (evtName, secteur, value) )
+        #
+        # elif(token == "panic"):
+        #     self.island.ModifyPanic(secteur, value)
+        #     print("%s modify %s panic by %s" % (evtName, secteur, value) )
+        #
+        # elif(token == "panic"):
+        #     self.island.ModifyPanic(secteur, value)
+        #     print("%s modify %s panic by %s" % (evtName, secteur, value) )
+        #
+        # elif(token == "panic"):
+        #     self.island.ModifyPanic(secteur, value)
+        #     print("%s modify %s panic by %s" % (evtName, secteur, value) )
+        #
+        # elif(token == "panic"):
+        #     self.island.ModifyPanic(secteur, value)
+        #     print("%s modify %s panic by %s" % (evtName, secteur, value) )
+
+            

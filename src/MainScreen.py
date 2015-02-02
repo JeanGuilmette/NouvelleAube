@@ -126,12 +126,19 @@ class MainScreen(gui.Desktop):
         pass
     
     def action_event(self, evt):
+#         display = self.get_toplevel().screen        
         dialog = Events.EventsViewer(self.island, evt)
         dialog.open()
         self.update()
-        pygame.display.flip() 
+#         pygame.display.flip() 
         done = False
         while not done:
+            pygame.time.wait(5)              
+            self.update()
+            self.paint()
+            pygame.display.update()
+            pygame.display.flip()              
+       
             # Process events
             for ev in pygame.event.get():
                 if (ev.type == pygame.QUIT or 
@@ -140,12 +147,10 @@ class MainScreen(gui.Desktop):
                 else:
                     # Pass the event off to pgu
                     self.event(ev)
-            self.update()
-            self.paint()
-            pygame.display.update()
-            pygame.display.flip()              
-            pygame.time.wait(5) 
-#             if(dialog.is_open()): done = True
+                    
+        # Remove dialog
+#         Events.flipScreen(self, display, evt.surf, evt.surfRect)
+
         return evt       
 
     def CreateResourceStatus(self):
