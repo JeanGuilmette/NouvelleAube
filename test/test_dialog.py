@@ -12,8 +12,6 @@ import Zone
 import Island
 import Events
 import pygame
-# import EventDef
-
  
   
 ##########################################################    
@@ -64,7 +62,7 @@ if __name__ in '__main__':
     dialog = BuildMenu(secteurA)  
     dialog2 = TransferMenu(secteurA)
 
-    dialog3 = Events.EventsViewer2(secteurA, evt_epidemie)
+    dialog3 = Events.EventsViewer3(secteurA, evt_epidemie)
             
     c.tr() 
     e = gui.Button("Build Management")

@@ -6,6 +6,7 @@ Created on Dec 24, 2014
 # Pour permettre <aparition des evenements
 import pygame
 import sys; 
+import CustomWidget
 sys.path.append("../lib")
 sys.path.append("../src")
 
@@ -42,8 +43,8 @@ class Event(object):
     def CreateOptions(self, options): 
         docs = []
         for id, desc, effects, result in options:
-            docDesc = self.CreateDescription(desc, 400, -1)
-            docResult = self.CreateDescription(result, 400, -1)
+            docDesc = self.CreateDescription(desc, 418, -1)
+            docResult = self.CreateDescription(result, 418, -1)
             docs.append((id, docDesc, effects, docResult)) 
         return docs
     
@@ -178,7 +179,7 @@ class EventsViewer(gui.Dialog):
 #         colorList = [0x000000, 0x778899, 0xd3d3d3, 0xd3d3d3, 0x778899, 0x000000 ] #Black/Grey
         colorList = [0x87ceeb, 0xadd8e6, 0xafeeee, 0xafeeee, 0xafeeee, 0xadd8e6, 0xadd8e6, 0x87ceeb ] #Blue
         for color in colorList:
-            pygame.draw.rect(s, color, r, 1) 
+            CustomWidget.DrawRoundRect(s, color, r, 1, 32, 32)
             r = pygame.Rect(r.x-1, r.top-1, r.width+2, r.height+2)        
    
  
@@ -223,23 +224,19 @@ def openScreen(ctl, display, surf, r):
 ##########################################################                 
 class EventsViewer2(gui.Container):  
     winWidth = 640
-    winHeigth = 400
+    winHeigth = 377
     descCoord = pygame.Rect(20, 60, 635, 158)  
     OptCoord = pygame.Rect(220, 200, 380, 200) 
     OptIdCoord = pygame.Rect(20, 200, 198, 180)  
-    btnCoord = pygame.Rect(30, 325, 100, 40)   
+    btnCoord = pygame.Rect(30, 325, 100, 40) 
+    borderSize = 10
+    cadreCoord = pygame.Rect(borderSize, borderSize, winWidth-(2*borderSize), winHeigth-(2*borderSize)) 
      
     def __init__(self, island, event, **params):
         # Initialize internal object
         params.setdefault('cls', 'dialog')
-#         params.setdefault('x', '0')
-#         params.setdefault('y', '0')
-#         params.setdefault('width', 640)
-#         params.setdefault('height', 400)                
         gui.Container.__init__(self, **params)
         self.value = gui.Form()
-#         self.rect = pygame.Rect(0, 0, 640, 400)  
-        
         self.island = island
         self.gameEvent = event
         self.isFirst = True 
@@ -313,20 +310,152 @@ class EventsViewer2(gui.Container):
         openScreen(self.get_toplevel(), surf, self.gameEvent.surf, self.gameEvent.surfRect)
         self.isOpen = True
 
-#     def paint(self, surf):
-#         gui.Dialog.paint(self, surf)
+    def paint(self, surf):
+        gui.Container.paint(self, surf)
 #         self.DrawBorder(self.descCoord, surf)
 #         self.DrawBorder(self.OptCoord, surf)
-#         self.DrawBorder(self.OptIdCoord, surf)     
-#         if(self.isOpen == True):  
-#             pygame.display.update()
+#         self.DrawBorder(self.OptIdCoord, surf)  
+        self.DrawBorder(self.cadreCoord, surf)  
+#         r =surf.get_rect() 
+#         self.DrawBorder(r, surf)  
+        if(self.isOpen == True):  
+            pygame.display.update()
   
          
     def DrawBorder(self, r, s):
 #         colorList = [0x000000, 0x778899, 0xd3d3d3, 0xd3d3d3, 0x778899, 0x000000 ] #Black/Grey
         colorList = [0x87ceeb, 0xadd8e6, 0xafeeee, 0xafeeee, 0xafeeee, 0xadd8e6, 0xadd8e6, 0x87ceeb ] #Blue
         for color in colorList:
-            pygame.draw.rect(s, color, r, 1) 
-            r = pygame.Rect(r.x-1, r.top-1, r.width+2, r.height+2)        
+            CustomWidget.DrawRoundRect(s, color, r, 1, 32, 32)            
+            #pygame.draw.rect(s, color, r, 1) 
+            r = pygame.Rect(r.x-1, r.top-1, r.width+2, r.height+2)     
+               
    
+##########################################################
+#
+##########################################################                 
+class EventsViewer3(gui.Table):  
+    winWidth = 640
+    winHeigth = 400
+    btnCoord = pygame.Rect(10, 325, 300, 40) 
+    borderSize = 10
+    label_height = 20     
+    cadreCoord = pygame.Rect(borderSize, borderSize+label_height, winWidth-(2*borderSize), winHeigth-(2*borderSize)-20) 
+    descCoord = pygame.Rect( 5, 5, 615, 128)  
+    descBoxCoord = pygame.Rect( borderSize, borderSize+label_height, winWidth-(2*borderSize), 130)    
+    OptIdCoord = pygame.Rect(20, 180, 198, 320)  
+    OptIdBoxCoord = pygame.Rect(borderSize, 164, 198, 320)  
+    OptCoord = pygame.Rect(204, 140, 418, 320) 
+    OptBoxCoord = pygame.Rect(212, 164, 418, 320) 
+ 
+    
+       
+    def __init__(self, island, event, **params):
+        # Initialize internal object     
+        params.setdefault('cls','dialog')
+        gui.Table.__init__(self,**params)
+        
+        self.value = gui.Form()
+        self.island = island
+        self.gameEvent = event
+        self.isFirst = True 
+        self.ipOpen = False   
+                
+        self.tr()
+        title =  gui.Label("Event: %s les régions touché sont: %s" % (self.gameEvent.name, self.gameEvent.regions) ) 
+        self.td(title,align=-1,cls=self.cls+'.bar')
+        
+        # Create container
+        c = gui.Container(width=640, heigth=400)
           
+        # Description
+        d = gui.ScrollArea(self.gameEvent.desc, self.descCoord.width, self.descCoord.height, hscrollbar=False,  vscrollbar=True)
+        c.add(d, self.descCoord.x, self.descCoord.y)   
+            
+        # Option
+        self.displayOption = gui.ScrollArea(self.gameEvent.options[0][1], self.OptCoord.width, self.OptCoord.height, hscrollbar=False,  vscrollbar=True)
+        c.add(self.displayOption, self.OptCoord.x, self.OptCoord.y)
+           
+        t = gui.Table()
+        g = gui.Group(name='options',value=0)   
+        index = 0  
+        y = self.OptIdCoord.y - self.label_height
+        for opt, doc, effect, result in self.gameEvent.options:
+            t.tr()
+            t.td(gui.Radio(g,index))
+            t.td(gui.Label(opt))
+            index += 1
+        c.add(t, self.OptIdCoord.x, y)
+        g.value = 0
+        g.connect(gui.CHANGE, self.action_SelectOption, g)
+ 
+        self.tr()
+        self.td(c,colspan=2,cls=self.cls+".main")   
+          
+        # Add confirmation button
+        self.tr()
+        b = gui.Button("Confirmez votre choix", width=self.btnCoord.width, height=self.btnCoord.height)
+        b.connect(gui.CLICK, self.action_ConfirmChoice, g, b)
+        self.td(b, align=0, valign=0)       
+      
+ 
+    def action_SelectOption(self, ctl):
+        if(self.isFirst == True):
+            self.displayOption.widget = self.gameEvent.options[ctl.value][1]
+         
+    def action_ConfirmChoice(self, ctl, btn):
+        if(self.isFirst == True):
+            print(ctl.value)
+            print(self.gameEvent.options[ctl.value][2])
+            self.gameEvent.effects = self.gameEvent.options[ctl.value][2]
+            self.displayOption.widget = self.gameEvent.options[ctl.value][3]
+            self.isFirst = False
+            btn.value = "Fermez"
+            btn.resize(width=self.btnCoord.width, height=self.btnCoord.height)
+        else:
+            surf = self.get_toplevel().screen        
+            self.gameEvent.surfRect = self.get_abs_rect()
+            s = surf.subsurface(self.gameEvent.surfRect)  
+            self.gameEvent.surf = s.copy()
+#             disp = pygame.display.get_surface()
+            pygame.event.post(pygame.event.Event(pygame.QUIT))
+            self.close()  
+            closeScreen(self.get_toplevel(), surf, self.gameEvent.surf, self.gameEvent.surfRect)            
+
+    def close(self):
+        if(self.isFirst == False):
+            gui.Dialog.close(self)
+             
+    def open(self, w=None, x=None, y=None):
+        gui.Dialog.open(self)
+        surf = self.get_toplevel().screen 
+        self.gameEvent.surfRect = self.get_abs_rect()
+        s = surf.subsurface(self.gameEvent.surfRect)  
+        self.gameEvent.surf = s.copy()                
+        openScreen(self.get_toplevel(), surf, self.gameEvent.surf, self.gameEvent.surfRect)
+        self.isOpen = True
+
+    def paint(self, surf):
+        gui.Container.paint(self, surf)
+        self.DrawBorder(self.descBoxCoord, surf)
+        self.DrawBorder(self.OptBoxCoord, surf)
+        self.DrawBorder(self.OptIdBoxCoord, surf)  
+        self.DrawBorder(self.cadreCoord, surf)  
+#         r =surf.get_rect() 
+#         self.DrawBorder(r, surf)  
+        if(self.isOpen == True):  
+            pygame.display.update()
+  
+         
+    def DrawBorder(self, r, s):
+#         colorList = [0x000000, 0x778899, 0xd3d3d3, 0xd3d3d3, 0x778899, 0x000000 ] #Black/Grey
+        colorList = [0x87ceeb, 0xadd8e6, 0xafeeee, 0xafeeee, 0xafeeee, 0xadd8e6, 0xadd8e6, 0x87ceeb ] #Blue
+
+        for color in colorList:
+            CustomWidget.DrawRoundRect(s, color, r, 1, 8, 8)            
+            #pygame.draw.rect(s, color, r, 1) 
+            r = pygame.Rect(r.x-1, r.top-1, r.width+2, r.height+2)     
+               
+   
+      
+   

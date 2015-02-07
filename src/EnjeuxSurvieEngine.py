@@ -35,6 +35,7 @@ class EnjeuxSurvieEngine(object):
         self.island = Island.Island(filename)
         self.evtEffect = EventEffectAnalyse.EventImpact(self.island)        
         self.evtGenerator = EventGenerator.GenerateEvents(self.island)
+
         
     # Build reference to all menu
     def CreateAllMenu(self):
