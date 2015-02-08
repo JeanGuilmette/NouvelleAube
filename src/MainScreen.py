@@ -130,7 +130,6 @@ class MainScreen(gui.Desktop):
         dialog = Events.EventsViewer(self.island, evt)
         dialog.open()
         self.update()
-#         pygame.display.flip() 
         done = False
         while not done:
             pygame.time.wait(5)              

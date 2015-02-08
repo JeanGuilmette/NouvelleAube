@@ -136,7 +136,7 @@ class Theme:
 
         if (os.path.splitext(vals[0].lower())[1] in self.image_extensions):
             # This is an image attribute
-            v = pygame.image.load(os.path.join(dname, vals[0]))
+            v = pygame.image.load(os.path.join(dname, vals[0])).convert_alpha()
 
         elif (attr == "color" or attr == "background"):
             # This is a color value
@@ -206,7 +206,7 @@ class Theme:
 
     # Draws a box around the surface in the given style
     def box(self, style, surf):
-        c = (0, 0, 0)
+        c = (0, 0, 0, 128)
         if style.border_color != 0:
             c = style.border_color
         w,h = surf.get_size()
@@ -294,18 +294,18 @@ class Theme:
         def theme_paint(s):
 #             if w.disabled:
 #                 if not hasattr(w,'_disabled_bkgr'):
-#                     w._disabled_bkgr = s.convert()
+#                     w._disabled_bkgr = s.convert_alpha()
 #                 orig = s
-#                 s = w._disabled_bkgr.convert()
+#                 s = w._disabled_bkgr.convert_alpha()
 
 #             if not hasattr(w,'_theme_paint_bkgr'):
-#                 w._theme_paint_bkgr = s.convert()
+#                 w._theme_paint_bkgr = s.convert_alpha()
 #             else:
 #                 s.blit(w._theme_paint_bkgr,(0,0))
 #             
 #             if w.disabled:
 #                 orig = s
-#                 s = w._theme_paint_bkgr.convert()
+#                 s = w._theme_paint_bkgr.convert_alpha()
 
             if w.disabled:
                 if (not (hasattr(w,'_theme_bkgr') and 
@@ -324,7 +324,7 @@ class Theme:
             r = func(surface.subsurface(s,w._rect_content))
             
             if w.disabled:
-                s.set_alpha(128)
+#                 s.set_alpha(128)
                 orig.blit(s,(0,0))
             
             w._painted = True
@@ -432,64 +432,70 @@ class Theme:
         if is_color(box):
             surf.fill(box,r)
             return
-        
+        if(surf.get_rect() == r):
+            surf.set_alpha(128)
+            box.set_alpha(128)
+            box = pygame.transform.smoothscale(box, (r.width, r.height)).convert_alpha()       
+            surf.blit(box, (r.x,r.y))
+            return 
+            
         x,y,w,h=r.x,r.y,r.w,r.h
-
+ 
         if (size and offset):
             pass
 #        destx = x
 #        desty = y
-
+ 
         # Calculate the size of each tile
         tilew, tileh = int(box.get_width()/3), int(box.get_height()/3)
         xx, yy = x+w, y+h
         src = pygame.rect.Rect(0, 0, tilew, tileh)
         dest = pygame.rect.Rect(0, 0, tilew, tileh)
-
+ 
         # Render the interior of the box
         surf.set_clip(pygame.Rect(x+tilew, y+tileh, w-tilew*2, h-tileh*2))
         src.x,src.y = tilew,tileh
         for dest.y in range(y+tileh,yy-tileh,tileh):
             for dest.x in range(x+tilew,xx-tilew,tilew): 
                 surf.blit(box,dest,src)
-
+ 
         # Render the top side of the box
         surf.set_clip(pygame.Rect(x+tilew,y,w-tilew*2,tileh))
         src.x,src.y,dest.y = tilew,0,y
         for dest.x in range(x+tilew, xx-tilew*2+tilew, tilew): 
             surf.blit(box,dest,src)
-        
+         
         # Render the bottom side
         surf.set_clip(pygame.Rect(x+tilew,yy-tileh,w-tilew*2,tileh))
         src.x,src.y,dest.y = tilew,tileh*2,yy-tileh
         for dest.x in range(x+tilew,xx-tilew*2+tilew,tilew): 
             surf.blit(box,dest,src)
-
+ 
         # Render the left side
         surf.set_clip(pygame.Rect(x,y+tileh,xx,h-tileh*2))
         src.y,src.x,dest.x = tileh,0,x
         for dest.y in range(y+tileh,yy-tileh*2+tileh,tileh): 
             surf.blit(box,dest,src)
-
+ 
         # Render the right side
         surf.set_clip(pygame.Rect(xx-tilew,y+tileh,xx,h-tileh*2))
         src.y,src.x,dest.x=tileh,tilew*2,xx-tilew
         for dest.y in range(y+tileh,yy-tileh*2+tileh,tileh): 
             surf.blit(box,dest,src)
-
+ 
         # Render the upper-left corner
         surf.set_clip()
         src.x,src.y,dest.x,dest.y = 0,0,x,y
         surf.blit(box,dest,src)
-        
+         
         # Render the upper-right corner
         src.x,src.y,dest.x,dest.y = tilew*2,0,xx-tilew,y
         surf.blit(box,dest,src)
-        
+         
         # Render the lower-left corner
         src.x,src.y,dest.x,dest.y = 0,tileh*2,x,yy-tileh
         surf.blit(box,dest,src)
-        
+         
         # Render the lower-right corner
         src.x,src.y,dest.x,dest.y = tilew*2,tileh*2,xx-tilew,yy-tileh
         surf.blit(box,dest,src)

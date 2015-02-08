@@ -3,7 +3,7 @@ import EventDef
 
 
 class GenerateEvents(object):
-    def __init__(self):
+    def __init__(self, island):
         pass
     
     def Generate(self):

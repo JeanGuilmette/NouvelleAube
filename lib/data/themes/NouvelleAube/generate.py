@@ -6,7 +6,7 @@ pygame.display.set_mode((80,80),32)
 def prep(name):
     fname = name+".png"
     img = pygame.image.load(fname)
-    w,h = img.get_width()/2,img.get_height()/2
+    w,h = int(img.get_width()/2), int(img.get_height()/2)
     
     out = pygame.Surface((w*3,h*3),SWSURFACE|SRCALPHA,32)
     out.fill((0,0,0,0))

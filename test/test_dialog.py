@@ -19,7 +19,7 @@ if __name__ in '__main__':
 
     pygame.display.set_caption('Enjeux-Survie')        
     pygame.display.set_icon(pygame.image.load("../src/image/pygame.bmp"))
-    disp = pygame.display.set_mode((1027, 768), 0, 32)
+    disp = pygame.display.set_mode((1027, 768), SRCALPHA)
     disp.convert_alpha()
 
     t = gui.Theme(["NouvelleAube"])
@@ -58,22 +58,22 @@ if __name__ in '__main__':
     
     ##The button CLICK event is connected to the dialog.open method.
     secteurA = Island.Island("new")
- 
+  
     dialog = BuildMenu(secteurA)  
     dialog2 = TransferMenu(secteurA)
-
-    dialog3 = Events.EventsViewer3(secteurA, evt_epidemie)
-            
+ 
+    dialog3 = Events.EventsViewer(secteurA, evt_epidemie)
+             
     c.tr() 
     e = gui.Button("Build Management")
     e.connect(gui.CLICK,dialog.open,None)
     c.td(e)
-    
+     
     c.tr()
     e = gui.Button("Transfert")    
     e.connect(gui.CLICK,dialog2.open,None)      
     c.td(e)   
-    
+     
     c.tr()
     e = gui.Button("Events")    
     e.connect(gui.CLICK,dialog3.open,None)      

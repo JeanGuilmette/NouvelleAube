@@ -24,7 +24,7 @@ def parse_color(desc):
         # Because of a bug in pygame 1.8.1 we need to explicitly define the 
         # alpha value otherwise it will default to transparent.
         if (len(desc) == 7):
-            desc += "FF"
+            desc += "80"
     return pygame.Color(desc)
 
 # Determines if the given object is a pygame-compatible color or not
@@ -139,7 +139,7 @@ class Image(widget.Widget):
 
         if (isinstance(value, basestring)):
             # Assume the argument is a path
-            value = pygame.image.load(value)
+            value = pygame.image.load(value).convert_alpha()
             if (not value):
                 raise PguError("Cannot load the image '%s'" % value)
 
