@@ -12,10 +12,13 @@ from Defines import COLORS, FPS
 import sys; sys.path.append("../pgu")
 from pgu import gui
 import Events
+import EventDef
 import EventEffectAnalyse
 import EventGenerator
+import EventAdvancement
 
-        
+
+
 class EnjeuxSurvieEngine(object):
     def __init__(self, disp):
         self.display = disp                        # Main screen  to display the game
@@ -36,7 +39,27 @@ class EnjeuxSurvieEngine(object):
         self.evtEffect = EventEffectAnalyse.EventImpact(self.island)        
         self.evtGenerator = EventGenerator.GenerateEvents(self.island)
 
-        
+        #crime organise
+        EventDef.evt_Aleksei_Vasilev.regions =  EventGenerator.AreaOfEffect(self.island)
+        self.evtMgr.add(EventDef.evt_Aleksei_Vasilev)
+        EventDef.evt_Emergence_du_crime_organise.regions =  EventGenerator.AreaOfEffect(self.island,"all")
+        self.evtMgr.add(EventDef.evt_Emergence_du_crime_organise)
+
+        #Recherche
+        EventDef.evt_EnergieThermovolcanique.regions =  EventGenerator.AreaOfEffect(self.island,"all")
+        self.evtMgr.add(EventDef.evt_EnergieThermovolcanique)
+        EventDef.evt_SchoolAtSleep.regions =  EventGenerator.AreaOfEffect(self.island,"all")
+        self.evtMgr.add(EventDef.evt_SchoolAtSleep)
+        EventDef.evt_STEP3000.regions =  EventGenerator.AreaOfEffect(self.island,"all")
+        self.evtMgr.add(EventDef.evt_STEP3000)
+        EventDef.evt_serumUtopia.regions =  EventGenerator.AreaOfEffect(self.island,"all")
+        self.evtMgr.add(EventDef.evt_serumUtopia)
+
+        #Fin de jeu
+        EventDef.evt_À_la_reconquête_du_monde.regions =  EventGenerator.AreaOfEffect(self.island,"all")
+        self.evtMgr.add(EventDef.evt_À_la_reconquête_du_monde)
+
+
     # Build reference to all menu
     def CreateAllMenu(self):
         self.mainGUI = MainScreen.MainScreen(self.island, self.display)        
@@ -44,7 +67,7 @@ class EnjeuxSurvieEngine(object):
     def DrawWorld(self):
         self.mainGUI.paint()
         pygame.display.update()
-#         pygame.display.flip()        
+       
 
     def ValidPlayerInput(self):
         for event in pygame.event.get():
@@ -53,7 +76,16 @@ class EnjeuxSurvieEngine(object):
                 self.quitFlag = True
             else:
                 self.mainGUI.event(event)
-
+    def Gameadvance(self):
+        if EventAdvancement.BradvaNegociation == True:
+            EventDef.evt_Negociation.regions =  EventGenerator.AreaOfEffect(self.island,"all")
+            self.evtMgr.add(EventDef.evt_Negociation)
+        if EventAdvancement.BradvaWar == True:
+            EventDef.evt_Guerre_contre_la_Bradva.regions =  EventGenerator.AreaOfEffect(self.island,"all")
+            self.evtMgr.add(EventDef.evt_Guerre_contre_la_Bradva)
+        if EventAdvancement.KarmaVesuve == True:
+            EventDef.evt_Éruption_vésuvienne.regions =  EventGenerator.AreaOfEffect(self.island,"all")
+            self.evtMgr.add(EventDef.evt_Éruption_vésuvienne)
     def UpdateWorld(self):
         # Update game time
         if(self.mainGUI.gameTime.Tick() == True):
@@ -73,6 +105,7 @@ class EnjeuxSurvieEngine(object):
             # Histoire principal Event
             moreEvent = True
             while(moreEvent == True):
+                self.Gameadvance()
                 evt = self.evtMgr.pop(self.mainGUI.gameTime.GetDateString())  
                 if(evt == False):
                     moreEvent = False
@@ -80,7 +113,7 @@ class EnjeuxSurvieEngine(object):
                     evt = self.mainGUI.action_event(evt)
                     self.evtEffect.Apply(evt)      
 
-            evt =self.evtGenerator.Generate() 
+            evt =self.evtGenerator.Generate()
             if(evt != False):
                 self.evtMgr.add(evt)     
 

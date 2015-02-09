@@ -432,12 +432,12 @@ class Theme:
         if is_color(box):
             surf.fill(box,r)
             return
-        if(surf.get_rect() == r):
-            surf.set_alpha(128)
-            box.set_alpha(128)
-            box = pygame.transform.smoothscale(box, (r.width, r.height)).convert_alpha()       
-            surf.blit(box, (r.x,r.y))
-            return 
+#         if(surf.get_rect() == r):
+#             surf.set_alpha(128)
+#             box.set_alpha(128)
+#             box = pygame.transform.smoothscale(box, (r.width, r.height)).convert_alpha()       
+#             surf.blit(box, (r.x,r.y))
+#             return 
             
         x,y,w,h=r.x,r.y,r.w,r.h
  

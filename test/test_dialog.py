@@ -19,7 +19,7 @@ if __name__ in '__main__':
 
     pygame.display.set_caption('Enjeux-Survie')        
     pygame.display.set_icon(pygame.image.load("../src/image/pygame.bmp"))
-    disp = pygame.display.set_mode((1027, 768), SRCALPHA)
+    disp = pygame.display.set_mode((1027, 768))
     disp.convert_alpha()
 
     t = gui.Theme(["NouvelleAube"])
