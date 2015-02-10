@@ -6,15 +6,15 @@ buildingDef = dict( \
     Mine  =  dict(resType = "Metaux", imgName = "image/building_image/mine.png", workerMax = 100, secteur = "primaire", space = 2, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
     Scierie = dict(resType = "Bois", imgName = "image/building_image/usine_de_transformation_du_bois.png", workerMax = 20, secteur = "primaire", space = 5, buildcost = dict( Bois = 0, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
 
-    Forage_petrolier = dict(resType = "Petrole", imgName = "image/building_image/Station de forage.png", workerMax = 3000, secteur = "primaire", space = 1, buildcost = dict( Bois = 0, Minerais = 800), buildTime = 5, entretient = 0.1, prerequis = "gisement" ),
-    camp_de_chasse  =  dict(resType = "Chasse", imgName = "image/building_image/camp de chasse.png", workerMax = 600, secteur = "primaire", space = 1, buildcost = dict( Bois = 345, Minerais = 60), buildTime = 5, entretient = 0.05, prerequis = "" ),
+    Forage_petrolier = dict(resType = "Petrole", imgName = "image/building_image/Station_de_forage.png", workerMax = 3000, secteur = "primaire", space = 1, buildcost = dict( Bois = 0, Minerais = 800), buildTime = 5, entretient = 0.1, prerequis = "gisement" ),
+    camp_de_chasse  =  dict(resType = "Chasse", imgName = "image/building_image/camp_de_chasse.png", workerMax = 600, secteur = "primaire", space = 1, buildcost = dict( Bois = 345, Minerais = 60), buildTime = 5, entretient = 0.05, prerequis = "" ),
     port = dict(resType = "Peche", imgName = "image/building_image/port.png", workerMax = 1500, secteur = "primaire", space = 1, buildcost = dict( Bois = 300, Minerais = 300), buildTime = 5, entretient = 0.15, prerequis = "" ),
-    Zone_residentielle_importante= dict(resType = "population max", imgName = "image/building_image/quartier residentielle.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 500, Minerais = 500), buildTime = 5, entretient = 0.2, prerequis = "" ),
+    Zone_residentielle_importante= dict(resType = "population max", imgName = "image/building_image/quartier_residentielle.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 500, Minerais = 500), buildTime = 5, entretient = 0.2, prerequis = "" ),
     Ecole  =  dict(resType = "Travailleurs", imgName = "image/building_image/ecole.png", workerMax = 400, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 800, Minerais = 500), buildTime = 5, entretient = 0.1, prerequis = "" ),
     Stade = dict(resType = "Bonheur", imgName = "image/building_image/stade.png", workerMax = 1700, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 100, Minerais = 2000), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Centrale_de_surveillance = dict(resType = "Panique", imgName = "image/building_image/centre de recherche.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 300, Minerais = 2000), buildTime = 5, entretient = 0.4, prerequis = "" ),
+    Centrale_de_surveillance = dict(resType = "Panique", imgName = "image/building_image/centre_de_recherche.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 300, Minerais = 2000), buildTime = 5, entretient = 0.4, prerequis = "" ),
     Prison  =  dict(resType = "Criminalite", imgName = "image/building_image/prison.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 600, Minerais = 800), buildTime = 5, entretient = 0.2, prerequis = "" ),
-    Bureaux_journalistiques = dict(resType = "Influence", imgName = "image/building_image/centre journalistique.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 700, Minerais = 400), buildTime = 5, entretient = 0.15, prerequis = "" ),
+    Bureaux_journalistiques = dict(resType = "Influence", imgName = "image/building_image/centre_journalistique.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 700, Minerais = 400), buildTime = 5, entretient = 0.15, prerequis = "" ),
     Parc= dict(resType = "Pollution", imgName = "image/building_image/parc.png", workerMax = 200, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 1200, Minerais = 200), buildTime = 5, entretient = 0.05, prerequis = "" ),
     Hopital  =  dict(resType = "Sante", imgName = "image/building_image/hopital.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 500, Minerais = 500), buildTime = 5, entretient = 0.2, prerequis = "" ),
 
@@ -23,12 +23,32 @@ buildingDef = dict( \
     Centre_de_logistique_aeroportee  =  dict(resType = "Tranport", imgName = "image/building_image/aeroport.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 1000, Minerais = 2300), buildTime = 5, entretient = 0.35, prerequis = "centre_de_logistique_routière" )
     )
 
+buildingDesc = dict( \
+    Ferme = "Ferme est pour",
+    Mine  =  "Mine est pour",
+    Scierie = "Scierie",
+    Forage_petrolier = "Forage pétrolier",
+    camp_de_chasse  =  "Camp de chasse",
+    port = "Port" ,
+    Zone_residentielle_importante = "Zone residentielle",
+    Ecole  = "Ecole",
+    Stade = "Stade",
+    Centrale_de_surveillance = "Centrale de surveillance",
+    Prison  =  "Prison",
+    Bureaux_journalistiques = "Bureau journalistique" ,
+    Parc=  "Parc" ,
+    Hopital  =  "Hopital",
+    Entrepot = "Entrepot",
+    Centre_de_logistique_routiere = "Centre logistique routière",
+    Centre_de_logistique_aeroportee  = "Centre de logistique aeroporte"
+    )
+
 class Batiment(object):
-    def __init__(self, name, pos):
+    def __init__(self, name):
         self.name = name                                 # Name to identify building
         self.image = buildingDef[name]["imgName"]        # Filename of image to represent building on map (on zoom information?)
         self.resType = buildingDef[name]["resType"]      # 
-        self.position = pos                              # Position of building on map (zone)
+        self.position = []                              # Position of building on map (zone)
         self.numberBuilding = 0                          # Number of building constructed in zone
         self.worker = 0                                  # Current number of worker affected to building
         self.workerMax = buildingDef[name]["workerMax"]  # Maximum number of worker that could work in this building
@@ -60,11 +80,13 @@ class Batiment(object):
         
     def Add(self, pos):
         self.numberBuilding = self.numberBuilding + 1 
+        self.position.append(pos)
         
     def Remove(self):
         self.numberBuilding = self.numberBuilding - 1
         self.numberBuilding = self.numberBuilding if (self.numberBuilding >= 0) else 0    
-        self.AssignWorker(0)    
+        self.AssignWorker(0)  
+        self.position.pop()  
         
     def AddWorker(self):
         val = self.worker + 1

@@ -1,5 +1,5 @@
-from time import sleep
-from pygame.tests import surflock_test
+# from time import sleep
+# from pygame.tests import surflock_test
 __author__ = 'SJS'
 
 import pygame
@@ -8,7 +8,8 @@ import CustomWidget
 import Island
 import Resources
 
-import sys; sys.path.append("../lib")
+
+import sys; sys.path.append("../lib"); sys.path.append("../src")
 from pgu import gui
 
 ##########################################################
@@ -131,20 +132,26 @@ class BuildMenu(gui.Dialog):
         title = gui.Label("Building management")
         self.island = island
         self.ActiveZone = gui.Select(value=Island.LANDING_REGION_NAME , width=160, height=20)
-        t = gui.Table()
-        self.value = gui.Form()
         
-        t.tr()
+        t1 = gui.Table()
+        
+        self.value = gui.Form()
+        t1.tr()
         for item in sorted(Island.secteurDef):
             if(item != Island.OVERVIEW_ZONE_NAME):
                 self.ActiveZone.add(item, item)
-        t.td(self.ActiveZone)
-       
+        t1.td(self.ActiveZone, align=-1)
+        
+        t1.tr()
+        buildingName = gui.Select(value="Ferme" , width=160, height=20)
+        t = gui.Table()   
         t.tr()
         t.td(gui.Label("Building: "))
         t.td(gui.Label("Current"))
         for item in sorted(Building.buildingDef):
+            buildingName.add(item, item)
             t.tr()
+            l = gui.Label(item)
             t.td(gui.Label(item), align = 1)
             t.td(BuildingLabel(self.island, self.ActiveZone, item))
             b = gui.Button("Add")
@@ -160,10 +167,29 @@ class BuildMenu(gui.Dialog):
             e.connect(gui.CHANGE,self.adjustWorker,e, item) 
             t.td(e)
 
-        gui.Dialog.__init__(self,title,t, background=( 255, 255, 255))
+        t1.td(t)
+        t2 = gui.Table()
+        t2.tr()
+        t2.td(buildingName)
+        buildingName.connect(gui.CHANGE, self.actionBuildingDesc, buildingName)
+        
+        t2.tr()
+        doc =  CreateDescription("Ferme", 400)
+        self.displayDesc = gui.ScrollArea(doc, 400, 300, hscrollbar=False,  vscrollbar=True)
+        t2.td(self.displayDesc)
+        
+        t1.td(t2)
+                
+#         s = pygame.image.load("image/Nouvelle_Aube.jpg")
+#         gui.Dialog.__init__(self,title,t, background=gui.Image(s))
+        gui.Dialog.__init__(self,title, t1)        
+        
+    def actionBuildingDesc(self, ctl):
+        self.displayDesc.widget = CreateDescription(ctl.value, 400)
+        
         
     def action_addBuilding(self, Value):
-        self.island.secteur[self.ActiveZone.value].AddBuilding(Value, (10,340))
+        self.island.secteur[self.ActiveZone.value].AddBuilding(Value)
         
     def action_deleteBuilding(self, Value):
         self.island.secteur[self.ActiveZone.value].RemoveBuilding(Value)
@@ -250,4 +276,19 @@ class TransferMenu(gui.Dialog):
             zoneCtl.value =  zoneCtl.values[i].value 
         for w in self.widgetList:
             w.Refresh()
- 
+
+
+#///////////////////////////////////////////////////////////////////////////////////////////
+#///
+#/// 
+def CreateDescription(buildingName, width, align=-1, fontName=None, fontSize=30):
+    font = pygame.font.SysFont(fontName, fontSize)        
+    space = font.size(" ")      
+    text =Building.buildingDesc[buildingName]
+    doc = gui.Document(width=width) 
+    doc.block(align=align)
+    doc.add(gui.Image(Building.buildingDef[buildingName]["imgName"]),align=1)    
+    for word in text.split(" "): 
+        doc.add(gui.Label(word))
+        doc.space(space)
+    return doc

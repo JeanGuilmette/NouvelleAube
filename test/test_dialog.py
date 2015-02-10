@@ -12,7 +12,7 @@ import Zone
 import Island
 import Events
 import pygame
- 
+pygame.init()
   
 ##########################################################    
 if __name__ in '__main__':

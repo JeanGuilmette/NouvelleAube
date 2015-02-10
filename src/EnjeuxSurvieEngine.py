@@ -103,7 +103,7 @@ class EnjeuxSurvieEngine(object):
             # Verify if construction is completed
             # New decovery completed
             # Histoire principal Event
-            moreEvent = True
+            moreEvent = False
             while(moreEvent == True):
                 self.Gameadvance()
                 evt = self.evtMgr.pop(self.mainGUI.gameTime.GetDateString())  

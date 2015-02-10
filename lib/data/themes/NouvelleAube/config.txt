@@ -180,10 +180,10 @@ select.arrow:down background select.arrow.down.tga
 select.arrow padding_left 1
 select.arrow padding_right 1
 
-#select.options background select.options.png
-#select.option background select.option.normal.png
-#select.option:hover background select.option.hover.png
-#select.option:down background select.option.hover.png
+select.options background select.options.png
+select.option background select.option.normal.png
+select.option:hover background select.option.hover.png
+select.option:down background select.option.hover.png
 select.option padding_left 4
 select.option padding_right 4
 select.option padding_top 1

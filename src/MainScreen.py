@@ -113,6 +113,7 @@ class MainScreen(gui.Desktop):
 
     def action_quit(self, value):
         self.quit()
+        pygame.event.post(pygame.event.Event(pygame.QUIT))       
 
     def action_building(self, value):
         d = BuildMenu.BuildMenu(self.island)            

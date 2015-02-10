@@ -276,9 +276,14 @@ class EventsReport(gui.Table):
         c.add(d, self.OptCoord.x, self.OptCoord.y)
  
         # Effect
-        c.add(gui.Label("Les effets de votre désicion: %s" % self.gameEvent.effects), self.effectCoord.x, self.effectCoord.y)
-        for i in range(1,3):
-            c.add(gui.Label("   "), self.effectCoord.x, self.effectCoord.y + (i*self.label_height))      
+#         c.add(gui.Label("Les effets de votre désicion: %s" % self.gameEvent.options[self.choice][3]), self.effectCoord.x, self.effectCoord.y)
+        doc = CreateDescription(self.gameEvent.options[self.choice][3], 600, align=-1)        
+        d = gui.ScrollArea(doc, self.effectCoord.width, self.effectCoord.height, hscrollbar=False,  vscrollbar=True)
+        c.add(d, self.effectCoord.x, self.effectCoord.y)
+        
+#         for i in range(1,3):
+#             c.add(gui.Label("   "), self.effectCoord.x, self.effectCoord.y + (i*self.label_height))    
+              
              
         self.tr()
         self.td(c,cls=self.cls+".main")   

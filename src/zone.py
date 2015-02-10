@@ -13,9 +13,9 @@ class Secteur():
     __size = ""
     __espace_entreposage = ""
 
-    def __init__(self, name, terrain, resList, map):
+    def __init__(self, name, terrain, resList, map, posList):
         self.name = name               # Name of the zone
-        self.spaceMax = 50             # Maximum available space on the zone
+        self.spaceList = posList       # Maximum available space on the zone
         self.currentSpace = 0          # Currently used space of the zone
         self.resources = dict()        # Available resource in the zone
         self.batiments = dict()        # List of building in the zone
@@ -26,15 +26,14 @@ class Secteur():
         self.ConstructResourcesList(resList)
         
         for buildingType in Building.buildingDef:
-            pos = (0,0)
-            self.batiments[buildingType] = Building.Batiment(buildingType, pos)    
+            self.batiments[buildingType] = Building.Batiment(buildingType)    
 
     def ConstructResourcesList(self, resList):
         for resName in resList:
             self.resources[resName] = Resources.Resource(resName)
 
-    def AddBuilding(self, buildingType, pos):
-        #Check if resources are availble
+    def AddBuilding(self, buildingType):
+        #Check if resources are available
         for resNeeded in self.batiments[buildingType].buildCost:
             if(self.resources[resNeeded].stock >= self.batiments[buildingType].buildCost[resNeeded]):
                 pass
@@ -43,22 +42,21 @@ class Secteur():
                 return "No ressource"
             
         # Check space avaialble
-        if( (self.currentSpace + self.batiments[buildingType].space) > self.spaceMax):
-            print("Not enough space needed: %d used: %d  max: %d" % (self.batiments[buildingType].space, self.currentSpace, self.spaceMax) )
+        if( self.currentSpace >= len(self.spaceList)):
+            print("Not enough space used: %d  max: %d" % ( self.currentSpace, len(self.spaceList) ))
             return "No space"
+               
+        #Add new building        
+        self.batiments[buildingType].Add(self.spaceList[self.currentSpace])
         
         #Remove resources and use space
         for resNeeded in self.batiments[buildingType].buildCost:
             self.resources[resNeeded].stock -= self.batiments[buildingType].buildCost[resNeeded]
-            
-        self.currentSpace += self.batiments[buildingType].space  
-        
-        #Add new building        
-        self.batiments[buildingType].Add(pos)
+        self.currentSpace += 1       
 
     def RemoveBuilding(self, buildingType):
         self.batiments[buildingType].Remove()
-        self.currentSpace -= self.batiments[buildingType].space
+        self.currentSpace -= 1
         
     def AddWorker(self, building):
         if(self.population.ActivateWorker() == True):
@@ -71,18 +69,12 @@ class Secteur():
     def draw(self):
         surface =  pygame.image.load(self.map)
         # Create building
-        size = 50
-        posX = 50
-        posY = 50
+        size = 100
         for building in self.batiments:
+            imgBuild = pygame.image.load(self.batiments[building].image)
+            scale1 = pygame.transform.scale(imgBuild, (size, size))  
             for index in range (0, self.batiments[building].numberBuilding):
-                imgBuild = pygame.image.load(self.batiments[building].image)
-                scale1 = pygame.transform.scale(imgBuild, (size, size))                
-                surface.blit(scale1, (posX, posY))
-                posX += size #imgBuild.get_rect().width
-                if(posX > surface.get_rect().width -50):
-                    posY += size
-                    posX = 50
+                surface.blit(scale1, self.batiments[building].position[index] )
         return surface
 
     def GetCurrentPopulation(self):

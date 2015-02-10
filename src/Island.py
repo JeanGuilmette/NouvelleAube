@@ -20,6 +20,22 @@ secteurDef = dict(
     RegionL = dict(terType = "EauxSalees", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole" ), image = "image/map/Man'ana'toura_peninsule_Nord.png" ),
     )
 
+secteurSpaceDef = dict(
+    Region  = [],                       
+    RegionA = [(100,100), (200,200) ],
+    RegionB = [(100,100), (200,200) ],
+    RegionC = [(100,100), (200,200) ],
+    RegionD = [(100,100), (200,200) ],
+    RegionE = [(100,100), (200,200) ],
+    RegionF = [(100,100), (200,200) ],
+    RegionG = [(100,100), (200,200) ],
+    RegionH = [(100,100), (200,200) ],
+    RegionI = [(100,100), (200,200) ],
+    RegionJ = [(100,100), (200,200) ],
+    RegionK = [(100,100), (200,200) ],
+    RegionL = [(100,100), (200,200) ],
+    )
+
 class Island(object):
     def __init__(self, filename):
         self.secteur = dict()
@@ -36,7 +52,7 @@ class Island(object):
     # Create new game with inital value
     def __create(self):
         for sectorName in sorted(secteurDef):
-            self.secteur[sectorName] = Zone.Secteur(sectorName, secteurDef[sectorName]["terType"], secteurDef[sectorName]["resList"], secteurDef[sectorName]["image"])
+            self.secteur[sectorName] = Zone.Secteur(sectorName, secteurDef[sectorName]["terType"], secteurDef[sectorName]["resList"], secteurDef[sectorName]["image"], secteurSpaceDef[sectorName])
         self.secteur[LANDING_REGION_NAME].Initialize()
         self.__activeZone = OVERVIEW_ZONE_NAME
 
@@ -256,8 +272,8 @@ class Island(object):
             stock, available, stockMax = self.secteur[zoneName].GetRessourceInfo(resName)
         return  stock, available, stockMax 
 
-    def AddBuilding(self, zoneName, buildingName, pos):
-        self.secteur[zoneName].AddBuilding(buildingName, pos)
+    def AddBuilding(self, zoneName, buildingName):
+        self.secteur[zoneName].AddBuilding(buildingName)
         
     def UpdateProd(self):
         for zone in self.secteur:
