@@ -14,34 +14,44 @@ class GenerateEvents(object):
     
     def Generate(self):
         # qui arrive si l'une des varibles est inférieure ou supérieure à:
-        TheList = ["RegionA","RegionB","RegionC", "RegionD","RegionE","RegionF","RegionG", "RegionH","RegionI","RegionJ","RegionK", "RegionL"]
-        for secteur in TheList:
+        for secteur in EventAdvancement.TheListAgriculture:
+
             i,b,c=self.Island.GetRessourceInfo("Agriculture", secteur)
             if (b==0):
                 EventDef.evt_Guerre_contre_la_Bradva.regions = [secteur]
+                EventAdvancement.TheListAgriculture.remove(secteur)
                 return EventDef.evt_Guerre_contre_la_Bradva
 
-        for secteur in TheList:
+        for secteur in EventAdvancement.TheListPetrole:
             i,b,c=self.Island.GetRessourceInfo("Petrole", secteur)
             if(b)==0:
                 EventDef.evt_Épuisement_du_pétrole.regions = [secteur]
+                EventAdvancement.TheListPetrole.remove(secteur)
                 return EventDef.evt_Épuisement_du_pétrole
-        for secteur in TheList:
+        for secteur in EventAdvancement.TheListChasse:
             i,b,c=self.Island.GetRessourceInfo("Chasse", secteur)
             if(b)==0:
                 EventDef.evt_Épuisement_du_gibier.regions = [secteur]
+                EventAdvancement.TheListChasse.remove(secteur)
                 return EventDef.evt_Épuisement_du_gibier
-        for secteur in TheList:
+        for secteur in EventAdvancement.TheListBois:
             i,b,c=self.Island.GetRessourceInfo("Bois", secteur)
             if(b)==0:
                 EventDef.evt_Déforestation_totale.regions = [secteur]
+                EventAdvancement.TheListBois.remove(secteur)
                 return EventDef.evt_Déforestation_totale
-        for secteur in TheList:
+        for secteur in EventAdvancement.TheListPeche:
             i,b,c=self.Island.GetRessourceInfo("Peche", secteur)
             if(b)==0:
                 EventDef.evt_Épuisement_de_la_faune_aquatique.regions = [secteur]
+                EventAdvancement.TheListPeche.remove(secteur)
                 return EventDef.evt_Épuisement_de_la_faune_aquatique
-
+        for secteur in EventAdvancement.TheListMinerais:
+            i,b,c=self.Island.GetRessourceInfo("Minerais", secteur)
+            if(b)==0:
+                EventDef.evt_Épuisement_des_minerais.regions = [secteur]
+                EventAdvancement.TheListMinerais.remove(secteur)
+                return EventDef.evt_Épuisement_des_minerais
         # for secteur in TheList:
         #     if(self.Island.GetCurrentPopulation(secteur)==self.Island.GetPopulationMax(secteur)):
         #         EventDef.evt_Surpopulation.regions = [secteur]
@@ -65,7 +75,7 @@ class GenerateEvents(object):
 
         # Events au hasard
         a = random.random()
-        if (a< 0.2):
+        if (a< 0):
 
 
 
@@ -96,7 +106,7 @@ class GenerateEvents(object):
 
 
 
-
+            TheList = ["RegionA","RegionB","RegionC", "RegionD","RegionE","RegionF","RegionG", "RegionH","RegionI","RegionJ","RegionK", "RegionL"]
 
             if True == True:
                 if EventAdvancement.wait != True:

@@ -4,11 +4,12 @@ import random
 import conda
 import pygame
 import math
+import EventAdvancement
 from Defines import COLORS
 from pygame.locals import *
 
 def FacteurHasard():
-    pourcentage = random.randrange (100)
+    pourcentage = random.randrange (1,100)
     return pourcentage
 
 # def StoryTelling():
@@ -36,7 +37,8 @@ StoryMode=True
 AFFICHERTEXTe = ("Page d'intoduction")
 TEXTEPOURLESCHOIX = ((""), (""))
 CHANGEMENTDUAUCHOIX = ("")
-
+Base_Sociale = Story.RapportElements()
+Ressources_depart = Story.StoryEffects()
 #while StoryMode == True:
  #   texte = AFFICHERTEXTe
   #  menuitem = TEXTEPOURLESCHOIX
@@ -47,8 +49,8 @@ CHANGEMENTDUAUCHOIX = ("")
 class StoryTelling():
     choicetaken = 0
     path = ""
-    Base_Sociale = Story.RapportElements()
-    Ressources_depart = Story.StoryEffects()
+
+
     def __init__(self, display):
         # self.epidemie(display)
          #self.Famine(display)
@@ -74,24 +76,24 @@ class StoryTelling():
                 self.add("Influence", 0, 20)
                 self.add("Bonheur", 0, 15)
                 self.add("Criminalite", 10, 0)
-                self.Base_Sociale.mensonge +=1
+                Base_Sociale.mensonge +=1
                 #Story.RapportElements.value1=
             # DISTRIBUTION NOURRITURE SELON LES BESIONS
             elif self.choicetaken == "2":
                 self.add("Sante", 0, 5)
                 self.add( "Bonheur", 0, 20 )
-                self.Base_Sociale.pragmatisme +=1
+                Base_Sociale.pragmatisme +=1
             # SERRONS-NOUS LA CEINTURE TOUS ENSEMBLE
             elif self.choicetaken =="3":
                 self.add("Sante", 0, 25)
-                self.Base_Sociale.solidarite +=1
+                Base_Sociale.solidarite +=1
             #JETER LE SURPLUS PAR DESSUS BORD
             elif self.choicetaken == "4":
                 Story.StoryEffects.Effects ["Population"] = Story.StoryEffects.Effects ["Nourriture"] /10
                 self.add("Influence", 0, 20)
                 self.add("Bonheur", 0, 35)
                 self.add("Criminalite", 15, 0)
-                self.Base_Sociale.cruaute +=1
+                Base_Sociale.cruaute +=1
 #       VERIFIER SI LA UNE EPIDEMIE SE PROPAGE AU D/BUT DU VOYAGE
 
         if self.verifyepidemie() == True:
@@ -100,12 +102,12 @@ class StoryTelling():
             if self.choicetaken == "1":
                 self.add( "Bonheur", 0, 5 )
                 self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/15))
-                self.Base_Sociale.pragmatisme +=1
+                Base_Sociale.pragmatisme +=1
             # AIDE AUX MALADES
             elif self.choicetaken == "2":
                 self.add("Sante", 0, 10)
                 self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/30))
-                self.Base_Sociale.solidarite +=1
+                Base_Sociale.solidarite +=1
             #GUARDER LE SECRET
             elif self.choicetaken =="3":
                 self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/10))
@@ -113,20 +115,20 @@ class StoryTelling():
                 self.add("Influence", 0, 20)
                 self.add("Bonheur", 0, 15)
                 self.add("Criminalite", 10, 0)
-                self.Base_Sociale.mensonge +=1
+                Base_Sociale.mensonge +=1
                 #JETER LES MALADES PAR DESSUS BORD
             elif self.choicetaken == "4":
                 self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/100))
                 self.add("Influence", 0, 20)
                 self.add("Bonheur", 0, 35)
                 self.add("Criminalite", 15, 0)
-                self.Base_Sociale.cruaute +=1
+                Base_Sociale.cruaute +=1
 #       LE PORTE-AVIONS EST EN VUE
         self.PorteAvions(display)
         # CHOIX 1 = NE PAS S'APPROCHER ET PASSE DIRECTEMENT A MAM'ANA'TOURA
         #ALLER A LA RENCONTRE DU PORTE-AVIONS
         if self.choicetaken == "1":
-            self.Base_Sociale.surete +=1
+            Base_Sociale.surete +=1
         if self.choicetaken == "2":
             self.Rencontre(display)
             #SI LE PORTE-AVIONS EST VIDE
@@ -138,12 +140,12 @@ class StoryTelling():
                         if self.choicetaken == "1":
                             self.add( "Bonheur", 0, 5 )
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/15))
-                            self.Base_Sociale.pragmatisme +=1
+                            Base_Sociale.pragmatisme +=1
                         # AIDE AUX MALADES
                         elif self.choicetaken == "2":
                             self.add("Sante", 0, 10)
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/30))
-                            self.Base_Sociale.solidarite +=1
+                            Base_Sociale.solidarite +=1
                         # GUARDER LE SECRET
                         elif self.choicetaken =="3":
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/10))
@@ -151,18 +153,18 @@ class StoryTelling():
                             self.add("Influence", 0, 20)
                             self.add("Bonheur", 0, 15)
                             self.add("Criminalite", 10, 0)
-                            self.Base_Sociale.mensonge +=1
+                            Base_Sociale.mensonge +=1
                         #JETER PAR DESSU BORD
                         elif self.choicetaken == "4":
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/100))
                             self.add("Influence", 0, 20)
                             self.add("Bonheur", 0, 35)
                             self.add("Criminalite", 15, 0)
-                            self.Base_Sociale.cruaute +=1
+                            Base_Sociale.cruaute +=1
 
 #               #PRENDRE LES RESSOURCES DU BATEAU AVEC VOUS, CHANCES DE CONTAGION
                 if self.choicetaken == "2":
-                    self.Base_Sociale.pragmatisme +=1
+                    Base_Sociale.pragmatisme +=1
                     self.add("Petrole", 700, 0)
                     self.add("Influence", 0, 5)
                     self.add("Bonheur", 20, 0)
@@ -176,12 +178,12 @@ class StoryTelling():
                         if self.choicetaken == "1":
                             self.add( "Bonheur", 0, 5 )
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/15))
-                            self.Base_Sociale.pragmatisme +=1
+                            Base_Sociale.pragmatisme +=1
                         #AIDES AUX MALADES
                         elif self.choicetaken == "2":
                             self.add("Sante", 0, 10)
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/30))
-                            self.Base_Sociale.solidarite +=1
+                            Base_Sociale.solidarite +=1
                         #NE RIEN DIRE
                         elif self.choicetaken =="3":
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/10))
@@ -189,14 +191,14 @@ class StoryTelling():
                             self.add("Influence", 0, 20)
                             self.add("Bonheur", 0, 15)
                             self.add("Criminalite", 10, 0)
-                            self.Base_Sociale.mensonge +=1
+                            Base_Sociale.mensonge +=1
                         #JETER PAR DESSU BORD
                         elif self.choicetaken == "4":
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/100))
                             self.add("Influence", 0, 20)
                             self.add("Bonheur", 0, 35)
                             self.add("Criminalite", 15, 0)
-                            self.Base_Sociale.cruaute +=1
+                            Base_Sociale.cruaute +=1
 
 #           SI LE BATEAU EST ENCORE HABITE
             else:
@@ -208,12 +210,12 @@ class StoryTelling():
                     if self.choicetaken == "1":
                         self.add( "Bonheur", 0, 5 )
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/15))
-                        self.Base_Sociale.pragmatisme +=1
+                        Base_Sociale.pragmatisme +=1
                     #AIDES AUX MALADES
                     elif self.choicetaken == "2":
                         self.add("Sante", 0, 10)
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/30))
-                        self.Base_Sociale.solidarite +=1
+                        Base_Sociale.solidarite +=1
                     #NE RIEN DIRE
                     elif self.choicetaken =="3":
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/10))
@@ -221,18 +223,18 @@ class StoryTelling():
                         self.add("Influence", 0, 20)
                         self.add("Bonheur", 0, 15)
                         self.add("Criminalite", 10, 0)
-                        self.Base_Sociale.mensonge +=1
+                        Base_Sociale.mensonge +=1
                     #JETER PAR DESSU BORD
                     elif self.choicetaken == "4":
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/100))
                         self.add("Influence", 0, 20)
                         self.add("Bonheur", 0, 35)
                         self.add("Criminalite", 15, 0)
-                        self.Base_Sociale.cruaute +=1
+                        Base_Sociale.cruaute +=1
 
 #               LEUR PROPOSER DE VENIR AVEC VOUS
                 if self.choicetaken=="2":
-                    self.Base_Sociale.solidarite +=1
+                    Base_Sociale.solidarite +=1
                     self.add("Petrole", 700, 0)
                     self.add("Influence", 0, 5)
                     self.add("Bonheur", 20, 0)
@@ -246,12 +248,12 @@ class StoryTelling():
                         if self.choicetaken == "1":
                             self.add( "Bonheur", 0, 5 )
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/15))
-                            self.Base_Sociale.pragmatisme +=1
+                            Base_Sociale.pragmatisme +=1
                         #AIDES AUX MALADES
                         elif self.choicetaken == "2":
                             self.add("Sante", 0, 10)
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/30))
-                            self.Base_Sociale.solidarite +=1
+                            Base_Sociale.solidarite +=1
                         #NE RIEN DIRE
                         elif self.choicetaken =="3":
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/10))
@@ -259,28 +261,28 @@ class StoryTelling():
                             self.add("Influence", 0, 20)
                             self.add("Bonheur", 0, 15)
                             self.add("Criminalite", 10, 0)
-                            self.Base_Sociale.mensonge +=1
+                            Base_Sociale.mensonge +=1
                         #JETER PAR DESSU BORD
                         elif self.choicetaken == "4":
                             self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/100))
                             self.add("Influence", 0, 20)
                             self.add("Bonheur", 0, 35)
                             self.add("Criminalite", 15, 0)
-                            self.Base_Sociale.cruaute +=1
+                            Base_Sociale.cruaute +=1
 
 #               DECIDER DE LES PREVENIR QUE LE CANADA N'EST PLUS UNE BONNE DESTINATION MAIS S'EN QU'ILS VIENNENT AVEC LE JOUEUR
                 if self.choicetaken=="3" and  self.verifyepidemie(15)==True:
-                    self.Base_Sociale.surete +=1
+                    Base_Sociale.surete +=1
                     self.Recontagion(display)
                     if self.choicetaken == "1":
                         self.add( "Bonheur", 0, 5 )
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/15))
-                        self.Base_Sociale.pragmatisme +=1
+                        Base_Sociale.pragmatisme +=1
                     #AIDES AUX MALADES
                     elif self.choicetaken == "2":
                         self.add("Sante", 0, 10)
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/30))
-                        self.Base_Sociale.solidarite +=1
+                        Base_Sociale.solidarite +=1
                     #NE RIEN DIRE
                     elif self.choicetaken =="3":
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/10))
@@ -288,29 +290,29 @@ class StoryTelling():
                         self.add("Influence", 0, 20)
                         self.add("Bonheur", 0, 15)
                         self.add("Criminalite", 10, 0)
-                        self.Base_Sociale.mensonge +=1
+                        Base_Sociale.mensonge +=1
                     #JETER PAR DESSU BORD
                     elif self.choicetaken == "4":
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/100))
                         self.add("Influence", 0, 20)
                         self.add("Bonheur", 0, 35)
                         self.add("Criminalite", 15, 0)
-                        self.Base_Sociale.cruaute +=1
+                        Base_Sociale.cruaute +=1
 
 #               LES LAISSER ALLER AU CANADA... CONTAGION, EN VENGEANCE/KARMA
                 if self.choicetaken=="4":
-                    self.Base_Sociale.cruaute +=4
-                    self.Base_Sociale.mensonge +=2
+                    Base_Sociale.cruaute +=4
+                    Base_Sociale.mensonge +=2
                     self.Recontagion(display)
                     if self.choicetaken == "1":
                         self.add( "Bonheur", 0, 5 )
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/15))
-                        self.Base_Sociale.pragmatisme +=1
+                        Base_Sociale.pragmatisme +=1
                     #AIDES AUX MALADES
                     elif self.choicetaken == "2":
                         self.add("Sante", 0, 10)
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/30))
-                        self.Base_Sociale.solidarite +=1
+                        Base_Sociale.solidarite +=1
                     #NE RIEN DIRE
                     elif self.choicetaken =="3":
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/10))
@@ -318,14 +320,14 @@ class StoryTelling():
                         self.add("Influence", 0, 20)
                         self.add("Bonheur", 0, 15)
                         self.add("Criminalite", 10, 0)
-                        self.Base_Sociale.mensonge +=1
+                        Base_Sociale.mensonge +=1
                     #JETER PAR DESSU BORD
                     elif self.choicetaken == "4":
                         self.add("Population", 0, (Story.StoryEffects.Effects ["Population"]/100))
                         self.add("Influence", 0, 20)
                         self.add("Bonheur", 0, 35)
                         self.add("Criminalite", 15, 0)
-                        self.Base_Sociale.cruaute +=3
+                        Base_Sociale.cruaute +=3
 
 
 
@@ -341,7 +343,7 @@ class StoryTelling():
 
 
     def add(self, variableamodifier, modificateurPOSITIF, modificateurNEGATIF):
-        self.Ressources_depart.Effects [variableamodifier] = Story.StoryEffects.Effects [variableamodifier] + modificateurPOSITIF - modificateurNEGATIF
+        Ressources_depart.Effects [variableamodifier] = Story.StoryEffects.Effects [variableamodifier] + modificateurPOSITIF - modificateurNEGATIF
 
     def Backround(self, displ):
         backround = pygame.image.load("image/Nouvelle_Aube.jpg").convert()
@@ -548,71 +550,71 @@ class StoryTelling():
         whatAction(displ,[680,670], 'clic')
 
     def epidemie(self,displ):
-        if self.Base_Sociale.value1 == 'La Santé':
 
-            Simple_interface =pygame.image.load("image/Simple_interface.png").convert_alpha()
-            Journal_interface_general =pygame.image.load("image/journal_interface_variation/Journal_interface_general.png").convert_alpha()
-            running = True
-            x=931
-            y=691
-            while running == True:
-                if x > 2:
-                    x=int(x-(930/30))
-                    self.Backround(displ)
-                    t =pygame.transform.smoothscale(Journal_interface_general,(x,y))
-                    displ.blit(t,[41,34])
-                    pygame.display.flip()
-                    pygame.time.wait(2)
-                else :
-                    running = False
-            x=0
-            y=691
-            runner =True
-            while runner == True:
-                if x <939:
-                    x=int(x+(930/30))
-                    self.Backround(displ)
-                    t =pygame.transform.smoothscale(Simple_interface,(x,y))
-                    displ.blit(t,[41,34])
-                    pygame.display.flip()
-                    pygame.time.wait(2)
-                else :
-                    runner = False
 
-            self.Backround(displ)
-            displ.blit(Simple_interface,[41,34])
-            Story.Story("Jour 2" , 57 , 50, 750,  displ)
-            Story.Story("Commandant... j'ai une très mauvaise nouvelle à vous annoncer... LA MORT ROUGE VA TUER TOUT LE MONDE SUR LE NAVIRE!!! Du moins, selons les rumeurs, rumeurs grondantes de plus en plus fort au seins des passagers et menaçant d'en faire céder plus d'un à la panique! Car même s'il ne s'agit pas de la Mort Rouge, comme le confirme mes analyses, il est incontestable qu'une épidémie de quelque chose s'annonce, vue le nombre de patient à l'infirmerie. Que souhaitez vous faire par rapport à cela?  " , 57 , 80, 750,  displ)
-         #   pygame.display.flip()
-          #  pygame.time.wait(temps)
-            whatAction(displ, [400,600],'clic')
-            running = True
-            x=931
-            y=691
-            while running == True:
-                if x > 2:
-                    x=int(x-(930/30))
-                    self.Backround(displ)
-                    t =pygame.transform.smoothscale(Simple_interface,(x,y))
-                    displ.blit(t,[41,34])
-                    pygame.display.flip()
-                    pygame.time.wait(2)
-                else :
-                    running = False
-            x=0
-            y=691
-            runner =True
-            while runner == True:
-                if x <939:
-                    x=int(x+(930/30))
-                    self.Backround(displ)
-                    t =pygame.transform.smoothscale(Journal_interface_general,(x,y))
-                    displ.blit(t,[41,34])
-                    pygame.display.flip()
-                    pygame.time.wait(2)
-                else :
-                    runner = False
-            Story.Verificationtouche(displ,Story.Texte.texte10,Story.Texte.choix10a,Story.Texte.choix10b,Story.Texte.choix10c,Story.Texte.choix10d, True )
+        Simple_interface =pygame.image.load("image/Simple_interface.png").convert_alpha()
+        Journal_interface_general =pygame.image.load("image/journal_interface_variation/Journal_interface_general.png").convert_alpha()
+        running = True
+        x=931
+        y=691
+        while running == True:
+            if x > 2:
+                x=int(x-(930/30))
+                self.Backround(displ)
+                t =pygame.transform.smoothscale(Journal_interface_general,(x,y))
+                displ.blit(t,[41,34])
+                pygame.display.flip()
+                pygame.time.wait(2)
+            else :
+                running = False
+        x=0
+        y=691
+        runner =True
+        while runner == True:
+            if x <939:
+                x=int(x+(930/30))
+                self.Backround(displ)
+                t =pygame.transform.smoothscale(Simple_interface,(x,y))
+                displ.blit(t,[41,34])
+                pygame.display.flip()
+                pygame.time.wait(2)
+            else :
+                runner = False
+
+        self.Backround(displ)
+        displ.blit(Simple_interface,[41,34])
+        Story.Story("Jour 2" , 57 , 50, 750,  displ)
+        Story.Story("Commandant... j'ai une très mauvaise nouvelle à vous annoncer... LA MORT ROUGE VA TUER TOUT LE MONDE SUR LE NAVIRE!!! Du moins, selons les rumeurs, rumeurs grondantes de plus en plus fort au seins des passagers et menaçant d'en faire céder plus d'un à la panique! Car même s'il ne s'agit pas de la Mort Rouge, comme le confirme mes analyses, il est incontestable qu'une épidémie de quelque chose s'annonce, vue le nombre de patient à l'infirmerie. Que souhaitez vous faire par rapport à cela?  " , 57 , 80, 750,  displ)
+     #   pygame.display.flip()
+      #  pygame.time.wait(temps)
+        whatAction(displ, [400,600],'clic')
+        running = True
+        x=931
+        y=691
+        while running == True:
+            if x > 2:
+                x=int(x-(930/30))
+                self.Backround(displ)
+                t =pygame.transform.smoothscale(Simple_interface,(x,y))
+                displ.blit(t,[41,34])
+                pygame.display.flip()
+                pygame.time.wait(2)
+            else :
+                running = False
+        x=0
+        y=691
+        runner =True
+        while runner == True:
+            if x <939:
+                x=int(x+(930/30))
+                self.Backround(displ)
+                t =pygame.transform.smoothscale(Journal_interface_general,(x,y))
+                displ.blit(t,[41,34])
+                pygame.display.flip()
+                pygame.time.wait(2)
+            else :
+                runner = False
+        Story.Verificationtouche(displ,Story.Texte.texte10,Story.Texte.choix10a,Story.Texte.choix10b,Story.Texte.choix10c,Story.Texte.choix10d, True )
 
 
 
@@ -863,10 +865,10 @@ class StoryTelling():
         self.Backround(displ)
         displ.blit(Rapport_Preliminaire,[41,34])
 
-        self.Base_Sociale.findValue()
+        Base_Sociale.findValue()
 
         Story.Story("Valeurs à la base de votre nouvelle société:" , 107 , 150, 750,  displ)
-        Story.Story( self.Base_Sociale.value1+ " et " +self.Base_Sociale.value2, 107 , 185, 750,  displ)
+        Story.Story( Base_Sociale.value1+ " et " +Base_Sociale.value2, 107 , 185, 750,  displ)
 
         Story.Story( "Données démographiques:", 107 , 250, 750,  displ)
         Story.Story( "Bonheur:", 107 , 290, 750,  displ)
@@ -876,13 +878,13 @@ class StoryTelling():
         Story.Story( "Criminalité:" , 107 , 390, 750,  displ)
         Story.Story( "Population:" , 107 , 415, 750,  displ)
 
-        Story.Story( str(self.Ressources_depart.Effects['Bonheur']), 307 , 290, 750,  displ)
-        Story.Story( str(self.Ressources_depart.Effects['Influence']), 307 , 315, 750,  displ)
-        Story.Story( str(self.Ressources_depart.Effects['Sante']), 307 , 340, 750,  displ)
-        Story.Story( str(self.Ressources_depart.Effects['Education']), 307 , 365, 750,  displ)
-        Story.Story( str(self.Ressources_depart.Effects['Criminalite']), 307 , 390, 750,  displ)
-        self.Ressources_depart.Effects['Population']=math.floor(self.Ressources_depart.Effects['Population'])
-        Story.Story( str(self.Ressources_depart.Effects['Population']), 307 , 415, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Bonheur']), 307 , 290, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Influence']), 307 , 315, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Sante']), 307 , 340, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Education']), 307 , 365, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Criminalite']), 307 , 390, 750,  displ)
+        Ressources_depart.Effects['Population']=math.floor(Ressources_depart.Effects['Population'])
+        Story.Story( str(Ressources_depart.Effects['Population']), 307 , 415, 750,  displ)
 
 
         Story.Story( "Stock de ressources:",547 , 250, 750,  displ)
@@ -891,12 +893,16 @@ class StoryTelling():
         Story.Story( "Nourriture:" , 547 , 340, 750,  displ)
         Story.Story( "Pétrole:" , 547 , 365, 750,  displ)
 
-        Story.Story( str(self.Ressources_depart.Effects['Bois']), 717 , 290, 750,  displ)
-        Story.Story( str(self.Ressources_depart.Effects['Minerai']), 717 , 315, 750,  displ)
-        Story.Story( str(self.Ressources_depart.Effects['Nourriture']), 717 , 340, 750,  displ)
-        Story.Story( str(self.Ressources_depart.Effects['Petrole']), 717 , 365, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Bois']), 717 , 290, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Minerai']), 717 , 315, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Nourriture']), 717 , 340, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Petrole']), 717 , 365, 750,  displ)
 
         whatAction(displ,[400,600],'clic')
+
+
+        EventAdvancement.PremiereValeur= Base_Sociale.value1
+        EventAdvancement.DeuxiemeValeur=Base_Sociale.value2
 
 
     def verifyFamine(self):
@@ -905,7 +911,7 @@ class StoryTelling():
     def verifyepidemie(self, chances=100):
         a = FacteurHasard()
         if a < chances :
-            if self.Base_Sociale.value1 != "La Santé":
+            if Base_Sociale.value1 != "La Santé":
                 return True
             else:
                 return False
@@ -957,7 +963,7 @@ class StoryTelling():
                         posX = pos[0]
                         posY = pos[1]
                             # checking part
-                        if posX <118 and posX >84:
+                        if  posX >75 and posX <474  :
                             if posY >76  and posY <109 :
                                 self.ALTRUISME()
                                 CheckingCheck.checked = True
@@ -967,8 +973,10 @@ class StoryTelling():
                                 CheckingCheck(displ)
                                 displ.blit(Ressources_Prevues,[515,506])
 
+
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteALTRUISME,475,50, 809,displ,467, 22 )
+                                whatAction(displ,[621,463],'clic')
 
 
                             if posY > 142 and posY < 172:
@@ -989,6 +997,7 @@ class StoryTelling():
                                 displ.blit(ISaveTheWorld_selec_Audace,[41,34])
                                 CheckingCheck(displ)
                                 Story.Story(Story.Texte.iTexteAUDACE2,475,50, 809,displ,450, 22 )
+                                whatAction(displ,[621,463],'clic')
 
                             if posY >208  and posY <241 :
                                 self.ARGENT()
@@ -1001,6 +1010,7 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteARGENT,475,50, 809,displ,467, 22 )
+                                whatAction(displ,[621,463],'clic')
 
 
                             if posY >275  and posY <307 :
@@ -1021,6 +1031,7 @@ class StoryTelling():
                                 CheckingCheck(displ)
                                 displ.blit(Ressources_Prevues,[515,506])
                                 Story.Story(Story.Texte.iTexteBONHEUR2,475,50, 809,displ,450, 22 )
+                                whatAction(displ,[621,463],'clic')
 
 
                             if posY >341  and posY <374 :
@@ -1034,6 +1045,7 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteEQUITE,475,50, 809,displ,467, 22 )
+                                whatAction(displ,[621,463],'clic')
 
 
                             if posY >408  and posY < 443:
@@ -1054,6 +1066,7 @@ class StoryTelling():
                                 CheckingCheck(displ)
                                 displ.blit(Ressources_Prevues,[515,506])
                                 Story.Story(Story.Texte.iTexteGALANTERIE2,475,50, 809,displ,450, 22 )
+                                whatAction(displ,[621,463],'clic')
 
 
 
@@ -1068,6 +1081,7 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteINDUSTRIE,475,50, 809,displ,467, 22 )
+                                whatAction(displ,[621,463],'clic')
 
 
                             if posY > 538 and posY < 570 :
@@ -1081,6 +1095,7 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteORDRE,475,50, 809,displ,467, 22 )
+                                whatAction(displ,[621,463],'clic')
 
 
                             if posY >597  and posY <629:
@@ -1094,124 +1109,7 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteSANTE,475,50, 809,displ,467, 22 )
-
-                        elif (posX <84 and posX >75) or (posX <474 and posX >118) :
-                            if posY > 65 and posY < 124:
-
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Altruisme,[41,34])
-                                CheckingCheck(displ )
-                                displ.blit(Ressources_Prevues,[515,506])
-                                pygame.display.flip()
-                                Story.Story(Story.Texte.iTexteALTRUISME,475,50, 809,displ,467, 22 )
-
-
-
-
-                            if posY > 124 and posY < 190:
-
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Audace,[41,34])
-                                CheckingCheck(displ )
-
-
-                                pygame.display.flip()
-                                Story.Story(Story.Texte.iTexteAUDACE,475,50, 809,displ,450, 22 )
                                 whatAction(displ,[621,463],'clic')
-                                self.Backround(displ)
-
-
-                                displ.blit(ISaveTheWorld_selec_Audace,[41,34])
-                                CheckingCheck(displ )
-                                Story.Story(Story.Texte.iTexteAUDACE2,475,50, 809,displ,450, 22 )
-
-
-                            if posY > 190 and posY < 256:
-
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Argent,[41,34])
-                                CheckingCheck(displ)
-
-                                pygame.display.flip()
-                                Story.Story(Story.Texte.iTexteARGENT,475,50, 809,displ,467, 22 )
-
-
-
-                            if posY > 256 and posY < 322:
-
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Bonheur,[41,34])
-                                CheckingCheck(displ )
-                                displ.blit(Ressources_Prevues,[515,506])
-                                pygame.display.flip()
-                                Story.Story(Story.Texte.iTexteBONHEUR,475,50, 809,displ,450, 22 )
-                                whatAction(displ,[621,463],'clic')
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Bonheur,[41,34])
-                                CheckingCheck(displ )
-                                displ.blit(Ressources_Prevues,[515,506])
-
-
-                                Story.Story(Story.Texte.iTexteBONHEUR2,475,50, 809,displ,450, 22 )
-
-
-
-                            if posY > 322 and posY < 385:
-
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Equite,[41,34])
-                                CheckingCheck(displ )
-                                displ.blit(Ressources_Prevues,[515,506])
-                                pygame.display.flip()
-                                Story.Story(Story.Texte.iTexteEQUITE,475,50, 809,displ,467, 22 )
-
-
-                            if posY > 385 and posY < 454:
-
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Galanterie,[41,34])
-                                CheckingCheck(displ )
-                                displ.blit(Ressources_Prevues,[515,506])
-                                pygame.display.flip()
-                                Story.Story(Story.Texte.iTexteGALANTERIE,475,50, 809,displ,450, 22 )
-                                whatAction(displ,[621,463],'clic')
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Galanterie,[41,34])
-                                CheckingCheck(displ )
-                                displ.blit(Ressources_Prevues,[515,506])
-
-
-                                Story.Story(Story.Texte.iTexteGALANTERIE2,475,50, 809,displ,450, 22 )
-
-
-                            if posY > 454 and posY < 518:
-
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Industrie,[41,34])
-                                CheckingCheck(displ )
-                                pygame.display.flip()
-                                Story.Story(Story.Texte.iTexteINDUSTRIE,475,50, 809,displ,467, 22 )
-
-
-                            if posY > 518 and posY < 582:
-
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Ordre,[41,34])
-                                CheckingCheck(displ )
-                                displ.blit(Ressources_Prevues,[515,506])
-                                pygame.display.flip()
-                                Story.Story(Story.Texte.iTexteORDRE,475,50, 809,displ,467, 22 )
-
-
-                            if posY > 582 and posY < 646:
-
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_selec_Sante,[41,34])
-                                CheckingCheck(displ)
-                                displ.blit(Ressources_Prevues,[515,506])
-                                pygame.display.flip()
-                                Story.Story(Story.Texte.iTexteSANTE,475,50, 809,displ,467, 22 )
-
 
                             if posY > 646 and posY < 697:
                                 if CheckingCheck.checked == True:
@@ -1327,7 +1225,7 @@ class StoryTelling():
                             whatAction(displ,[621,463])
 
     def set(self, setcible, valor ):
-        self.Ressources_depart.Effects [setcible] = valor
+        Ressources_depart.Effects [setcible] = valor
 
     def ALTRUISME(self):
          self.set('Bois', 1200)
@@ -1340,8 +1238,8 @@ class StoryTelling():
          self.set('Education', 75)
          self.set('Sante', 75)
          self.set('Bonheur', 75)
-         self.Base_Sociale.value1 ="L'Altruisme"
-         self.Base_Sociale.solidarite +=1
+         Base_Sociale.value1 ="L'Altruisme"
+         Base_Sociale.solidarite +=1
 
     def AUDACE(self):
         if FacteurHasard() < 50:
@@ -1360,8 +1258,8 @@ class StoryTelling():
             self.set('Sante', 12)
             self.set('Influence', 12)
             self.set('Bonheur', 12)
-        self.Base_Sociale.value1 ="L'Audace"
-        self.Base_Sociale.surete -=3
+        Base_Sociale.value1 ="L'Audace"
+        Base_Sociale.surete -=3
 
 
     def ARGENT(self):
@@ -1373,8 +1271,8 @@ class StoryTelling():
         self.set('Education', 63)
         self.set('Influence', 25)
         self.set('Bonheur', 63)
-        self.Base_Sociale.value1 ="L'Argent"
-        self.Base_Sociale.solidarite -=1
+        Base_Sociale.value1 ="L'Argent"
+        Base_Sociale.solidarite -=1
 
 
     def BONHEUR(self):
@@ -1387,7 +1285,7 @@ class StoryTelling():
         self.set('Criminalite', 38)
         self.set('Influence', 63)
         self.set('Bonheur', 100)
-        self.Base_Sociale.value1 ="Le Bonheur"
+        Base_Sociale.value1 ="Le Bonheur"
 
 
     def EQUITE(self):
@@ -1398,7 +1296,7 @@ class StoryTelling():
         self.set('Criminalite', 38)
         self.set('Influence', 75)
         self.set('Bonheur', 63)
-        self.Base_Sociale.value1 ="L'Équité"
+        Base_Sociale.value1 ="L'Équité"
 
     def GALANTERIE(self):
         self.set('Bois', 1200)
@@ -1411,8 +1309,8 @@ class StoryTelling():
         self.set('Influence', 75)
         self.set('Bonheur', 63)
         self.set('Education', 83)
-        self.Base_Sociale.value1 ="La Galanterie"
-        self.Base_Sociale.pragmatisme -=1
+        Base_Sociale.value1 ="La Galanterie"
+        Base_Sociale.pragmatisme -=1
 
     def INDUSTRIE(self):
         self.set('Bois', 900)
@@ -1425,8 +1323,8 @@ class StoryTelling():
 
         self.set('Education', 75)
         self.set('Bonheur', 38)
-        self.Base_Sociale.value1 ="L'Industrie"
-        self.Base_Sociale.pragmatisme +=1
+        Base_Sociale.value1 ="L'Industrie"
+        Base_Sociale.pragmatisme +=1
 
     def ORDRE(self):
         self.set('Bois', 1200)
@@ -1437,8 +1335,8 @@ class StoryTelling():
         self.set('Influence', 100)
         self.set('Education', 25)
         self.set('Sante', 63)
-        self.Base_Sociale.value1 ="L'Ordre"
-        self.Base_Sociale.pragmatisme +=1
+        Base_Sociale.value1 ="L'Ordre"
+        Base_Sociale.pragmatisme +=1
 
     def SANTE(self):
         self.set('Bois', 1200)
@@ -1447,8 +1345,8 @@ class StoryTelling():
 
         self.set('Education', 63)
         self.set('Sante', 100)
-        self.Base_Sociale.value1 ="La Santé"
-        self.Base_Sociale.surete +=1
+        Base_Sociale.value1 ="La Santé"
+        Base_Sociale.surete +=1
 
 class CheckingCheck():
         checked = False

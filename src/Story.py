@@ -4,8 +4,9 @@ import MainScreen
 import DockingMenu
 import conda
 import pygame
-from pygame.locals import *
 import StoryTelling
+from pygame.locals import *
+# import StoryTelling
 # class position(): #entre les lignes le rapport de 30 pour la taille des caracteres et de 35 d<espapce entre les lignes sembles bon.
 #     def __init__(self, Ecran):
 #         self.topleft = [25 ,  25]

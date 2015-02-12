@@ -13,7 +13,7 @@ import StoryTelling
 
 
 def CreateMainWindows():
-        pygame.display.set_caption('Enjeux-Survie')        
+        pygame.display.set_caption('Nouvelle Aube')
         pygame.display.set_icon(pygame.image.load("image/pygame.bmp"))
         disp = pygame.display.set_mode((1027, 768), 0, 32)
         disp.convert_alpha()
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     
     game = EnjeuxSurvieEngine.EnjeuxSurvieEngine(disp) 
     if(action.lower() == "start"):
-#         StoryTelling.StoryTelling(disp)        
+        StoryTelling.StoryTelling(disp)
         game.run()
     elif(action.lower() == "continue"):
         game.run()
@@ -41,4 +41,5 @@ if __name__ == "__main__":
         game.run()
 
     # Game Over
-    EndGame.EndGame(disp, game.score)
+    #EndGame.EndGame(disp, game.score)
+    EndGame.EndGame(disp, game.island)

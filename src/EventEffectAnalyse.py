@@ -69,9 +69,9 @@ class EventImpact(object):
             self.island.ModifySante(secteur, value)
             print("%s modify %s sante by %s" % (evtName, secteur, value) )
 
-        # elif(token == "pollution"):
-        #     self.island.Modify(secteur, value)
-        #     print("%s modify %s panic by %s" % (evtName, secteur, value) )
+        elif(token == "pollution"):
+            self.island.Modify(secteur, value)
+            print("%s modify %s panic by %s" % (evtName, secteur, value) )
 
 
 
@@ -83,4 +83,14 @@ class EventImpact(object):
 
         elif(token == "Karma"):
             EventAdvancement.KarmaVesuve = True
-            
+
+        elif(token == "WIN"):
+            EventAdvancement.WIN = True
+
+        elif(token == "fin"):
+            if value == "SAS":
+                EventAdvancement.The_EndingText = EventAdvancement.Fin_SAS
+            if value == "ETAT":
+                EventAdvancement.The_EndingText = EventAdvancement.Fin_Etat_Policier
+            if value == "Sameness":
+                EventAdvancement.The_EndingText = EventAdvancement.Fin_Sameness

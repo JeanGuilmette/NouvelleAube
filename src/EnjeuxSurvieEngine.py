@@ -16,7 +16,7 @@ import EventDef
 import EventEffectAnalyse
 import EventGenerator
 import EventAdvancement
-
+import EventAdvancement
 
 
 class EnjeuxSurvieEngine(object):
@@ -103,7 +103,7 @@ class EnjeuxSurvieEngine(object):
             # Verify if construction is completed
             # New decovery completed
             # Histoire principal Event
-            moreEvent = False
+            moreEvent = True
             while(moreEvent == True):
                 self.Gameadvance()
                 evt = self.evtMgr.pop(self.mainGUI.gameTime.GetDateString())  
@@ -137,10 +137,63 @@ class EnjeuxSurvieEngine(object):
     def isEndofGame(self):
         pop = self.island.GetCurrentPopulation(Island.OVERVIEW_ZONE_NAME)
         if(pop <= 0):
+            EventAdvancement.TrueEnding = True
             print("Game Over, You have lost")
+            EventAdvancement.Linkmessage = EventAdvancement.Extinction
             self.score = -1
             self.quitFlag = True
-        elif(pop >= self.island.GetPopulationMax()):
-            print("You have Win Game over")
-            self.score = 100
+        sante = self.island.GetSante(Island.OVERVIEW_ZONE_NAME)
+        if(sante <= 0):
+            EventAdvancement.TrueEnding = True
+            print("Game Over, You have lost")
+            EventAdvancement.Linkmessage = EventAdvancement.LaRedDeath
+            self.score = -1
             self.quitFlag = True
+        bonheur = self.island.GetBonheur(Island.OVERVIEW_ZONE_NAME)
+        if(bonheur <= 0):
+            EventAdvancement.TrueEnding = True
+            print("Game Over, You have lost")
+            EventAdvancement.Linkmessage = EventAdvancement.LaRevolution
+            self.score = -1
+            self.quitFlag = True
+        Criminalite = self.island.GetCriminalite(Island.OVERVIEW_ZONE_NAME)
+        if(Criminalite >= 100):
+            EventAdvancement.TrueEnding = True
+            print("Game Over, You have lost")
+            EventAdvancement.Linkmessage = EventAdvancement.Coup_etat
+            self.score = -1
+            self.quitFlag = True
+        Influence = self.island.GetInfluence(Island.OVERVIEW_ZONE_NAME)
+        if(Influence <= 0):
+            EventAdvancement.TrueEnding = True
+            print("Game Over, You have lost")
+            EventAdvancement.Linkmessage = EventAdvancement.Anarchie
+            self.score = -1
+            self.quitFlag = True
+
+        if EventAdvancement.KarmaVesuve == True:
+            EventAdvancement.TrueEnding = True
+            print("Game Over, You have WIN")
+            EventAdvancement.Linkmessage = EventAdvancement.Vesuve
+            self.score = -1
+            self.quitFlag = True
+
+        if EventAdvancement.WIN == True:
+            EventAdvancement.TrueEnding = True
+            EventAdvancement.HappyEnd = True
+            print("Game Over, You have WIN")
+            EventAdvancement.Linkmessage = EventAdvancement.Gagne
+            self.score = -1
+            self.quitFlag = True
+
+        if self.quitFlag == True:
+
+
+            EventAdvancement.Ending_Bonheur = str(int(self.island.GetBonheur(Island.OVERVIEW_ZONE_NAME)))
+            EventAdvancement.Ending_Influence= str(int(self.island.GetInfluence(Island.OVERVIEW_ZONE_NAME)))
+            EventAdvancement.Ending_Sante= str(int(self.island.GetSante(Island.OVERVIEW_ZONE_NAME)))
+            EventAdvancement.Ending_Education = str(int(self.island.GetEducation(Island.OVERVIEW_ZONE_NAME)))
+            EventAdvancement.Ending_Criminalite = str(int(self.island.GetCriminalite(Island.OVERVIEW_ZONE_NAME)))
+            EventAdvancement.Ending_Population = str(int(self.island.GetCurrentPopulation(Island.OVERVIEW_ZONE_NAME)))
+            EventAdvancement.Ending_Pollution = str(int(self.island.GetPollution(Island.OVERVIEW_ZONE_NAME)))
+            EventAdvancement.Ending_Panique = str(int(self.island.GetPanique(Island.OVERVIEW_ZONE_NAME)))

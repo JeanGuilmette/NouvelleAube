@@ -7,7 +7,7 @@ class Population():
         self.popMax = popMax            # Maximum of population supported by the island
         self.croissance = croissance    # Number of new people by unit of time.
         self.sante= 50                  #
-        self.influence = 0              #
+        self.influence = 50              #
         self.bonheur = 50               #
         self.recherche = 0              # 
         self.education =  50            #
