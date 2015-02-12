@@ -4,6 +4,7 @@ Created on Jan 11, 2015
 @author: SJS
 '''
 import sys
+import CustomWidget
 sys.path.append("../src")
 sys.path.append("../lib")
 from BuildMenu import BuildMenu, TransferMenu
@@ -59,25 +60,31 @@ if __name__ in '__main__':
     ##The button CLICK event is connected to the dialog.open method.
     secteurA = Island.Island("new")
   
-    dialog = BuildMenu(secteurA)  
-    dialog2 = TransferMenu(secteurA)
- 
+#     dialog = BuildMenu(secteurA)  
+    dialog2 = TransferMenu(secteurA) 
     dialog3 = Events.EventsViewer(secteurA, evt_epidemie)
+    dialog4 = CustomWidget.MessageBox("Test", "building could not be build. Not enough ressource.")
+    
              
-    c.tr() 
-    e = gui.Button("Build Management")
-    e.connect(gui.CLICK,dialog.open,None)
-    c.td(e)
+#     c.tr() 
+#     e = gui.Button("Build Management")
+#     e.connect(gui.CLICK,dialog.open,None)
+#     c.td(e)
      
     c.tr()
     e = gui.Button("Transfert")    
-    e.connect(gui.CLICK,dialog2.open,None)      
+    e.connect(gui.CLICK,dialog2.open, None)      
     c.td(e)   
      
     c.tr()
     e = gui.Button("Events")    
-    e.connect(gui.CLICK,dialog3.open,None)      
+    e.connect(gui.CLICK,dialog3.open, None)      
     c.td(e)  
+    
+    c.tr()
+    e = gui.Button("Message Box")    
+    e.connect(gui.CLICK,dialog4.open, None)      
+    c.td(e)      
     
     app.run(c, screen=disp)
 

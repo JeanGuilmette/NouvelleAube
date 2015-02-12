@@ -7,7 +7,7 @@ import Resources
 import Island
 import Zone
 import sys; sys.path.append("../lib")
-from pgu import gui
+from pgu import gui, text
 
 class RessourceLabel(gui.Label):
     def __init__(self, island, activeZone, resName):
@@ -90,8 +90,45 @@ class MapDisplay(gui.Widget):
         zone = self.island.GetActiveZone()
         scale1 = pygame.transform.smoothscale(zone.draw(), (surf.get_width(), surf.get_height()))
         surf.blit(scale1, (0, 0))
-#         pygame.display.update()   
+
+class MessageBox(gui.Dialog):
+    def __init__(self, Title, msg, icon=None): 
         
+        title = gui.Label(Title)
+        t = gui.Table()
+        t.tr()
+        doc = CreateMessage(msg, 400, icon)
+        t.td(gui.ScrollArea(doc, 400, 300, hscrollbar=False,  vscrollbar=True))
+        
+        t.tr()
+        b = gui.Button("Close")
+        b.connect(gui.CLICK, self.action_quit)  
+        t.td(b)  
+            
+        gui.Dialog.__init__(self, title, t, background=( 128, 128, 128, 10) )
+#         gui.Dialog.__init__(self, title, t )       
+          
+    def action_quit(self):
+        pygame.event.post(pygame.event.Event(pygame.QUIT))  
+                                  
+    def open(self, w=None, x=None, y=None):
+        gui.Dialog.open(self)
+        done = False
+        while not done:
+            pygame.time.wait(5)             
+            self.get_toplevel().update()
+            pygame.display.update()
+            # Process events
+            for ev in pygame.event.get():
+                if (ev.type == pygame.QUIT or 
+                    ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE):
+                    done = True
+                else:
+                    # Pass the event off to pgu
+                    self.get_toplevel().event(ev)
+        self.close()
+                    
+                            
 class GameClock(gui.Label):
     def __init__(self):
         self.counter = 0
@@ -145,3 +182,18 @@ def DrawRoundRect(surface, color, rect, width, xr, yr):
     pygame.draw.ellipse(surface, color, pygame.Rect(rect.right-2*xr, rect.bottom-2*yr, 2*xr, 2*yr), width)
 
     surface.set_clip(clip)
+    
+#///////////////////////////////////////////////////////////////////////////////////////////
+#///
+#/// 
+def CreateMessage(text, width, icon=None, align=-1, fontName=None, fontSize=30):
+    font = pygame.font.SysFont(fontName, fontSize)        
+    space = font.size(" ")      
+    doc = gui.Document(width=width) 
+    doc.block(align=align)
+    if(icon != None):
+        doc.add(gui.Image(icon),align=1)    
+    for word in text.split(" "): 
+        doc.add(gui.Label(word))
+        doc.space(space)
+    return doc

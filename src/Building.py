@@ -86,7 +86,7 @@ class Batiment(object):
         self.numberBuilding = self.numberBuilding - 1
         self.numberBuilding = self.numberBuilding if (self.numberBuilding >= 0) else 0    
         self.AssignWorker(0)  
-        self.position.pop()  
+        return self.position.pop()  
         
     def AddWorker(self):
         val = self.worker + 1

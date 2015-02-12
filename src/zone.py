@@ -16,7 +16,7 @@ class Secteur():
     def __init__(self, name, terrain, resList, map, posList):
         self.name = name               # Name of the zone
         self.spaceList = posList       # Maximum available space on the zone
-        self.currentSpace = 0          # Currently used space of the zone
+#         self.currentSpace = 0          # Currently used space of the zone
         self.resources = dict()        # Available resource in the zone
         self.batiments = dict()        # List of building in the zone
         self.population = Population.Population(100000, 0.05)
@@ -42,21 +42,21 @@ class Secteur():
                 return "No ressource"
             
         # Check space avaialble
-        if( self.currentSpace >= len(self.spaceList)):
-            print("Not enough space used: %d  max: %d" % ( self.currentSpace, len(self.spaceList) ))
+        if( len(self.spaceList) <= 0):
+            print("Not enough space used: %d  max: %d" % (len(self.spaceList), self.batiments[buildingType].numberBuilding ))
             return "No space"
                
         #Add new building        
-        self.batiments[buildingType].Add(self.spaceList[self.currentSpace])
+        self.batiments[buildingType].Add(self.spaceList.pop(0))
         
         #Remove resources and use space
         for resNeeded in self.batiments[buildingType].buildCost:
             self.resources[resNeeded].stock -= self.batiments[buildingType].buildCost[resNeeded]
-        self.currentSpace += 1       
-
+        return True
+    
     def RemoveBuilding(self, buildingType):
-        self.batiments[buildingType].Remove()
-        self.currentSpace -= 1
+        pos = self.batiments[buildingType].Remove()
+        self.spaceList.insert(0, pos) 
         
     def AddWorker(self, building):
         if(self.population.ActivateWorker() == True):

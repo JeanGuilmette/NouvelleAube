@@ -189,7 +189,12 @@ class BuildMenu(gui.Dialog):
         
         
     def action_addBuilding(self, Value):
-        self.island.secteur[self.ActiveZone.value].AddBuilding(Value)
+        result = self.island.secteur[self.ActiveZone.value].AddBuilding(Value)
+        if(result != True):
+            msgbox = CustomWidget.MessageBox("Add Building", result)
+            msgbox.open()
+            
+        print(result)
         
     def action_deleteBuilding(self, Value):
         self.island.secteur[self.ActiveZone.value].RemoveBuilding(Value)
