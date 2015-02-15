@@ -15,12 +15,16 @@ class RessourceLabel(gui.Label):
         self.island = island
         self.zoneCtl = activeZone
         stock, available, stockMax = self.island.GetRessourceInfo(self.resource, self.zoneCtl.value)
-        resString = ("{:0>6d} / {:0>6d} / {:0>6d}".format(stock, available, stockMax ))
+        resString = ("{:0>6d} | {:0>6d} | {:0>6d}".format(stock, available, stockMax ))
         gui.Label.__init__(self, value=resString)
         
     def paint(self, surf):
         stock, available, stockMax = self.island.GetRessourceInfo(self.resource, self.zoneCtl.value)
-        self.value = ("{:0>6d} / {:0>6d} / {:0>6d}".format(stock, available, stockMax ))
+        self.value = ("{:0>6d} | {:0>6d} | {:0>6d}".format(stock, available, stockMax ))
+        if(available < (0.3 * stockMax)):
+            self.style.color = (255, 0, 0)
+        else:
+            self.style.color = (0, 0, 0)            
         gui.Label.paint(self, surf)
        
 class StockLabel(gui.Label):

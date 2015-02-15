@@ -11,6 +11,7 @@ import Events
         
                     
 class MainScreen(gui.Desktop):
+    leftBorder = 39
     
     def __init__(self, island, disp):
         t = gui.Theme(["NouvelleAube"])
@@ -27,33 +28,33 @@ class MainScreen(gui.Desktop):
         c = gui.Container(width=sizeX, height=sizeY)
 
         ###############################
-        # Game time control          
-        c.add(self.gameTime, sizeX-225, 0) 
+        # Game time control   
+        offsetY = sizeY - (5*btn_heigth) + 10
+        offsetX = sizeX - btn_witdh - 55       
+        c.add(self.gameTime, offsetX+40, offsetY) 
 
         e = gui.HSlider(value=FPS_DAY,min=FPS_MIN,max=FPS_MAX,size=32,width=128,height=15) 
         e.connect(gui.CHANGE,self.adjustTime,e)
-        c.add(e, sizeX-128, 2)       
-             
-                  
+        c.add(e, offsetX+26, offsetY + 20)  
+                           
         ###############################
         # Acitve Zone selection      
         self.region = gui.Select(value= OVERVIEW_ZONE_NAME, width=btn_witdh, height=btn_heigth)
-        #self.region.add('Island Overview',OVERVIEW_ZONE_NAME)        
         for item in sorted(Island.secteurDef):
-            #if(item != OVERVIEW_ZONE_NAME):
-            self.region.add(item, item)
+            self.region.add(Island.secteurDef[item]["name"], item)
         self.region.connect(gui.CHANGE, self.ChangeZone)
-        c.add(self.region, 0, 0)
-
+#         c.add(self.region, 0, 0)
+        
         ###############################
         # Map Display
-        tbl = CustomWidget.MapDisplay(island, sizeX, sizeY-(6*btn_heigth))
-        c.add(tbl, 0, btn_heigth)
-
+        tbl = CustomWidget.MapDisplay(island, sizeX-(2*self.leftBorder), sizeY-(6*btn_heigth)-7)
+        c.add(tbl, self.leftBorder, btn_heigth+8)
+        c.add(self.region, self.leftBorder, btn_heigth+8)
+        
         ###############################
         # Action Button menu
-        offsetY = sizeY - (5*btn_heigth)
-        offsetX = sizeX - btn_witdh
+        offsetY = sizeY - (4*btn_heigth) + 20
+        offsetX = sizeX - btn_witdh - 55
         btn = gui.Button("Building", width=btn_witdh, height=btn_heigth)
         btn.connect(gui.CLICK, self.action_building, None)
         c.add(btn, offsetX, offsetY)
@@ -61,27 +62,20 @@ class MainScreen(gui.Desktop):
         btn = gui.Button("Transfer", width=btn_witdh, height=btn_heigth)
         btn.connect(gui.CLICK, self.action_transfer, None)
         c.add(btn, offsetX, offsetY + btn_heigth) 
-        
-        btn = gui.Button("Options", width=btn_witdh, height=btn_heigth)
-        btn.connect(gui.CLICK, self.action_option, None)
-        c.add(btn, offsetX, offsetY + (2*btn_heigth) ) 
-        
+      
         btn = gui.Button("Quit", width=btn_witdh, height=btn_heigth )
         btn.connect(gui.CLICK, self.action_quit, None)
-        c.add(btn, offsetX, offsetY + (3*btn_heigth) )     
+        c.add(btn, offsetX, offsetY + (2*btn_heigth) )     
         
-                
-        
+
         ###############################
-        # Clock and time control
-                
-        ###############################
-        # Active Zone resource status      
-        c.add(self.CreateResourceStatus(), 0, offsetY)
+        # Active Zone resource status    
+        offsetY = (sizeY - (5*btn_heigth)) + 10
+        c.add(self.CreateResourceStatus(), self.leftBorder-10, offsetY)
            
         ###############################
         # Active Zone population status      
-        c.add(self.CreatePopulationStatus(), 300, offsetY)
+        c.add(self.CreatePopulationStatus(), 375, offsetY)
         c.add(self.CreatePopulationStatus2(), 600, offsetY)        
         
         self.init(c, disp)
@@ -116,7 +110,7 @@ class MainScreen(gui.Desktop):
         pygame.event.post(pygame.event.Event(pygame.QUIT))       
 
     def action_building(self, value):
-        d = BuildMenu.BuildMenu(self.island)            
+        d = BuildMenu.BuildMenu(self.island, self.region.value)            
         d.open()
         
     def action_transfer(self, value):
@@ -169,7 +163,7 @@ class MainScreen(gui.Desktop):
         return tbl   
     
     def CreatePopulationStatus(self):
-        demographieList = ["Population", "Worker", "Bonheur", "Recherche", "Education", "Panique"]
+        demographieList = ["Population", "Worker", "Bonheur", "Education", "Sante"]
        
         tbl = gui.Table()
         tbl.tr()
@@ -183,8 +177,8 @@ class MainScreen(gui.Desktop):
         return tbl      
     
     def CreatePopulationStatus2(self):
-        demographieList = ["Criminalite", "Influence", "Pollution", "Production", "Tresors"]
-        
+        demographieList = ["Criminalite", "Influence", "Panique", "Pollution"]
+
         tbl = gui.Table()
         tbl.tr()
         tbl.td(gui.Label("Demographie:"))

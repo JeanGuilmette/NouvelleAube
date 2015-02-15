@@ -21,11 +21,11 @@ class BuildingLabel(gui.Label):
         self.buildingName = buildingName
         self.island = island
         self.zoneCtl = activeZone
-        resString = ("%2d  " % (self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].numberBuilding))
+        resString = ("%d" % (self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].numberBuilding))
         gui.Label.__init__(self, value=resString)     
         
     def paint(self, surf):
-        self.value = ("%2d  " % (self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].numberBuilding))
+        self.value = ("%d" % (self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].numberBuilding))
         gui.Label.paint(self, surf)
         
  
@@ -37,11 +37,11 @@ class WorkerLabel(gui.Label):
         self.island = island
         self.buildingName = buildingName
         self.zoneCtl = activeZone
-        resString = ("%3d  " % (self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].worker))
+        resString = (" %4d  " % (self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].worker))
         gui.Label.__init__(self, value=resString)
         
     def paint(self, surf):
-        self.value = ("%3d  " % (self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].worker))
+        self.value = (" %4d  " % (self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].worker))
         gui.Label.paint(self, surf)
      
  
@@ -130,7 +130,7 @@ class ResourcesSlider(gui.HSlider):
 #
 ##########################################################
 class BuildMenu(gui.Dialog):
-    def __init__(self, island):
+    def __init__(self, island, zone):
         title = gui.Label("Building management")
         self.island = island
         self.ActiveZone = gui.Select(value=Island.LANDING_REGION_NAME , width=160, height=20)
@@ -142,46 +142,55 @@ class BuildMenu(gui.Dialog):
         t1.tr()
         for item in sorted(Island.secteurDef):
             if(item != Island.OVERVIEW_ZONE_NAME):
-                self.ActiveZone.add(item, item)
+                self.ActiveZone.add(Island.secteurDef[item]["name"], item)
         t1.td(self.ActiveZone, align=-1)
+        if(zone == Island.OVERVIEW_ZONE_NAME) : zone = Island.LANDING_REGION_NAME
+        self.ActiveZone.value = zone
         
         t1.tr()
         buildingName = gui.Select(value="Ferme" , width=160, height=20)
         t = gui.Table()   
         t.tr()
-        t.td(gui.Label("Building: "))
-        t.td(gui.Label("Current"))
+        t.td(gui.Label("Bâtiment:"))
+        t.td(gui.Label("   "))        
         for item in sorted(Building.buildingDef):
             buildingName.add(item, item)
             t.tr()
             l = gui.Label(item)
             t.td(gui.Label(item), align = 1)
-            t.td(BuildingLabel(self.island, self.ActiveZone, item))
-            b = gui.Button("Add")
+            t.td(gui.Label("   "))            
+            # Remove building
+            b = gui.Button("-")
+            b.connect(gui.CLICK, self.action_deleteBuilding, item)
+            t.td(b, align =1)     
+            # Number of building       
+            t.td(BuildingLabel(self.island, self.ActiveZone, item), algin=0)
+            # add Building
+            b = gui.Button("+")
             b.connect(gui.CLICK, self.action_addBuilding, item)
             t.td(b)
-            b = gui.Button("Delete")
-            b.connect(gui.CLICK, self.action_deleteBuilding, item)
-            t.td(b)
              
-            t.td(WorkerLabel(self.island, self.ActiveZone, item), colspan=3)
- 
+            #Number of worker
             e = WorkerSlider(self.island, self.ActiveZone, item)
             e.connect(gui.CHANGE,self.adjustWorker,e, item) 
             t.td(e)
+            t.td(WorkerLabel(self.island, self.ActiveZone, item), align =-1)    
+            b = gui.Button(" ? ")   
+            b.connect(gui.CLICK, self.action_info, item)   
+            t.td(b)   
 
         t1.td(t)
-        t2 = gui.Table()
-        t2.tr()
-        t2.td(buildingName)
-        buildingName.connect(gui.CHANGE, self.actionBuildingDesc, buildingName)
+#         t2 = gui.Table()
+#         t2.tr()
+#         t2.td(buildingName)
+#         buildingName.connect(gui.CHANGE, self.actionBuildingDesc, buildingName)
         
-        t2.tr()
-        doc =  CreateDescription("Ferme", 400)
-        self.displayDesc = gui.ScrollArea(doc, 400, 300, hscrollbar=False,  vscrollbar=True)
-        t2.td(self.displayDesc)
+#         t2.tr()
+#         doc =  CreateDescription("Ferme", 400)
+#         self.displayDesc = gui.ScrollArea(doc, 400, 300, hscrollbar=False,  vscrollbar=True)
+#         t2.td(self.displayDesc)
         
-        t1.td(t2)
+#         t1.td(t2)
                 
 #         s = pygame.image.load("image/Nouvelle_Aube.jpg")
 #         gui.Dialog.__init__(self,title,t, background=gui.Image(s))
@@ -221,6 +230,10 @@ class BuildMenu(gui.Dialog):
                 zone.RemoveWorker(building)
             else:
                 zone.AddWorker(building)   
+                
+    def action_info(self, buildingName):
+        db = BuildingInfo(buildingName)
+        db.open()
 
 ##########################################################
 #
@@ -239,8 +252,8 @@ class TransferMenu(gui.Dialog):
         t.tr()
         for item in sorted(Island.secteurDef):
             if(item != Island.OVERVIEW_ZONE_NAME):
-                self.ZoneSrc.add(item, item)
-                self.ZoneDst.add(item, item)
+                self.ZoneSrc.add(Island.secteurDef[item]["name"], item)
+                self.ZoneDst.add(Island.secteurDef[item]["name"], item)
         self.ZoneSrc.connect(gui.CHANGE, self.action_ChangeZone, "src")
         self.ZoneDst.connect(gui.CHANGE, self.action_ChangeZone, "dst")        
         t.td(self.ZoneSrc)
@@ -286,6 +299,44 @@ class TransferMenu(gui.Dialog):
             w.Refresh()
 
 
+
+class BuildingInfo(gui.Dialog):
+    def __init__(self, buildingName): 
+        
+        title = gui.Label(buildingName)
+        t = gui.Table()
+        t.tr()
+        doc = CreateDescription(buildingName, 400)
+        t.td(gui.ScrollArea(doc, 400, 300, hscrollbar=False,  vscrollbar=True))
+        
+        t.tr()
+        b = gui.Button("Close")
+        b.connect(gui.CLICK, self.action_quit)  
+        t.td(b)  
+            
+        gui.Dialog.__init__(self, title, t, background=( 128, 128, 128, 10) )
+     
+          
+    def action_quit(self):
+        pygame.event.post(pygame.event.Event(pygame.QUIT))  
+                                  
+    def open(self, w=None, x=None, y=None):
+        gui.Dialog.open(self)
+        done = False
+        while not done:
+            pygame.time.wait(5)             
+            self.get_toplevel().update()
+            pygame.display.update()
+            # Process events
+            for ev in pygame.event.get():
+                if (ev.type == pygame.QUIT or 
+                    ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE):
+                    done = True
+                else:
+                    # Pass the event off to pgu
+                    self.get_toplevel().event(ev)
+        self.close()
+                        
 #///////////////////////////////////////////////////////////////////////////////////////////
 #///
 #/// 

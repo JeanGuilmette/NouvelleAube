@@ -22,33 +22,12 @@ class Event(object):
     def __init__(self, date, title, description, options):
         self.date = date
         self.name = title
-#         self.font = pygame.font.SysFont(None, 30)        
-#         self.space = self.font.size(" ")     
-#         self.desc = self.CreateDescription(description, 600, 0)
-#         self.options = self.CreateOptions(options)
         self.desc = description
         self.options = options
         self.effects = []
         self.regions = []   
         self.surf = "" 
         self.surfRect = ""         
-
-             
-#     def CreateDescription(self, text, width, align=0):
-#         doc = gui.Document(width=width) 
-#         doc.block(align=align)
-#         for word in text.split(" "): 
-#             doc.add(gui.Label(word))
-#             doc.space(self.space)
-#         return doc
-#     
-#     def CreateOptions(self, options): 
-#         docs = []
-#         for id, desc, effects, result in options:
-#             docDesc = self.CreateDescription(desc, 400, -1)
-#             docResult = self.CreateDescription(result, 400, -1)
-#             docs.append((id, docDesc, effects, docResult)) 
-#         return docs
     
     
 ##########################################################
@@ -238,12 +217,8 @@ class EventsReport(gui.Table):
     btnCoord = pygame.Rect(10, 325, 300, 40) 
     borderSize = 10
     label_height = 20     
-    descCoord = pygame.Rect( 5, 5, 625, 100)  
-    descBoxCoord = pygame.Rect( borderSize, borderSize+label_height, 630, 100)    
-    OptCoord = pygame.Rect(5, 110, 625, 120) 
-    OptBoxCoord = pygame.Rect(borderSize, 134, 630, 120) 
-    effectCoord = pygame.Rect(5, 235, 625, 50) 
-    effectBoxCoord = pygame.Rect(borderSize, 258,  630, 50)     
+    effectCoord = pygame.Rect(5, 5, 625, 200) 
+    effectBoxCoord = pygame.Rect(borderSize, borderSize+label_height,  630, 200)     
        
     def __init__(self, event, choice, **params):
         # Initialize internal object     
@@ -264,27 +239,12 @@ class EventsReport(gui.Table):
         
         # Create container
         c = gui.Container(width=640, heigth=400)
-          
-        # Description
-        doc = CreateDescription(self.gameEvent.desc, 600, align=-1)        
-        d = gui.ScrollArea(doc, self.descCoord.width, self.descCoord.height, hscrollbar=False,  vscrollbar=True)
-        c.add(d, self.descCoord.x, self.descCoord.y)   
-            
-        # Option
-        doc = CreateDescription(self.gameEvent.options[self.choice][1], 600, align=-1)        
-        d = gui.ScrollArea(doc, self.OptCoord.width, self.OptCoord.height, hscrollbar=False,  vscrollbar=True)
-        c.add(d, self.OptCoord.x, self.OptCoord.y)
  
         # Effect
-#         c.add(gui.Label("Les effets de votre désicion: %s" % self.gameEvent.options[self.choice][3]), self.effectCoord.x, self.effectCoord.y)
         doc = CreateDescription(self.gameEvent.options[self.choice][3], 600, align=-1)        
         d = gui.ScrollArea(doc, self.effectCoord.width, self.effectCoord.height, hscrollbar=False,  vscrollbar=True)
         c.add(d, self.effectCoord.x, self.effectCoord.y)
-        
-#         for i in range(1,3):
-#             c.add(gui.Label("   "), self.effectCoord.x, self.effectCoord.y + (i*self.label_height))    
-              
-             
+            
         self.tr()
         self.td(c,cls=self.cls+".main")   
         
@@ -294,10 +254,7 @@ class EventsReport(gui.Table):
         b.connect(gui.CLICK, self.action_Close)
         self.td(b, align=0, valign=0)      
         
-        #Add space at dialog bottom
-        self.tr() 
-        self.td(gui.Label("   " ))  
-  
+ 
          
     def action_Close(self):
         surf = self.get_toplevel().screen        
@@ -320,8 +277,6 @@ class EventsReport(gui.Table):
 
     def paint(self, surf):
         gui.Container.paint(self, surf)
-        self.DrawBorder(self.descBoxCoord, surf)
-        self.DrawBorder(self.OptBoxCoord, surf)
         self.DrawBorder(self.effectBoxCoord, surf)  
         if(self.isOpen == True):  
             pygame.display.update()

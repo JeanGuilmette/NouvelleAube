@@ -1,5 +1,5 @@
-#desktop background Nouvelle_Aube.jpg
-desktop background #708090
+desktop background Interface.png
+#desktop background #708090
  
 link font Vera.ttf 24
 link color #0000FF
@@ -144,7 +144,8 @@ dialog.main padding_right 8
 dialog.main padding_top 4
 dialog.main padding_bottom 4
 
-scrollarea.content background #add8e6
+#scrollarea.content background button.normal.tga
+#scrollarea.content background#add8e6
 scrollarea.content padding_left 1
 scrollarea.content padding_right 1
 scrollarea.content padding_top 1
@@ -167,6 +168,7 @@ dialog.title.label color #000000
 #container border_right 4
 #container border_color #FF0000
 
+#select.selected background #ff0000
 select.selected background select.selected.normal.tga
 select.selected:hover background select.selected.hover.tga
 select.selected:down background select.selected.down.tga
@@ -174,6 +176,10 @@ select.selected padding_left 4
 select.selected padding_right 4
 select.selected padding_top 1
 select.selected padding_bottom 1
+select.selected border_top 1
+select.selected border_right 1
+select.selected border_bottom 1
+select.selected border_left 1
 select.arrow background select.arrow.normal.tga
 select.arrow:hover background select.arrow.hover.tga
 select.arrow:down background select.arrow.down.tga
