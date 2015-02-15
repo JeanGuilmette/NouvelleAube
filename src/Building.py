@@ -43,6 +43,26 @@ buildingDesc = dict( \
     Centre_de_logistique_aeroportee  = "Centre de logistique aeroporte"
     )
 
+buildingEffect = dict( \
+    Ferme = dict( add = ["panic=15"], remove = ["panic=-5"]),
+    Mine  = dict( add = "", remove = ""),
+    Scierie = dict( add = "", remove = ""),
+    Forage_petrolier = dict( add = "", remove = ""),
+    camp_de_chasse  =  dict( add = "", remove = ""),
+    port = dict( add = "", remove = ""),
+    Zone_residentielle_importante = dict( add = "", remove = ""),
+    Ecole  = dict( add = "", remove = ""),
+    Stade = dict( add = "", remove = ""),
+    Centrale_de_surveillance = dict( add = "", remove = ""),
+    Prison  =  dict( add = "", remove = ""),
+    Bureaux_journalistiques = dict( add = "", remove = ""),
+    Parc =  dict( add = "", remove = ""),
+    Hopital  =  dict( add = "", remove = ""),
+    Entrepot = dict( add = "", remove = ""),
+    Centre_de_logistique_routiere = dict( add = "", remove = ""),
+    Centre_de_logistique_aeroportee  = dict( add = "", remove = ""),
+    )
+
 class Batiment(object):
     def __init__(self, name):
         self.name = name                                 # Name to identify building
@@ -74,7 +94,7 @@ class Batiment(object):
         return True if (self.worker > 0) else False
     
     def AssignWorker(self, nbrWorker):
-        limitMaxWorker = (self.workerMax * self.numberBuilding)
+        limitMaxWorker =  self.GetMaxWorker()
         self.worker = (self.worker + nbrWorker) if( (self.worker + nbrWorker) <= limitMaxWorker ) else limitMaxWorker
         self.worker = self.worker if (self.worker >= 0) else 0
         
@@ -90,10 +110,13 @@ class Batiment(object):
         
     def AddWorker(self):
         val = self.worker + 1
-        limitMaxWorker = self.workerMax * self.numberBuilding
+        limitMaxWorker = self.GetMaxWorker()
         self.worker = val if( val <= limitMaxWorker ) else limitMaxWorker
         
     def RemoveWorker(self):
         self.worker = self.worker - 1
         self.worker = self.worker if (self.worker >= 0) else 0  
+        
+    def GetMaxWorker(self):
+        return self.workerMax * self.numberBuilding
         

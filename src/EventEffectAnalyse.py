@@ -13,9 +13,16 @@ class EventImpact(object):
         if(len(evt.regions) > 0 and len(evt.effects) > 0):
             for s in evt.regions:
                 for item in evt.effects: 
-                    self.Analyze(evt.name, s, item)          
+                    self.Analyze(evt.name, s, item)    
+                       
+    def ApplyBuildingEffect(self,  evtName, secteur, effects):
+        if(len(effects) > 0):
+             for item in effects: 
+                self.Analyze(evtName, secteur, item)                      
+                       
     
     def Analyze(self, evtName, secteur, effect):
+      
         t = effect.split('=')
         token = t[0]
         value = t[1]

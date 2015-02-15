@@ -7,6 +7,7 @@ import Building
 import CustomWidget
 import Island
 import Resources
+import EventEffectAnalyse
 
 
 import sys; sys.path.append("../lib"); sys.path.append("../src")
@@ -53,11 +54,12 @@ class WorkerSlider(gui.HSlider):
         self.buildingName = buildingName
         self.zoneCtl = activeZone
         actual = self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].worker  
-        workermax = self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].workerMax 
+        workermax = self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].GetMaxWorker() 
         gui.HSlider.__init__(self, value=actual,min=0,max=workermax,size=32,width=128,height=15) 
             
     def paint(self, surf):
         self.value = self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].worker
+        self.max =  self.island.secteur[self.zoneCtl.value].batiments[self.buildingName].GetMaxWorker()
         gui.HSlider.paint(self, surf)
  
  
@@ -132,6 +134,7 @@ class BuildMenu(gui.Dialog):
         title = gui.Label("Building management")
         self.island = island
         self.ActiveZone = gui.Select(value=Island.LANDING_REGION_NAME , width=160, height=20)
+        self.ImpactAnalyse = EventEffectAnalyse.EventImpact(island)
         
         t1 = gui.Table()
         
@@ -193,11 +196,11 @@ class BuildMenu(gui.Dialog):
         if(result != True):
             msgbox = CustomWidget.MessageBox("Add Building", result)
             msgbox.open()
-            
-        print(result)
+        self.ImpactAnalyse.ApplyBuildingEffect("Add Building", self.ActiveZone.value, Building.buildingEffect[Value]["add"])
         
     def action_deleteBuilding(self, Value):
         self.island.secteur[self.ActiveZone.value].RemoveBuilding(Value)
+        self.ImpactAnalyse.ApplyBuildingEffect("Remove Building", self.ActiveZone.value, Building.buildingEffect[Value]["remove"])        
     
     def adjustWorker(self, ctl, building):
         zone = self.island.secteur[self.ActiveZone.value]
@@ -207,8 +210,8 @@ class BuildMenu(gui.Dialog):
             
         if(ctl.value < 0):
             ctl.value = 0
-        if(ctl.value > zone.batiments[building].workerMax):
-            ctl.value = zone.batiments[building].workerMax
+        if(ctl.value > zone.batiments[building].GetMaxWorker()):
+            ctl.value = zone.batiments[building].GetMaxWorker()
         if(ctl.value >= zone.GetAvailableWorker()):
             ctl.value = zone.GetAvailableWorker()
           
