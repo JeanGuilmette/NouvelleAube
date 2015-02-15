@@ -42,12 +42,20 @@ class Secteur():
                 return "No ressource"
             
         # Check space avaialble
-        if( len(self.spaceList) <= 0):
-            print("Not enough space used: %d  max: %d" % (len(self.spaceList), self.batiments[buildingType].numberBuilding ))
+        pos = "Not Found"
+        for t in self.spaceList:
+            if(t[2] == Building.buildingDef[buildingType]["pos"]):
+                pos = (t[0], t[1])
+                self.spaceList.remove(t)
+                break
+        
+        if( pos == "Not Found"):
+            msg = "Not enough space used: %d  max: %d" % (len(self.spaceList), self.batiments[buildingType].numberBuilding )
+            print(msg)
             return "No space"
                
         #Add new building        
-        self.batiments[buildingType].Add(self.spaceList.pop(0))
+        self.batiments[buildingType].Add(pos)
         
         #Remove resources and use space
         for resNeeded in self.batiments[buildingType].buildCost:
@@ -56,7 +64,8 @@ class Secteur():
     
     def RemoveBuilding(self, buildingType):
         pos = self.batiments[buildingType].Remove()
-        self.spaceList.insert(0, pos) 
+        t = (pos[0], pos[1], Building.buildingDef[buildingType]["pos"])
+        self.spaceList.insert(0, t) 
         
     def AddWorker(self, building):
         if(self.population.ActivateWorker() == True):
