@@ -29,7 +29,7 @@ class BuildingLabel(gui.Label):
         gui.Label.paint(self, surf)
         
  
- ##########################################################
+##########################################################
 #
 ##########################################################       
 class WorkerLabel(gui.Label):
@@ -135,6 +135,7 @@ class BuildMenu(gui.Dialog):
         self.island = island
         self.ActiveZone = gui.Select(value=Island.LANDING_REGION_NAME , width=160, height=20)
         self.ImpactAnalyse = EventEffectAnalyse.EventImpact(island)
+        c = gui.Container(width=595, height=471)
         
         t1 = gui.Table()
         
@@ -180,21 +181,8 @@ class BuildMenu(gui.Dialog):
             t.td(b)   
 
         t1.td(t)
-#         t2 = gui.Table()
-#         t2.tr()
-#         t2.td(buildingName)
-#         buildingName.connect(gui.CHANGE, self.actionBuildingDesc, buildingName)
-        
-#         t2.tr()
-#         doc =  CreateDescription("Ferme", 400)
-#         self.displayDesc = gui.ScrollArea(doc, 400, 300, hscrollbar=False,  vscrollbar=True)
-#         t2.td(self.displayDesc)
-        
-#         t1.td(t2)
-                
-#         s = pygame.image.load("image/Nouvelle_Aube.jpg")
-#         gui.Dialog.__init__(self,title,t, background=gui.Image(s))
-        gui.Dialog.__init__(self,title, t1)        
+        c.add(t1, 40, 20)
+        gui.Dialog.__init__(self,title, c, backgound="image/Building_Interface.png" )        
         
     def actionBuildingDesc(self, ctl):
         self.displayDesc.widget = CreateDescription(ctl.value, 400)
@@ -242,10 +230,12 @@ class TransferMenu(gui.Dialog):
     def __init__(self, island):
         title = gui.Label("Resources Management")
         self.island = island
-        self.ZoneSrc = gui.Select(value=Island.LANDING_REGION_NAME , width=160, height=20)
-        self.ZoneDst = gui.Select(value="RegionB" , width=160, height=20)        
-        t = gui.Table()
+        self.ZoneSrc = gui.Select(value=Island.LANDING_REGION_NAME , width=110, height=20)
+        self.ZoneDst = gui.Select(value="RegionB" , width=110, height=20)   
+        
+        c = gui.Container(width=550, height=200)  
         self.value = gui.Form()
+        t = gui.Table()
         self.widgetList = []
         
         # Origin and destination zone
@@ -282,7 +272,8 @@ class TransferMenu(gui.Dialog):
             t.td(s)
             t.td(CustomWidget.StockLabel(self.island, self.ZoneDst, item))     
 
-        gui.Dialog.__init__(self,title,t)
+        c.add(t, 20, 20)
+        gui.Dialog.__init__(self, title, c, backgound="image/Building_Interface.png" )
 
     def action_TransferPopulation(self, slider):
         slider.populationToMove

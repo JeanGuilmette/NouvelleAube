@@ -60,7 +60,7 @@ class TileFont:
             s = pygame.Surface(size).convert_alpha()
             s.fill((0,0,0,0))
         else:
-            s = pygame.Surface(size).convert()
+            s = pygame.Surface(size).convert_alpha()
             s.fill(background)
             
         if not self.sensitive: text = text.lower()
@@ -112,7 +112,7 @@ class BorderFont:
             s = pygame.Surface(size).convert_alpha()
             s.fill((0,0,0,0))
         else:
-            s = pygame.Surface(size).convert()
+            s = pygame.Surface(size).convert_alpha()
             s.fill(background)
             
         bg = self.font.render(text,antialias,self.color)

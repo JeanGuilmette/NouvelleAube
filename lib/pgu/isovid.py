@@ -178,7 +178,7 @@ class Isovid(Vid):
          
         img = self.tiles[0].image
         
-        self.tiles[0].image = pygame.Surface((w,h))
+        self.tiles[0].image = pygame.Surface((w,h)).convert_alpha()
         r = Vid.run_codes(self,cdata,rect)
         self.tiles[0].image = img
         return r

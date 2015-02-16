@@ -126,8 +126,8 @@ vscrollbar minus vslider.up.tga
 vscrollbar plus vslider.down.tga
 
 
-#dialog background Nouvelle_Aube.jpg
-dialog background #add8e6
+dialog background Building_Interface.png
+#dialog background #add8e6
 #dialog background dialog.bar.png
 xdialog.bar background dialog.bar.png
 dialog.bar padding_left 8
@@ -150,10 +150,20 @@ scrollarea.content padding_left 1
 scrollarea.content padding_right 1
 scrollarea.content padding_top 1
 scrollarea.content padding_bottom 1
-scrollarea.option border_top 1
-scrollarea.option border_right 1
-scrollarea.option border_bottom 1
-scrollarea.option border_left 1
+#scrollarea.content border_top 1
+#scrollarea.content border_right 1
+#scrollarea.content border_bottom 1
+#scrollarea.content border_left 1
+scrollarea.option border_top 0
+scrollarea.option border_right 0
+scrollarea.option border_bottom 0
+scrollarea.option border_left 0
+
+document color #FF0000
+document border_top 0
+document border_right 0
+document border_bottom 0
+document border_left 0
 
 dialog.title.label font Vera.ttf 16
 dialog.title.label color #000000

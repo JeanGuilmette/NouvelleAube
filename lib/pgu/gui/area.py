@@ -50,24 +50,25 @@ class SlideBox(container.Container):
     
     def paint(self, s):
         #if not hasattr(self,'surface'):
-        self.surface = pygame.Surface((self.max_rect.w,self.max_rect.h),0,s)
-        #self.surface.fill((0,0,0,0))
-        pguglobals.app.theme.render(self.surface,self.style.background,pygame.Rect(0,0,self.max_rect.w,self.max_rect.h))
-        self.bkgr = pygame.Surface((s.get_width(),s.get_height()),0,s)
+        self.surface = pygame.Surface((self.max_rect.w,self.max_rect.h),0,s).convert_alpha()
+        self.surface.fill((0,0,0,0))
+#         pguglobals.app.theme.render(self.surface,self.style.background,pygame.Rect(0,0,self.max_rect.w,self.max_rect.h))
+        self.bkgr = pygame.Surface((s.get_width(),s.get_height()),0,s).convert_alpha()
         self.bkgr.blit(s,(0,0))
-        container.Container.paint(self,self.surface)
+#         container.Container.paint(self,self.bkgr)
+        container.Container.paint(self,self.surface)        
         s.blit(self.surface,(-self.offset[0],-self.offset[1]))
         self._offset = self.offset[:]
         return
         
-    def paint_for_when_pygame_supports_other_tricks(self,s): 
-        #this would be ideal if pygame had support for it!
-        #and if pgu also had a paint(self,s,rect) method to paint small parts
-        sr = (self.offset[0],self.offset[1],self.max_rect.w,self.max_rect.h)
-        cr = (-self.offset[0],-self.offset[1],s.get_width(),s.get_height())
-        s2 = s.subsurface(sr)
-        s2.set_clip(cr)
-        container.Container.paint(self,s2)
+#     def paint_for_when_pygame_supports_other_tricks(self,s): 
+#         #this would be ideal if pygame had support for it!
+#         #and if pgu also had a paint(self,s,rect) method to paint small parts
+#         sr = (self.offset[0],self.offset[1],self.max_rect.w,self.max_rect.h)
+#         cr = (-self.offset[0],-self.offset[1],s.get_width(),s.get_height())
+#         s2 = s.subsurface(sr)
+#         s2.set_clip(cr)
+#         container.Container.paint(self,s2)
         
     def proxy_paint(self, s):
         container.Container.paint(self, surface.ProxySurface(parent=None, 
@@ -89,11 +90,11 @@ class SlideBox(container.Container):
         else:
             s.blit(self.bkgr,(0,0))
             sub = pygame.Rect(self.offset[0],self.offset[1],min(s.get_width(),self.max_rect.w-self.offset[0]),min(s.get_height(),self.max_rect.h-self.offset[1]))
-#             print sub
-#             print self.surface.get_width(),self.surface.get_height()
-#             print s.get_width(),s.get_height()
-#             print self.offset
-#             print self.style.width,self.style.height
+#             print(sub)
+#             print(self.surface.get_width(),self.surface.get_height())
+#             print(s.get_width(),s.get_height())
+#             print(self.offset)
+#             print(self.style.width,self.style.height)
             s.blit(self.surface.subsurface(sub),(0,0))
             rets.append(s_rect)
         self._offset = self.offset[:]
@@ -197,14 +198,14 @@ class ScrollArea(table.Table):
         
         box.rect.w,box.rect.h = box.resize()
         
-        #print widget.rect
-        #print box.rect
-        #r = table.Table.resize(self,width,height)
-        #print r
-        #return r
-        
+#         print widget.rect
+#         print box.rect
+#         r = table.Table.resize(self,width,height)
+#         print r
+#         return r
+#         
         #print box.offset
-        
+         
 #         #this old code automatically adds in a scrollbar if needed
 #         #but it doesn't always work
 #         self.vscrollbar = None

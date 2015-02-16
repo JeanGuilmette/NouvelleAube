@@ -253,7 +253,7 @@ class Vid:
 
         """
         w,h = self.size
-        img = pygame.Surface((w,h),SWSURFACE,32)
+        img = pygame.Surface((w,h),SWSURFACE,32).convert_alpha()
         img.fill((0,0,0,0))
         for y in range(0,h):
             for x in range(0,w):

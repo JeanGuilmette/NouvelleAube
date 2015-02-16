@@ -95,6 +95,7 @@ class MapDisplay(gui.Widget):
         scale1 = pygame.transform.smoothscale(zone.draw(), (surf.get_width(), surf.get_height()))
         surf.blit(scale1, (0, 0))
 
+
 class MessageBox(gui.Dialog):
     def __init__(self, Title, msg, icon=None): 
         
@@ -109,8 +110,7 @@ class MessageBox(gui.Dialog):
         b.connect(gui.CLICK, self.action_quit)  
         t.td(b)  
             
-        gui.Dialog.__init__(self, title, t, background=( 128, 128, 128, 10) )
-#         gui.Dialog.__init__(self, title, t )       
+        gui.Dialog.__init__(self, title, t, background=( 128, 128, 128, 0) )
           
     def action_quit(self):
         pygame.event.post(pygame.event.Event(pygame.QUIT))  

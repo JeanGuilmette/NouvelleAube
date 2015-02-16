@@ -12,7 +12,7 @@ sys.path.append("../src")
 
 from pgu import gui
 from pygame.transform import smoothscale
-from pygame.tests import surflock_test
+
 
 
 ##########################################################
@@ -59,9 +59,6 @@ class EventsMgr(object):
                 del self.eventList[date]
         
         return False
-        
-
-     
 
    
 ##########################################################
@@ -80,7 +77,6 @@ class EventsViewer(gui.Table):
     OptIdBoxCoord = pygame.Rect(10, 184, 198, 320)  
     OptCoord = pygame.Rect(204, 140, 428, 320) 
     OptBoxCoord = pygame.Rect(212, 184, 428, 320) 
- 
     
        
     def __init__(self, island, event, **params):
