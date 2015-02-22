@@ -7,6 +7,7 @@ import Building
 import random
 import EventAdvancement
 from Defines import COLORS
+import StoryTelling
 
 ########################################
 class Secteur():
@@ -170,13 +171,22 @@ class Secteur():
     def UpdatePopulation(self):
         self.population.PopulationAdjustment()
         
-    def Initialize(self):
-        self.resources["Agriculture"].stock = 5000
-        self.resources["Chasse"].stock = 1000
-        self.resources["Peche"].stock = 1000               
-        self.resources["Bois"].stock = 1000
-        self.resources["Minerais"].stock = 1000
-        self.population.SetCurrentPopulation(1000)
+    def Initialize(self, startup_package):
+        # Set startup ressources available
+        for r in  self.resources:
+            if(r in startup_package.Effects):
+                self.ModifyRessource(r,  startup_package.Effects[r])
+        
+        #set startup population characteristique
+        self.population.SetCurrentPopulation(startup_package.Effects ["Population"])
+        self.population.sante= startup_package.Effects ["Sante"]
+        self.population.influence =startup_package.Effects ["Influence"] 
+        self.population.bonheur = startup_package.Effects ["Bonheur"] 
+        self.population.education =  startup_package.Effects ["Education"] 
+        self.population.panique = startup_package.Effects ["Panique"]
+        self.criminalite = startup_package.Effects ["Criminalite"] 
+          
+        
 
     def UpdateExpandRessource(self):
         if(self.population.current > 0):

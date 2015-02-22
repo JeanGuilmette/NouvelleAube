@@ -112,11 +112,14 @@ class StoryEffects():
     Panique = (0),
 
     Bois  = (1200),
-    Minerai  = (200),
+    Minerais  = (200),
 
-    Nourriture  = (1800),
+
     Petrole = (100),
-    Population = (3000)
+    Population = (3000),
+    Agriculture = (1800),
+    Chasse = (0),
+    Peche = (0)
     )
 
 

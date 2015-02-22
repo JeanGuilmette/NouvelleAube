@@ -5,12 +5,12 @@
 
 import pygame
 pygame.init()
+import Musique
 import EnjeuxSurvieEngine
 import Introduction
 import MenuPrincipale
 import EndGame
 import StoryTelling
-import Musique
 import EventAdvancement
 
 def CreateMainWindows():

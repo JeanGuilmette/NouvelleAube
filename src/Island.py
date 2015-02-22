@@ -2,6 +2,7 @@ __author__ = 'SJS'
 import Zone
 from Building import GENERAL, SOUSTERRAIN, RIVE, AERIEN
 import Musique
+import StoryTelling
 
 OVERVIEW_ZONE_NAME = "Region"
 LANDING_REGION_NAME = "RegionA"
@@ -58,7 +59,7 @@ class Island(object):
     def __create(self):
         for sectorName in sorted(secteurDef):
             self.secteur[sectorName] = Zone.Secteur(sectorName, secteurDef[sectorName]["terType"], secteurDef[sectorName]["resList"], secteurDef[sectorName]["image"], secteurSpaceDef[sectorName])
-        self.secteur[LANDING_REGION_NAME].Initialize()
+        self.secteur[LANDING_REGION_NAME].Initialize(StoryTelling.Ressources_depart)
         self.__activeZone = OVERVIEW_ZONE_NAME
 
     def GetActiveZone(self):

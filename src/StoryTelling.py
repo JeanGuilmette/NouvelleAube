@@ -86,7 +86,7 @@ class StoryTelling():
                 Base_Sociale.solidarite +=1
             #JETER LE SURPLUS PAR DESSUS BORD
             elif self.choicetaken == "4":
-                Story.StoryEffects.Effects ["Population"] = Story.StoryEffects.Effects ["Nourriture"] /10
+                Story.StoryEffects.Effects ["Population"] = Story.StoryEffects.Effects ["Population"] /10
                 self.add("Influence", 0, 20)
                 self.add("Bonheur", 0, 35)
                 self.add("Criminalite", 15, 0)
@@ -166,8 +166,8 @@ class StoryTelling():
                     self.add("Influence", 0, 5)
                     self.add("Bonheur", 20, 0)
                     self.add("Criminalite", 15, 0)
-                    self.add("Minerai", 300, 0)
-                    self.add("Nourriture", 600, 0)
+                    self.add("Minerais", 300, 0)
+                    self.add("Agriculture", 600, 0)
                     #VERIFIT SI CONTAGION
                     if self.verifyepidemie(65)==True :
                         self.Recontagion(display)
@@ -236,8 +236,8 @@ class StoryTelling():
                     self.add("Influence", 0, 5)
                     self.add("Bonheur", 20, 0)
                     self.add("Criminalite", 15, 0)
-                    self.add("Minerai", 300, 0)
-                    self.add("Nourriture", 600, 0)
+                    self.add("Minerais", 300, 0)
+                    self.add("Agriculture", 600, 0)
                     self.add("Population", 80, 0)
                     if self.verifyepidemie(30)==True :
                         # POSSIBILITE DE CONTAGION
@@ -905,13 +905,13 @@ class StoryTelling():
 
         Story.Story( "Stock de ressources:",547 , 250, 750,  displ)
         Story.Story( "Bois:" , 547 , 290, 750,  displ)
-        Story.Story( "Minerai:", 547 , 315, 750,  displ)
-        Story.Story( "Nourriture:" , 547 , 340, 750,  displ)
+        Story.Story( "Minerais:", 547 , 315, 750,  displ)
+        Story.Story( "Agriculture:" , 547 , 340, 750,  displ)
         Story.Story( "Pétrole:" , 547 , 365, 750,  displ)
 
         Story.Story( str(Ressources_depart.Effects['Bois']), 717 , 290, 750,  displ)
-        Story.Story( str(Ressources_depart.Effects['Minerai']), 717 , 315, 750,  displ)
-        Story.Story( str(Ressources_depart.Effects['Nourriture']), 717 , 340, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Minerais']), 717 , 315, 750,  displ)
+        Story.Story( str(Ressources_depart.Effects['Agriculture']), 717 , 340, 750,  displ)
         Story.Story( str(Ressources_depart.Effects['Petrole']), 717 , 365, 750,  displ)
 
         whatAction(displ,[400,600],'clic')
@@ -1288,8 +1288,8 @@ class StoryTelling():
 
     def ALTRUISME(self):
          self.set('Bois', 1200)
-         self.set('Minerai', 200)
-         self.set('Nourriture',1800)
+         self.set('Minerais', 200)
+         self.set('Agriculture',1800)
 
 
          self.set('Criminalite', 38)
@@ -1303,16 +1303,16 @@ class StoryTelling():
     def AUDACE(self):
         if FacteurHasard() < 50:
             self.set('Bois', 2400)
-            self.set('Minerai', 400)
-            self.set('Nourriture', 3600)
+            self.set('Minerais', 400)
+            self.set('Agriculture', 3600)
             self.set('Petrole',400)
 
             self.set('Influence', 63)
             self.set('Bonheur', 63)
         else:
             self.set('Bois', 1200)
-            self.set('Minerai', 200)
-            self.set('Nourriture',1800)
+            self.set('Minerais', 200)
+            self.set('Agriculture',1800)
 
             self.set('Sante', 12)
             self.set('Influence', 12)
@@ -1323,8 +1323,8 @@ class StoryTelling():
 
     def ARGENT(self):
         self.set('Bois', 1800)
-        self.set('Minerai', 300)
-        self.set('Nourriture',2700)
+        self.set('Minerais', 300)
+        self.set('Agriculture',2700)
         self.set('Petrole',250)
 
         self.set('Education', 63)
@@ -1336,8 +1336,8 @@ class StoryTelling():
 
     def BONHEUR(self):
         self.set('Bois', 1200)
-        self.set('Minerai', 200)
-        self.set('Nourriture',1800)
+        self.set('Minerais', 200)
+        self.set('Agriculture',1800)
 
         #centre multim/dia bonus batiment de depart
 
@@ -1349,8 +1349,8 @@ class StoryTelling():
 
     def EQUITE(self):
         self.set('Bois', 1200)
-        self.set('Minerai', 200)
-        self.set('Nourriture',1800)
+        self.set('Minerais', 200)
+        self.set('Agriculture',1800)
 
         self.set('Criminalite', 38)
         self.set('Influence', 75)
@@ -1359,8 +1359,8 @@ class StoryTelling():
 
     def GALANTERIE(self):
         self.set('Bois', 1200)
-        self.set('Minerai', 200)
-        self.set('Nourriture',1800)
+        self.set('Minerais', 200)
+        self.set('Agriculture',1800)
 
         self.set('Population', 3500)
 
@@ -1373,8 +1373,8 @@ class StoryTelling():
 
     def INDUSTRIE(self):
         self.set('Bois', 900)
-        self.set('Minerai', 150)
-        self.set('Nourriture',1350)
+        self.set('Minerais', 150)
+        self.set('Agriculture',1350)
         self.set('Petrole',75)
         # + un batiment special de production, efficace mais polluant
 
@@ -1387,8 +1387,8 @@ class StoryTelling():
 
     def ORDRE(self):
         self.set('Bois', 1200)
-        self.set('Minerai', 200)
-        self.set('Nourriture',1800)
+        self.set('Minerais', 200)
+        self.set('Agriculture',1800)
 
         self.set('Criminalite', 0)
         self.set('Influence', 100)
@@ -1399,8 +1399,8 @@ class StoryTelling():
 
     def SANTE(self):
         self.set('Bois', 1200)
-        self.set('Minerai', 200)
-        self.set('Nourriture',1800)
+        self.set('Minerais', 200)
+        self.set('Agriculture',1800)
 
         self.set('Education', 63)
         self.set('Sante', 100)
