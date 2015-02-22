@@ -1,5 +1,5 @@
 __author__ = 'Jean-Alexandre'
-
+import pygame
 BradvaNegociation = False
 BradvaWar = False
 
@@ -61,3 +61,24 @@ WIN = False
 # WIN = True
 # The_EndingText = Fin_SAS
 # Linkmessage = Gagne
+
+
+#################################################################
+#SONS
+
+sound_validation = pygame.mixer.Sound("Soundtrack/VerificationTone6.ogg")
+sound_buttonpassOver = pygame.mixer.Sound("Soundtrack/Signal5.ogg")
+sound_Typing = pygame.mixer.Sound("Soundtrack/ButtonClicks10.ogg")
+sound_Woosh = pygame.mixer.Sound("Soundtrack/StaticElectric3.ogg")
+sound_InvalidChoice = pygame.mixer.Sound("Soundtrack/ErrorTone13.ogg")
+sound_ValidChoiceOK = pygame.mixer.Sound("Soundtrack/MusicFXSimple1.ogg")
+sound_QuitOrReturn = pygame.mixer.Sound("Soundtrack/MusicFXSimple2.ogg")
+sound_BuildingDestroyed = pygame.mixer.Sound("Soundtrack/Explosion.ogg")
+sound_BuildingContructed= pygame.mixer.Sound("Soundtrack/BuildingConstruction.ogg")
+
+
+
+
+#######################################################################
+ARNAQUED=False
+ARNAQUED_SECTOR = ""

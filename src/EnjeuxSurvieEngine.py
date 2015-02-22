@@ -86,6 +86,7 @@ class EnjeuxSurvieEngine(object):
         if EventAdvancement.KarmaVesuve == True:
             EventDef.evt_Éruption_vésuvienne.regions =  EventGenerator.AreaOfEffect(self.island,"all")
             self.evtMgr.add(EventDef.evt_Éruption_vésuvienne)
+            
     def UpdateWorld(self):
         # Update game time
         if(self.mainGUI.gameTime.Tick() == True):

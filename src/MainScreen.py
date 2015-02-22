@@ -7,7 +7,8 @@ from Island import OVERVIEW_ZONE_NAME
 import Island
 import BuildMenu
 import Events
-        
+import EventAdvancement
+import Musique
         
                     
 class MainScreen(gui.Desktop):
@@ -84,6 +85,7 @@ class MainScreen(gui.Desktop):
         self.gameTime.day = ctl.value
 
     def ChangeZone(self):
+        Musique.PlaySound(EventAdvancement.sound_validation)
         print(self.region.value)
         self.island.SetActiveZone(self.region.value)  
                
@@ -106,14 +108,17 @@ class MainScreen(gui.Desktop):
         pass
 
     def action_quit(self, value):
+        Musique.PlaySound(EventAdvancement.sound_QuitOrReturn)
         self.quit()
         pygame.event.post(pygame.event.Event(pygame.QUIT))       
 
     def action_building(self, value):
+        Musique.PlaySound(EventAdvancement.sound_validation)
         d = BuildMenu.BuildMenu(self.island, self.region.value)            
         d.open()
         
     def action_transfer(self, value):
+        Musique.PlaySound(EventAdvancement.sound_validation)
         d = BuildMenu.TransferMenu(self.island)            
         d.open() 
       

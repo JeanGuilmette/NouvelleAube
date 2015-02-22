@@ -7,7 +7,7 @@ import math
 import EventAdvancement
 from Defines import COLORS
 from pygame.locals import *
-
+import Musique
 def FacteurHasard():
     pourcentage = random.randrange (1,100)
     return pourcentage
@@ -25,10 +25,7 @@ def Effet():
                 StoryEffects.Effects.naturedeleffet += naturedeleffet.modifier
 
 
-def StartMusic(music):
-    pygame.mixer.music.load(music)
-    pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
-    pygame.mixer.music.play()
+
 
 
 
@@ -57,8 +54,8 @@ class StoryTelling():
          #self.PorteAvions(display)
         # self.Recontagion(display)
          #self.Rencontre(display)
-
-
+        #Musique.StartMusic("Soundtrack/Plus_Rien.ogg")
+        #Musique.StartMusic("Soundtrack/OuvertureMusic.ogg")
 
         a = Story.StoryEffects.Effects
         #INTRODUCTION, PAS DE CHOIX
@@ -342,8 +339,9 @@ class StoryTelling():
         self.Arrivee(display, 2000)
 
 
+
     def add(self, variableamodifier, modificateurPOSITIF, modificateurNEGATIF):
-        Ressources_depart.Effects [variableamodifier] = Story.StoryEffects.Effects [variableamodifier] + modificateurPOSITIF - modificateurNEGATIF
+        Ressources_depart.Effects [variableamodifier] = Ressources_depart.Effects [variableamodifier] + modificateurPOSITIF - modificateurNEGATIF
 
     def Backround(self, displ):
         backround = pygame.image.load("image/Nouvelle_Aube.jpg").convert()
@@ -379,7 +377,7 @@ class StoryTelling():
         x=25
         y=50
 
-
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while running == True:
             if x < 939:
                 x=x+100
@@ -422,7 +420,7 @@ class StoryTelling():
         x=931
         y=691
 
-
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while running == True:
             if x > 2:
                 x=int(x-(930/30))
@@ -465,6 +463,7 @@ class StoryTelling():
         x=0
         y=691
         run = True
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while run == True:
             if x < 939:
                 x=int(x+(930/30))
@@ -516,7 +515,7 @@ class StoryTelling():
      #   pygame.display.flip()
       #  pygame.time.wait(temps)
         whatAction(displ, [400,600],'clic')
-
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         running = True
         x=931
         y=691
@@ -533,6 +532,7 @@ class StoryTelling():
         x=0
         y=691
         runner =True
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while runner == True:
             if x <939:
                 x=int(x+(930/30))
@@ -557,6 +557,7 @@ class StoryTelling():
         running = True
         x=931
         y=691
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while running == True:
             if x > 2:
                 x=int(x-(930/30))
@@ -570,6 +571,7 @@ class StoryTelling():
         x=0
         y=691
         runner =True
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while runner == True:
             if x <939:
                 x=int(x+(930/30))
@@ -591,6 +593,7 @@ class StoryTelling():
         running = True
         x=931
         y=691
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while running == True:
             if x > 2:
                 x=int(x-(930/30))
@@ -604,6 +607,7 @@ class StoryTelling():
         x=0
         y=691
         runner =True
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while runner == True:
             if x <939:
                 x=int(x+(930/30))
@@ -624,6 +628,7 @@ class StoryTelling():
         running = True
         x=931
         y=691
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while running == True:
             if x > 2:
                 x=int(x-(930/30))
@@ -637,6 +642,7 @@ class StoryTelling():
         x=0
         y=691
         runner =True
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while runner == True:
             if x <939:
                 x=int(x+(930/30))
@@ -658,6 +664,7 @@ class StoryTelling():
         running = True
         x=931
         y=691
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while running == True:
             if x > 2:
                 x=int(x-(930/30))
@@ -671,6 +678,7 @@ class StoryTelling():
         x=0
         y=691
         runner =True
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while runner == True:
             if x <939:
                 x=int(x+(930/30))
@@ -691,6 +699,7 @@ class StoryTelling():
         running = True
         x=931
         y=691
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while running == True:
             if x > 2:
                 x=int(x-(930/30))
@@ -704,6 +713,7 @@ class StoryTelling():
         x=0
         y=691
         runner =True
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while runner == True:
             if x <939:
                 x=int(x+(930/30))
@@ -726,6 +736,7 @@ class StoryTelling():
         running = True
         x=931
         y=691
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while running == True:
             if x > 2:
                 x=int(x-(930/30))
@@ -739,6 +750,7 @@ class StoryTelling():
         x=0
         y=691
         runner =True
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while runner == True:
             if x <939:
                 x=int(x+(930/30))
@@ -781,6 +793,7 @@ class StoryTelling():
         running = True
         x=931
         y=691
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while running == True:
             if x > 2:
                 x=int(x-(930/30))
@@ -794,6 +807,7 @@ class StoryTelling():
         x=0
         y=691
         runner =True
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while runner == True:
             if x <939:
                 x=int(x+(930/30))
@@ -834,6 +848,7 @@ class StoryTelling():
         running = True
         x=931
         y=691
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while running == True:
             if x > 2:
                 x=int(x-(930/30))
@@ -847,6 +862,7 @@ class StoryTelling():
         x=0
         y=691
         runner =True
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         while runner == True:
             if x <939:
                 x=int(x+(930/30))
@@ -951,6 +967,7 @@ class StoryTelling():
 
         Ressources_Prevues =pygame.image.load("image/ISaveTheWorld/Communstartingressources .png").convert_alpha()
         ISaveTheWorld_interface = pygame.image.load("image/ISaveTheWorld/interfaceGeneral.png").convert_alpha()
+        lastPOS = 0
         while run==True:
             clock.tick(30)
             if etat == 'choix de concept':
@@ -965,6 +982,7 @@ class StoryTelling():
                             # checking part
                         if  posX >75 and posX <474  :
                             if posY >76  and posY <109 :
+                                Musique.PlaySound(EventAdvancement.sound_validation)
                                 self.ALTRUISME()
                                 CheckingCheck.checked = True
                                 self.Backround(displ)
@@ -976,10 +994,11 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteALTRUISME,475,50, 809,displ,467, 22 )
-                                whatAction(displ,[621,463],'clic')
+
 
 
                             if posY > 142 and posY < 172:
+                                Musique.PlaySound(EventAdvancement.sound_validation)
                                 self.AUDACE()
                                 CheckingCheck.checked = True
                                 self.Backround(displ)
@@ -997,9 +1016,10 @@ class StoryTelling():
                                 displ.blit(ISaveTheWorld_selec_Audace,[41,34])
                                 CheckingCheck(displ)
                                 Story.Story(Story.Texte.iTexteAUDACE2,475,50, 809,displ,450, 22 )
-                                whatAction(displ,[621,463],'clic')
+
 
                             if posY >208  and posY <241 :
+                                Musique.PlaySound(EventAdvancement.sound_validation)
                                 self.ARGENT()
                                 CheckingCheck.checked = True
                                 self.Backround(displ)
@@ -1010,10 +1030,11 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteARGENT,475,50, 809,displ,467, 22 )
-                                whatAction(displ,[621,463],'clic')
+
 
 
                             if posY >275  and posY <307 :
+                                Musique.PlaySound(EventAdvancement.sound_validation)
                                 self.BONHEUR()
                                 CheckingCheck.checked = True
                                 self.Backround(displ)
@@ -1031,10 +1052,11 @@ class StoryTelling():
                                 CheckingCheck(displ)
                                 displ.blit(Ressources_Prevues,[515,506])
                                 Story.Story(Story.Texte.iTexteBONHEUR2,475,50, 809,displ,450, 22 )
-                                whatAction(displ,[621,463],'clic')
+
 
 
                             if posY >341  and posY <374 :
+                                Musique.PlaySound(EventAdvancement.sound_validation)
                                 self.EQUITE()
                                 CheckingCheck.checked = True
                                 self.Backround(displ)
@@ -1045,10 +1067,11 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteEQUITE,475,50, 809,displ,467, 22 )
-                                whatAction(displ,[621,463],'clic')
+
 
 
                             if posY >408  and posY < 443:
+                                Musique.PlaySound(EventAdvancement.sound_validation)
                                 self.GALANTERIE()
                                 CheckingCheck.checked = True
                                 self.Backround(displ)
@@ -1066,11 +1089,12 @@ class StoryTelling():
                                 CheckingCheck(displ)
                                 displ.blit(Ressources_Prevues,[515,506])
                                 Story.Story(Story.Texte.iTexteGALANTERIE2,475,50, 809,displ,450, 22 )
-                                whatAction(displ,[621,463],'clic')
+
 
 
 
                             if posY > 471 and posY <505 :
+                                Musique.PlaySound(EventAdvancement.sound_validation)
                                 self.INDUSTRIE()
                                 CheckingCheck.checked = True
                                 self.Backround(displ)
@@ -1081,10 +1105,11 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteINDUSTRIE,475,50, 809,displ,467, 22 )
-                                whatAction(displ,[621,463],'clic')
+
 
 
                             if posY > 538 and posY < 570 :
+                                Musique.PlaySound(EventAdvancement.sound_validation)
                                 self.ORDRE()
                                 CheckingCheck.checked = True
                                 self.Backround(displ)
@@ -1095,10 +1120,11 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteORDRE,475,50, 809,displ,467, 22 )
-                                whatAction(displ,[621,463],'clic')
+
 
 
                             if posY >597  and posY <629:
+                                Musique.PlaySound(EventAdvancement.sound_validation)
                                 self.SANTE()
                                 CheckingCheck.checked = True
                                 self.Backround(displ)
@@ -1109,100 +1135,133 @@ class StoryTelling():
 
                                 pygame.display.flip()
                                 Story.Story(Story.Texte.iTexteSANTE,475,50, 809,displ,467, 22 )
-                                whatAction(displ,[621,463],'clic')
+
 
                             if posY > 646 and posY < 697:
                                 if CheckingCheck.checked == True:
+                                    Musique.PlaySound(EventAdvancement.sound_ValidChoiceOK)
                                     run = False
-
+                                else:
+                                    Musique.PlaySound(EventAdvancement.sound_InvalidChoice)
 
                     else:
                         pos =pygame.mouse.get_pos()
                         posX = pos[0]
                         posY = pos[1]
+
                         if posX <474 and posX >75:
                             if posY > 65 and posY < 124:
+                                if lastPOS != 1:
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
+                                    lastPOS = 1
 
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_illu_Altruisme,[40,34])
-                                CheckingCheck(displ )
-                                pygame.display.flip()
+                                    self.Backround(displ)
+                                    displ.blit(ISaveTheWorld_illu_Altruisme,[40,34])
+                                    CheckingCheck(displ )
+                                    pygame.display.flip()
 
 
 
                             if posY > 124 and posY < 190:
+                                if lastPOS != 2:
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
+                                    lastPOS = 2
 
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_illu_Audace,[41,34])
-                                CheckingCheck(displ )
-                                pygame.display.flip()
+                                    self.Backround(displ)
+                                    displ.blit(ISaveTheWorld_illu_Audace,[41,34])
+                                    CheckingCheck(displ )
+                                    pygame.display.flip()
 
 
 
                             if posY > 190 and posY < 256:
+                                if lastPOS != 3:
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
+                                    lastPOS = 3
 
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_illu_Argent,[41,34])
-                                CheckingCheck(displ )
-                                pygame.display.flip()
+                                    self.Backround(displ)
+                                    displ.blit(ISaveTheWorld_illu_Argent,[41,34])
+                                    CheckingCheck(displ )
+                                    pygame.display.flip()
 
 
 
                             if posY > 256 and posY < 322:
+                                if lastPOS != 4:
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
+                                    lastPOS = 4
 
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_illu_Bonheur,[41,34])
-                                CheckingCheck(displ )
-                                pygame.display.flip()
+                                    self.Backround(displ)
+                                    displ.blit(ISaveTheWorld_illu_Bonheur,[41,34])
+                                    CheckingCheck(displ )
+                                    pygame.display.flip()
 
 
 
                             if posY > 322 and posY < 385:
+                                if lastPOS != 5:
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
+                                    lastPOS = 5
 
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_illu_Equite,[41,34])
-                                CheckingCheck(displ )
-                                pygame.display.flip()
+                                    self.Backround(displ)
+                                    displ.blit(ISaveTheWorld_illu_Equite,[41,34])
+                                    CheckingCheck(displ )
+                                    pygame.display.flip()
 
 
 
                             if posY > 385 and posY < 454:
+                                if lastPOS != 6:
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
+                                    lastPOS = 6
 
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_illu_Galanterie,[41,34])
-                                CheckingCheck(displ )
-                                pygame.display.flip()
+                                    self.Backround(displ)
+                                    displ.blit(ISaveTheWorld_illu_Galanterie,[41,34])
+                                    CheckingCheck(displ )
+                                    pygame.display.flip()
 
                             if posY > 454 and posY < 518:
+                                if lastPOS != 7:
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
+                                    lastPOS = 7
 
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_illu_Industrie,[41,34])
-                                CheckingCheck(displ )
-                                pygame.display.flip()
+                                    self.Backround(displ)
+                                    displ.blit(ISaveTheWorld_illu_Industrie,[41,34])
+                                    CheckingCheck(displ )
+                                    pygame.display.flip()
 
                             if posY > 518 and posY < 582:
+                                if lastPOS != 8:
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
+                                    lastPOS = 8
 
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_illu_Ordre,[41,34])
-                                CheckingCheck(displ )
-                                pygame.display.flip()
+                                    self.Backround(displ)
+                                    displ.blit(ISaveTheWorld_illu_Ordre,[41,34])
+                                    CheckingCheck(displ )
+                                    pygame.display.flip()
 
                             if posY > 582 and posY < 646:
+                                if lastPOS != 9:
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
+                                    lastPOS = 9
 
-                                self.Backround(displ)
-                                displ.blit(ISaveTheWorld_illu_Sante,[41,34])
-                                CheckingCheck(displ )
-                                pygame.display.flip()
+                                    self.Backround(displ)
+                                    displ.blit(ISaveTheWorld_illu_Sante,[41,34])
+                                    CheckingCheck(displ )
+                                    pygame.display.flip()
 
                             if posY > 646 and posY < 697:
+                                if lastPOS != 10:
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
+                                    lastPOS = 10
 
-                                self.Backround(displ)
-                                if CheckingCheck.checked == False:
-                                    displ.blit(ISaveTheWorld_illu_DepartRed,[41,34])
-                                if CheckingCheck.checked == True:
-                                    displ.blit(ISaveTheWorld_illu_DepartGrenn,[41,34])
-                                CheckingCheck(displ)
-                                pygame.display.flip()
+                                    self.Backround(displ)
+                                    if CheckingCheck.checked == False:
+                                        displ.blit(ISaveTheWorld_illu_DepartRed,[41,34])
+                                    if CheckingCheck.checked == True:
+                                        displ.blit(ISaveTheWorld_illu_DepartGrenn,[41,34])
+                                    CheckingCheck(displ)
+                                    pygame.display.flip()
 
             else:
                 for event in pygame.event.get():

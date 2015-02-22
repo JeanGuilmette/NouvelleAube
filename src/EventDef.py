@@ -160,15 +160,15 @@ evt_Revolte = Events.Event("now", "Révolte", desc, options)
 ##################################
 desc = "Bonjour... euh... Commandant... vous savez, à propos de la dernière contruction commandée dans le secteur... Il se trouve que nous avons été arnaqué. Totalement. Toutes les ressources que nous avons envoyées pour sa constructions ont été volées par les travailleurs, qui se sont évanouie dans la nature avec leur butin. Comment réagirons-nous?"
 choix_A=("Lancez les forces de police à leur trousse et récupérez nos ressources.")
-effect_A = ["criminalite=-20"]
+effect_A = ["criminalite=-20", "ARNAQUED=1" ]
 result_A ="Relativement rapidement, la majorité des coupables ont été retrouvé. Cela, contrairement aux ressources qui auraient apparemment déjà été vendu à une organisation criminelle inquiétante. Nous poursuivons les recherches et si elles aboutissent, je vous en reparlerai."
 choix_B=("Nous avons d'autres choses à s'occuper. Laissez-les aller, ne passons pas nos ressources sur cela.")
-effect_B = ["criminalite=20"]
+effect_B = ["criminalite=20", "ARNAQUED=1"]
 result_B ="Divers criminels prennent courage et augmentent leur activités en voyant un groupe des leurs réussir à arnaquer l'État sans subir l'ombre d'une conséquence."
 choix_C=("Mettez une prime sur leur têtes. Je les veux morts ou vifs, avec les ressources qu'ils ont volées! Ce crime ne restera pas impuni.")
-effect_C = ["population=-300", "criminalite=-10"]
+effect_C = ["population=-300", "criminalite=-10", "ARNAQUED=1"]
 choix_D=("Je veux un rapport complet sur la situation; QUI a permis à ces arnaqueurs d'agir, comment et pourquoi. Nous corrigerons notre système bureaucratique en conséquence pour que ce genre d'événement ne se reproduisent plus.")
-effect_D = ["criminalite=-20"]
+effect_D = ["criminalite=-20","ARNAQUED=1"]
 result_D ="Après une enquête approfondie, vos forces d'investigations ont réussient à retrouver les responsables et les causes, qui ont été corrigées. Malheureusemnt nos ressources auraient apparemment déjà été vendu à une organisation criminelle inquiétante. Nous poursuivons les recherches et si elles aboutissent, je vous en reparlerai."
 options =[]
 options.append(("Option A", choix_A, effect_A, result_A))
@@ -215,7 +215,7 @@ evt_Surpopulation = Events.Event("now", "Surpopulation", desc, options)
 ##################################
 desc = "La criminalité est trop élevée et cela ce traduit par une vague de crimes de tout acabi. Des gens meurent, se font voler, arnaquer, etc. Il faut faire refluer cette criminalité, sinon la région tombera définitivement dans le chaos. Une solution serait probablement la construction d'une prison"
 choix_A=("C'est noté.")
-effect_A = ["MultiplyPop=0,95", "panic=6","bonheur=-12" ]
+effect_A = ["MultiplyPop=0.95", "panic=6","bonheur=-12" ]
 result_A ="N'oubliez pas, sinon vous recevrez rapidement un autre message du genre."
 
 options =[]

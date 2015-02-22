@@ -7,9 +7,11 @@ Created on Dec 24, 2014
 import pygame
 import sys; 
 import CustomWidget
+import Musique
+import EventAdvancement
 sys.path.append("../lib")
 sys.path.append("../src")
-
+import Musique
 from pgu import gui
 from pygame.transform import smoothscale
 
@@ -141,6 +143,7 @@ class EventsViewer(gui.Table):
         
         
     def action_SelectOption(self, ctl):
+        Musique.PlaySound(EventAdvancement.sound_validation)
         self.displayOption.widget = CreateDescription(self.gameEvent.options[ctl.value][1], 400, align=-1)        
 #         text = "" 
 #         for word in self.gameEvent.options[ctl.value][1].split(" "):
@@ -152,18 +155,21 @@ class EventsViewer(gui.Table):
 #             pygame.time.wait(20)             
          
     def action_ConfirmChoice(self, ctl, btn):
+        Musique.PlaySound(EventAdvancement.sound_ValidChoiceOK)
         self.gameEvent.effects = self.gameEvent.options[ctl.value][2]
         self.displayOption.widget = CreateDescription(self.gameEvent.options[ctl.value][3], 400)
         surf = self.get_toplevel().screen        
         self.gameEvent.surfRect = self.get_abs_rect()
         s = surf.subsurface(self.gameEvent.surfRect)  
         self.gameEvent.surf = s.copy()
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         gui.Dialog.close(self) 
         closeScreen(self.get_toplevel(), surf, self.gameEvent.surf, self.gameEvent.surfRect)  
         result = EventsReport(self.gameEvent, ctl.value)
         result.open()
-             
+
     def open(self, w=None, x=None, y=None):
+        Musique.PlaySound(EventAdvancement.sound_Woosh)
         gui.Table.open(self)
         surf = self.get_toplevel().screen 
         self.gameEvent.surfRect = self.get_abs_rect()
@@ -171,7 +177,8 @@ class EventsViewer(gui.Table):
         self.gameEvent.surf = s.copy()                
         openScreen(self.get_toplevel(), surf, self.gameEvent.surf, self.gameEvent.surfRect)
         self.isOpen = True
-        pygame.time.wait(50) 
+        pygame.time.wait(50)
+
 #         self.WriteDescription()        
 
 
@@ -220,7 +227,6 @@ class EventsReport(gui.Table):
         # Initialize internal object     
         params.setdefault('cls','dialog')
         gui.Table.__init__(self,**params)
-        
         self.value = gui.Form()
         self.gameEvent = event
         self.choice = choice
@@ -253,6 +259,7 @@ class EventsReport(gui.Table):
  
          
     def action_Close(self):
+        Musique.PlaySound(EventAdvancement.sound_QuitOrReturn)
         surf = self.get_toplevel().screen        
         self.gameEvent.surfRect = self.get_abs_rect()
         s = surf.subsurface(self.gameEvent.surfRect)  
@@ -292,6 +299,7 @@ class EventsReport(gui.Table):
 #///
 def closeScreen(ctl, display, surf, r):
     # Erase dialog and get a snapshot as background.
+    Musique.PlaySound(EventAdvancement.sound_Woosh)
     ctl.paint()    
     backg = display.copy() 
     # Draw background and resized dialog
@@ -300,19 +308,20 @@ def closeScreen(ctl, display, surf, r):
         surf = pygame.transform.smoothscale(surf,(i, r.height))
         display.blit(surf, (r.x, r.y))
         pygame.display.update(r)
-        pygame.time.wait(5)
+        pygame.time.wait(10)
         
     display.blit(backg, (0,0))
     surf = pygame.transform.smoothscale(surf,(0, r.height))
     display.blit(surf, (r.x, r.y))
     pygame.display.update(r)
-    pygame.time.wait(5)        
+    pygame.time.wait(10)
    
     
 def openScreen(ctl, display, surf, r):
     # Erase dialog and get a snapshot as background.
+    Musique.PlaySound(EventAdvancement.sound_Woosh)
     backg = display.copy()
-    bgImage = pygame.image.load("../lib/data/themes/NouvelleAube/glassPanel.png").convert_alpha()    
+    bgImage = pygame.image.load("image/Building_Interface.png").convert_alpha()    
     # Draw background and resized dialog
     for i in range(0, r.width, 10):
         display.blit(backg, (0,0))
@@ -320,7 +329,7 @@ def openScreen(ctl, display, surf, r):
         surf.fill((173, 216, 230, 200))
         display.blit(surf, (r.x, r.y))
         pygame.display.update(r)
-        pygame.time.wait(5) 
+        pygame.time.wait(10)
      
 def CreateDescription(text, width, align=-1, fontName=None, fontSize=30):
     font = pygame.font.SysFont(fontName, fontSize)        

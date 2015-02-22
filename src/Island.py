@@ -1,24 +1,25 @@
 __author__ = 'SJS'
 import Zone
 from Building import GENERAL, SOUSTERRAIN, RIVE, AERIEN
+import Musique
 
 OVERVIEW_ZONE_NAME = "Region"
 LANDING_REGION_NAME = "RegionA"
 
 secteurDef = dict(
     Region = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura .png", name = "Man'ana'toura" ),
-    RegionA = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_foest.png", name = "Ra" ),
-    RegionB = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_North_Plains.png", name = "Rb" ),
-    RegionC = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_South_Plains.png", name = "Rc" ),
-    RegionD = dict(terType = "Lac", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_Lac.png", name = "Rd" ),
-    RegionE = dict(terType = "Collines", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_Collines.png", name = "Re" ),
-    RegionF = dict(terType = "Volcan", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_volcano.png", name = "Rf" ),
-    RegionG = dict(terType = "Marecage", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_marecage.png", name = "Rg" ),
-    RegionH = dict(terType = "Collines", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_ile_sud.png", name = "Rh" ),
-    RegionI = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_ileNord.png", name = "Ri" ),
-    RegionJ = dict(terType = "EauxSalees", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole" ), image = "image/map/Man'ana'toura_peninsule_ile_sud.png", name = "Rj" ),
-    RegionK = dict(terType = "EauxSalees", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole" ), image = "image/map/Man'ana'toura_Plage_Sud.png", name = "Rk" ),
-    RegionL = dict(terType = "EauxSalees", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole" ), image = "image/map/Man'ana'toura_peninsule_Nord.png", name = "Rl" ),
+    RegionA = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_foest.png", name = "La Forêt Boisée" ),
+    RegionB = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_North_Plains.png", name = "La Prairie Nord" ),
+    RegionC = dict(terType = "Plaine", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_South_Plains.png", name = "La Prairie Sud" ),
+    RegionD = dict(terType = "Lac", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_Lac.png", name = "Le Lac Mouillé" ),
+    RegionE = dict(terType = "Collines", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_Collines.png", name = "LES Collines" ),
+    RegionF = dict(terType = "Volcan", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_volcano.png", name = "Le Volcan Délavé" ),
+    RegionG = dict(terType = "Marecage", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_marecage.png", name = "Les Marécages" ),
+    RegionH = dict(terType = "Collines", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_ile_sud.png", name = "L'île aux Mouettes " ),
+    RegionI = dict(terType = "Foret", resList = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole"), image = "image/map/Man'ana'toura_ileNord.png", name = "L'île du Nord" ),
+    RegionJ = dict(terType = "EauxSalees", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole" ), image = "image/map/Man'ana'toura_peninsule_ile_sud.png", name = "La Pointe aux Crabes" ),
+    RegionK = dict(terType = "EauxSalees", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole" ), image = "image/map/Man'ana'toura_Plage_Sud.png", name = "Le Littoral Sud" ),
+    RegionL = dict(terType = "EauxSalees", resList = ( "Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole" ), image = "image/map/Man'ana'toura_peninsule_Nord.png", name = "Le Littoral Nord" ),
     )
 
 
@@ -41,6 +42,7 @@ secteurSpaceDef = dict(
 
 class Island(object):
     def __init__(self, filename):
+        Musique.StartMusic("Soundtrack/Mananatoura-days.ogg")
         self.secteur = dict()
         self.__activeZone = None                      # Which zone player currently examine or work with
         if(filename == "new"):
@@ -277,7 +279,7 @@ class Island(object):
 
     def AddBuilding(self, zoneName, buildingName):
         self.secteur[zoneName].AddBuilding(buildingName)
-        
+
         
     def UpdateProd(self):
         for zone in self.secteur:
@@ -350,7 +352,15 @@ class Island(object):
                     self.secteur[zone].ModifyCriminalite(newVal)   
         else:
             self.secteur[zoneName].ModifyCriminalite(newVal)
-            
+
+    def ModifyPollution(self, zoneName, newVal):
+        if(zoneName == OVERVIEW_ZONE_NAME):
+            for zone in self.secteur:
+                if(zone != OVERVIEW_ZONE_NAME):
+                    self.secteur[zone].ModifyPollution(newVal)
+        else:
+            self.secteur[zoneName].ModifyPollution(newVal)
+
     def ModifyPanic(self, zoneName, newVal):
         if(zoneName == OVERVIEW_ZONE_NAME):
             for zone in self.secteur:

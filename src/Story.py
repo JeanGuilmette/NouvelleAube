@@ -5,6 +5,8 @@ import DockingMenu
 import conda
 import pygame
 import StoryTelling
+import Musique
+import EventAdvancement
 from pygame.locals import *
 # import StoryTelling
 # class position(): #entre les lignes le rapport de 30 pour la taille des caracteres et de 35 d<espapce entre les lignes sembles bon.
@@ -28,6 +30,7 @@ class Story (): # envoyer cette classe dans choix, pour n<avoir a appeler qu<une
         Pos = [commX , commY]
         m=0
         delay = 40
+
 
         for i in texte:
 
@@ -56,6 +59,7 @@ class Story (): # envoyer cette classe dans choix, pour n<avoir a appeler qu<une
             text = font.render (i, True , color)
             Positionnement = [Pos[0] + DeplacementX + 25, Pos[1] + DeplacementY + 25]
             display.blit(text, Positionnement)
+            Musique.PlaySound(EventAdvancement.sound_Typing, 0.1)
             pygame.display.flip()
             pygame.time.delay(delay)
             m = i
@@ -83,7 +87,7 @@ class RapportElements():
                 max = i
 
         if self.surete == max:
-            self.value2='la Sûreté'
+            self.value2='la Prudence'
         elif self.pragmatisme == max:
             self.value2='le Pragmatisme'
         elif self.solidarite == max:
@@ -95,6 +99,7 @@ class RapportElements():
         else:
             self.value2 = "quelque chose d'encore indéfinie"
         print(t)
+
 
 class StoryEffects():
     Effects = dict( \
@@ -244,6 +249,7 @@ class Verificationtouche():
 
                     if posX <489 and posX >82:
                         if posY >70  and posY <183 :
+                           Musique.PlaySound(EventAdvancement.sound_validation)
                            self.choix ='1'
                            displ.blit(backround,[0,0])
                            displ.blit(Journal_interface_choix1_green,[41,34])
@@ -251,6 +257,7 @@ class Verificationtouche():
                            Story(texteChoixA,506,379,810,displ,654,24,COLORS.BLACK,False)
                            pygame.display.flip()
                         if posY >183  and posY <315 :
+                           Musique.PlaySound(EventAdvancement.sound_validation)
                            self.choix ='2'
                            displ.blit(backround,[0,0])
                            displ.blit(Journal_interface_choix2_green,[41,34])
@@ -258,6 +265,7 @@ class Verificationtouche():
                            Story(texteChoixB,506,379,810,displ,654,24,COLORS.BLACK,False)
                            pygame.display.flip()
                         if posY >315  and posY <448 :
+                           Musique.PlaySound(EventAdvancement.sound_validation)
                            self.choix ='3'
                            displ.blit(backround,[0,0])
                            displ.blit(Journal_interface_choix3_green,[41,34])
@@ -265,6 +273,7 @@ class Verificationtouche():
                            Story(texteChoixC,506,379,810,displ,654,24,COLORS.BLACK,False)
                            pygame.display.flip()
                         if posY >448  and posY <581 :
+                           Musique.PlaySound(EventAdvancement.sound_validation)
                            self.choix ='4'
                            displ.blit(backround,[0,0])
                            displ.blit(Journal_interface_choix4_green,[41,34])
@@ -272,20 +281,26 @@ class Verificationtouche():
                            Story(texteChoixD,506,379,810,displ,654,24,COLORS.BLACK,False)
                            pygame.display.flip()
                         if self.choix != '' and posY >581 and posY < 693:
+
                             if self.choix =='1':
                                 self.Return1()
+                                Musique.PlaySound(EventAdvancement.sound_ValidChoiceOK)
                                 self.endrun = False
                             if self.choix =='2':
                                 self.Return2()
+                                Musique.PlaySound(EventAdvancement.sound_ValidChoiceOK)
                                 self.endrun = False
                             if self.choix =='3':
                                 self.Return3()
+                                Musique.PlaySound(EventAdvancement.sound_ValidChoiceOK)
                                 self.endrun = False
                             if self.choix =='4':
                                 self.Return4()
+                                Musique.PlaySound(EventAdvancement.sound_ValidChoiceOK)
                                 self.endrun = False
 
                             else:
+                                Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                 displ.blit(backround,[0,0])
                                 displ.blit(Journal_interface_redvalid,[41,34])
                                 pygame.display.flip()
@@ -298,15 +313,19 @@ class Verificationtouche():
                         if posY >70  and posY <183 :
                             if self.choix != '':
 
+
                                 if self.choix =='2':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix2_green_white1,[41,34])
                                     pygame.display.flip()
                                 if self.choix =='3':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix3_green_white1,[41,34])
                                     pygame.display.flip()
                                 if self.choix =='4':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix4_green_white1,[41,34])
                                     pygame.display.flip()
@@ -318,16 +337,20 @@ class Verificationtouche():
 
                         if posY >183  and posY <315 :
                             if self.choix != '':
+
                                 if self.choix =='1':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix1_green_white2,[41,34])
                                     pygame.display.flip()
 
                                 if self.choix =='3':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix3_green_white2,[41,34])
                                     pygame.display.flip()
                                 if self.choix =='4':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix4_green_white2,[41,34])
                                     pygame.display.flip()
@@ -338,16 +361,20 @@ class Verificationtouche():
 
                         if posY >315  and posY <448 :
                             if self.choix != '':
+
                                 if self.choix =='1':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix1_green_white3,[41,34])
                                     pygame.display.flip()
                                 if self.choix =='2':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix2_green_white3,[41,34])
                                     pygame.display.flip()
 
                                 if self.choix =='4':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix4_green_white3,[41,34])
                                     pygame.display.flip()
@@ -360,15 +387,19 @@ class Verificationtouche():
 
                         if posY >448  and posY <581 :
                             if self.choix != '':
+
                                 if self.choix =='1':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix1_green_white4,[41,34])
                                     pygame.display.flip()
                                 if self.choix =='2':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix2_green_white4,[41,34])
                                     pygame.display.flip()
                                 if self.choix =='3':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix3_green_white4,[41,34])
                                     pygame.display.flip()
@@ -383,15 +414,19 @@ class Verificationtouche():
 
                         if  posY >581 and posY < 693:
                             if self.choix != '':
+
                                 if self.choix =='1':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix1_validgreen,[41,34])
                                     pygame.display.flip()
                                 if self.choix =='2':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix2_validgreen,[41,34])
                                     pygame.display.flip()
                                 if self.choix =='3':
+                                    Musique.PlaySound(EventAdvancement.sound_buttonpassOver)
                                     displ.blit(backround,[0,0])
                                     displ.blit(Journal_interface_choix3_validgreen,[41,34])
                                     pygame.display.flip()

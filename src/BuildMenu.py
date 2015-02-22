@@ -8,7 +8,8 @@ import CustomWidget
 import Island
 import Resources
 import EventEffectAnalyse
-
+import EventAdvancement
+import Musique
 
 import sys; sys.path.append("../lib"); sys.path.append("../src")
 from pgu import gui
@@ -145,6 +146,7 @@ class BuildMenu(gui.Dialog):
             if(item != Island.OVERVIEW_ZONE_NAME):
                 self.ActiveZone.add(Island.secteurDef[item]["name"], item)
         t1.td(self.ActiveZone, align=-1)
+        self.ActiveZone.connect(gui.CHANGE, self.action_ChangeZone)
         if(zone == Island.OVERVIEW_ZONE_NAME) : zone = Island.LANDING_REGION_NAME
         self.ActiveZone.value = zone
         
@@ -182,20 +184,32 @@ class BuildMenu(gui.Dialog):
 
         t1.td(t)
         c.add(t1, 40, 20)
-        gui.Dialog.__init__(self,title, c, backgound="image/Building_Interface.png" )        
-        
+        gui.Dialog.__init__(self,title, c, backgound="image/Building_Interface.png" )
+
+    def action_ChangeZone(self):
+        Musique.PlaySound(EventAdvancement.sound_validation)
     def actionBuildingDesc(self, ctl):
         self.displayDesc.widget = CreateDescription(ctl.value, 400)
+    def close(self, w = None):
+        Musique.PlaySound(EventAdvancement.sound_QuitOrReturn)
+        gui.Dialog.close(self)
+
         
         
     def action_addBuilding(self, Value):
         result = self.island.secteur[self.ActiveZone.value].AddBuilding(Value)
-        if(result != True):
+        notConstruct = False
+        if(result != True and result !=False):
+            Musique.PlaySound(EventAdvancement.sound_InvalidChoice)
             msgbox = CustomWidget.MessageBox("Add Building", result)
             msgbox.open()
-        self.ImpactAnalyse.ApplyBuildingEffect("Add Building", self.ActiveZone.value, Building.buildingEffect[Value]["add"])
+            notConstruct = True
+        if notConstruct == False and EventAdvancement.ARNAQUED != True:
+            Musique.PlaySound(EventAdvancement.sound_BuildingContructed)
+            self.ImpactAnalyse.ApplyBuildingEffect("Add Building", self.ActiveZone.value, Building.buildingEffect[Value]["add"])
         
     def action_deleteBuilding(self, Value):
+        Musique.PlaySound(EventAdvancement.sound_BuildingDestroyed)
         self.island.secteur[self.ActiveZone.value].RemoveBuilding(Value)
         self.ImpactAnalyse.ApplyBuildingEffect("Remove Building", self.ActiveZone.value, Building.buildingEffect[Value]["remove"])        
     
@@ -210,6 +224,7 @@ class BuildMenu(gui.Dialog):
         if(ctl.value > zone.batiments[building].GetMaxWorker()):
             ctl.value = zone.batiments[building].GetMaxWorker()
         if(ctl.value >= zone.GetAvailableWorker()):
+            Musique.PlaySound(EventAdvancement.sound_InvalidChoice)
             ctl.value = zone.GetAvailableWorker()
           
         a = ctl.value            
@@ -220,6 +235,7 @@ class BuildMenu(gui.Dialog):
                 zone.AddWorker(building)   
                 
     def action_info(self, buildingName):
+        Musique.PlaySound(EventAdvancement.sound_validation)
         db = BuildingInfo(buildingName)
         db.open()
 
@@ -275,12 +291,17 @@ class TransferMenu(gui.Dialog):
         c.add(t, 20, 20)
         gui.Dialog.__init__(self, title, c, backgound="image/Building_Interface.png" )
 
+    def close(self, w = None):
+        Musique.PlaySound(EventAdvancement.sound_QuitOrReturn)
+        gui.Dialog.close(self)
+
     def action_TransferPopulation(self, slider):
         slider.populationToMove
         self.island.secteur[self.ZoneSrc.value].population.current -=  slider.populationToMove
         self.island.secteur[self.ZoneDst.value].population.current +=  slider.populationToMove
     
     def action_ChangeZone(self, origin):
+        Musique.PlaySound(EventAdvancement.sound_validation)
         if(self.ZoneSrc.value == self.ZoneDst.value):
             zoneCtl = self.ZoneDst if(origin == "src") else self.ZoneSrc  
             i =  zoneCtl.values.index(zoneCtl.top_selected.value)
@@ -290,7 +311,7 @@ class TransferMenu(gui.Dialog):
             w.Refresh()
 
 
-
+#############################################################################3
 class BuildingInfo(gui.Dialog):
     def __init__(self, buildingName): 
         
@@ -309,6 +330,7 @@ class BuildingInfo(gui.Dialog):
      
           
     def action_quit(self):
+        Musique.PlaySound(EventAdvancement.sound_QuitOrReturn)
         pygame.event.post(pygame.event.Event(pygame.QUIT))  
                                   
     def open(self, w=None, x=None, y=None):
@@ -322,6 +344,7 @@ class BuildingInfo(gui.Dialog):
             for ev in pygame.event.get():
                 if (ev.type == pygame.QUIT or 
                     ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE):
+
                     done = True
                 else:
                     # Pass the event off to pgu

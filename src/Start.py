@@ -10,11 +10,12 @@ import Introduction
 import MenuPrincipale
 import EndGame
 import StoryTelling
-
+import Musique
+import EventAdvancement
 
 def CreateMainWindows():
         pygame.display.set_caption('Nouvelle Aube')
-        pygame.display.set_icon(pygame.image.load("image/pygame.bmp"))
+        pygame.display.set_icon(pygame.image.load("image/Nouvelle_Aube.jpg"))
         disp = pygame.display.set_mode((1027, 768), 0, 32)
         disp.convert_alpha()
         return disp
@@ -33,11 +34,14 @@ if __name__ == "__main__":
     
     game = EnjeuxSurvieEngine.EnjeuxSurvieEngine(disp) 
     if(action.lower() == "start"):
+        Musique.PlaySound(EventAdvancement.sound_validation)
         StoryTelling.StoryTelling(disp)
         game.run()
     elif(action.lower() == "continue"):
+        Musique.PlaySound(EventAdvancement.sound_validation)
         game.run()
     elif(action.lower() == "option"):
+        Musique.PlaySound(EventAdvancement.sound_validation)
         game.run()
 
     # Game Over

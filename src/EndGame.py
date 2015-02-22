@@ -2,13 +2,14 @@ __author__ = 'SJS'
 import Island
 import pygame
 from Defines import COLORS
-
+import Musique
 import math
 import EventAdvancement
 
 class Writer (): # envoyer cette classe dans choix, pour n<avoir a appeler qu<une seule classe lors de Storytelling
 
     def __init__(self, texte,commX,commY ,limiteX , display, limiteY = 0, taille = 30, color = COLORS.BLACK, instantScript=False):
+
         font = pygame.font.SysFont ('None' , taille, True, False)
         DeplacementX = 0
         DeplacementY = 0
@@ -43,6 +44,7 @@ class Writer (): # envoyer cette classe dans choix, pour n<avoir a appeler qu<un
             text = font.render (i, True , color)
             Positionnement = [Pos[0] + DeplacementX + 25, Pos[1] + DeplacementY + 25]
             display.blit(text, Positionnement)
+            Musique.PlaySound(EventAdvancement.sound_Typing, 0.1)
             pygame.display.flip()
             pygame.time.delay(delay)
             m = i
@@ -75,6 +77,7 @@ class ClicWait():
 class EndGame():
 
     def __init__(self, display, island):
+        self.WichMusic()
         self.island = island
         self.Rapport_final=pygame.image.load("image/RapportFinal.png").convert_alpha()
         self.bgImage = pygame.image.load("image/Nouvelle_Aube.jpg")
@@ -91,7 +94,7 @@ class EndGame():
             ClicWait(displ,[400,600],'clic')
 
 
-
+            Musique.PlaySound(EventAdvancement.sound_Woosh)
             runner=True
             x=0
             y=691
@@ -140,6 +143,7 @@ class EndGame():
             running = True
             x=931
             y=691
+            Musique.PlaySound(EventAdvancement.sound_Woosh)
             while running == True:
                 if x > 2:
                     x=int(x-(930/30))
@@ -154,6 +158,7 @@ class EndGame():
 
 
             if EventAdvancement.HappyEnd == True:
+                Musique.PlaySound(EventAdvancement.sound_Woosh)
 
                 runner=True
                 x=0
@@ -179,6 +184,7 @@ class EndGame():
                 running = True
                 x=931
                 y=691
+                Musique.PlaySound(EventAdvancement.sound_Woosh)
                 while running == True:
                     if x > 2:
                         x=int(x-(930/30))
@@ -213,7 +219,21 @@ class EndGame():
             pygame.display.flip()
             pygame.time.wait(1)
 
-
+    def WichMusic(self):
+        if EventAdvancement.Linkmessage == EventAdvancement.Gagne:
+            Musique.StartMusic("Soundtrack/WhatShallWeDieFor.ogg")
+        if EventAdvancement.Linkmessage == EventAdvancement.Extinction:
+            Musique.StartMusic("Soundtrack/Plus_Rien.ogg", 0.7)
+        if EventAdvancement.Linkmessage == EventAdvancement.Coup_etat:
+            Musique.StartMusic("Soundtrack/SmoothCriminal.ogg")
+        if EventAdvancement.Linkmessage == EventAdvancement.LaRevolution:
+            Musique.StartMusic("Soundtrack/VivaLaResistance.ogg")
+        if EventAdvancement.Linkmessage == EventAdvancement.LaRedDeath:
+            Musique.StartMusic("Soundtrack/Plus_Rien.ogg")
+        if EventAdvancement.Linkmessage == EventAdvancement.Anarchie:
+            Musique.StartMusic("Soundtrack/FuckAuthority.ogg")
+        if EventAdvancement.Linkmessage == EventAdvancement.Vesuve:
+            Musique.StartMusic("Soundtrack/TheKraken.ogg")
     def LinkMessage(self,displ):
         Writer(EventAdvancement.Linkmessage , 10 , 10, 750,  displ)
 

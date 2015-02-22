@@ -3,7 +3,7 @@ __author__ = 'SJS'
 import pygame
 import DockingMenu
 from Defines import COLORS
-
+import Musique
 class MenuPrincipale(object):
     __menu_items = ('Start', 'Continue', 'Options', 'Quit')
     
@@ -32,6 +32,7 @@ class MenuPrincipale(object):
                         menuName = self.mainMenu.validSelectedMenu(event)
                         if(menuName != "none"):
                             print(menuName)
+                            #Musique.StopMusic()
                             return menuName
                         
             self.menuSurface.blit(self.bgImage, [0,0])

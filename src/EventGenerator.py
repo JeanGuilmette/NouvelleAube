@@ -72,13 +72,17 @@ class GenerateEvents(object):
         #         EventDef.evt_epidemie.regions = [secteur]
         #         return EventDef.evt_epidemie
 
-
+        TheList = ["RegionA","RegionB","RegionC", "RegionD","RegionE","RegionF","RegionG", "RegionH","RegionI","RegionJ","RegionK", "RegionL"]
         # Events au hasard
         a = random.random()
-        if (a< 0):
 
-
-
+        if EventAdvancement.ARNAQUED == True and EventAdvancement.wait == False:
+            EventAdvancement.wait = True
+            EventDef.evt_Arnaque.regions = [EventAdvancement.ARNAQUED_SECTOR]
+            EventAdvancement.ARNAQUED = False
+            return EventDef.evt_Arnaque
+        
+        if (a< 0.005):
             a = random.random()
             if(a > 0.88):
                 EventDef.evt_Feu_de_forêt.regions = AreaOfEffect(self.Island)
@@ -106,19 +110,10 @@ class GenerateEvents(object):
 
 
 
-            TheList = ["RegionA","RegionB","RegionC", "RegionD","RegionE","RegionF","RegionG", "RegionH","RegionI","RegionJ","RegionK", "RegionL"]
+
 
             if True == True:
                 if EventAdvancement.wait != True:
-
-                    a = random.random()
-                    c= random.randrange(1,12)
-                    b=TheList[c]
-                    if(a < self.Island.GetCriminalite(b)):
-                        EventAdvancement.wait = True
-                        EventDef.evt_Arnaque.regions = [b]
-                        return EventDef.evt_Arnaque
-
                     a = random.random()
                     c= random.randrange(1,12)
                     b=TheList[c]

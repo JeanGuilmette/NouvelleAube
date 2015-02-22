@@ -4,6 +4,8 @@ import pygame
 import Resources
 import Population
 import Building
+import random
+import EventAdvancement
 from Defines import COLORS
 
 ########################################
@@ -33,6 +35,9 @@ class Secteur():
             self.resources[resName] = Resources.Resource(resName)
 
     def AddBuilding(self, buildingType):
+        arnaque=False
+        EventAdvancement.ARNAQUED = False
+
         #Check if resources are available
         for resNeeded in self.batiments[buildingType].buildCost:
             if(self.resources[resNeeded].stock >= self.batiments[buildingType].buildCost[resNeeded]):
@@ -46,20 +51,30 @@ class Secteur():
         for t in self.spaceList:
             if(t[2] == Building.buildingDef[buildingType]["pos"]):
                 pos = (t[0], t[1])
-                self.spaceList.remove(t)
+                posTuple = t
                 break
         
         if( pos == "Not Found"):
             msg = "Not enough space used: %d  max: %d" % (len(self.spaceList), self.batiments[buildingType].numberBuilding )
             print(msg)
             return "No space"
-               
-        #Add new building        
-        self.batiments[buildingType].Add(pos)
         
-        #Remove resources and use space
+        #Remove resources
         for resNeeded in self.batiments[buildingType].buildCost:
             self.resources[resNeeded].stock -= self.batiments[buildingType].buildCost[resNeeded]
+                    
+        #Check if someone arnaque us
+        a = random.randrange(1,100)
+        if (a<(int(self.GetCriminalite()/2))):
+            EventAdvancement.ARNAQUED_SECTOR = self.name
+            EventAdvancement.ARNAQUED = True
+            return False
+        
+        #Add new building
+        self.batiments[buildingType].Add(pos)
+
+        #Remove resources and use space
+        self.spaceList.remove(posTuple)
         return True
     
     def RemoveBuilding(self, buildingType):
@@ -124,7 +139,7 @@ class Secteur():
     
     def GetPollution(self):
 #         return self.population.valeur_de_polution() 
-        return 222   
+        return self.population.pollution
     
     def GetProduction(self):
         return 999 
@@ -215,7 +230,10 @@ class Secteur():
         self.population.education += int(newVal) 
         
     def ModifyCriminalite(self, newVal):
-        self.population.criminalite += int(newVal) 
+        self.population.criminalite += int(newVal)
+
+    def ModifyPollution(self, newVal):
+        self.population.pollution += int(newVal)
         
     def ModifyCroissance(self, newVal):
         self.population.croissance += int(newVal)  

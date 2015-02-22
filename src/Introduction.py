@@ -2,10 +2,12 @@ __author__ = 'SJS'
 
 import pygame
 from Defines import COLORS
-
+import Musique
 
 class Introduction():
     def __init__(self, display):
+        Musique.StartMusic("Soundtrack/OuvertureMusic.ogg")
+        #Musique.StartMusic("Soundtrack/Plus_Rien.ogg")
         self.menuSurface =  display
         self.scr_width = self.menuSurface.get_rect().width
         self.scr_height = self.menuSurface.get_rect().height

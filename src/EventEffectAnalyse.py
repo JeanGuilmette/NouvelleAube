@@ -77,10 +77,11 @@ class EventImpact(object):
             print("%s modify %s sante by %s" % (evtName, secteur, value) )
 
         elif(token == "pollution"):
-            self.island.Modify(secteur, value)
+            self.island.ModifyPollution(secteur, value)
             print("%s modify %s panic by %s" % (evtName, secteur, value) )
 
-
+        elif(token == "ARNAQUED"):
+            EventAdvancement.ARNAQUED = False
 
         elif(token == "Nego"):
             EventAdvancement.BradvaNegociation = True
