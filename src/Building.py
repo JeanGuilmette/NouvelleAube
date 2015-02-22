@@ -8,12 +8,12 @@ AERIEN = 3
 
 buildingDef = dict( \
     Ferme = dict(resType = "Agriculture", pos = GENERAL, imgName = "image/building_image/ferme.png", workerMax = 10, secteur = "primaire", space = 40, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
-    Mine  =  dict(resType = "Metaux", pos = GENERAL, imgName = "image/building_image/mine.png", workerMax = 100, secteur = "primaire", space = 2, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Mine  =  dict(resType = "Metaux", pos = SOUSTERRAIN, imgName = "image/building_image/mine.png", workerMax = 100, secteur = "primaire", space = 2, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
     Scierie = dict(resType = "Bois", pos = GENERAL, imgName = "image/building_image/usine_de_transformation_du_bois.png", workerMax = 20, secteur = "primaire", space = 5, buildcost = dict( Bois = 0, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
 
-    Forage_petrolier = dict(resType = "Petrole", pos = GENERAL, imgName = "image/building_image/Station_de_forage.png", workerMax = 3000, secteur = "primaire", space = 1, buildcost = dict( Bois = 0, Minerais = 800), buildTime = 5, entretient = 0.1, prerequis = "gisement" ),
+    Forage_petrolier = dict(resType = "Petrole", pos = AERIEN, imgName = "image/building_image/Station_de_forage.png", workerMax = 3000, secteur = "primaire", space = 1, buildcost = dict( Bois = 0, Minerais = 800), buildTime = 5, entretient = 0.1, prerequis = "gisement" ),
     Camp_de_chasse  =  dict(resType = "Chasse", pos = GENERAL, imgName = "image/building_image/camp_de_chasse.png", workerMax = 600, secteur = "primaire", space = 1, buildcost = dict( Bois = 345, Minerais = 60), buildTime = 5, entretient = 0.05, prerequis = "" ),
-    Port = dict(resType = "Peche", pos = GENERAL, imgName = "image/building_image/port.png", workerMax = 1500, secteur = "primaire", space = 1, buildcost = dict( Bois = 300, Minerais = 300), buildTime = 5, entretient = 0.15, prerequis = "" ),
+    Port = dict(resType = "Peche", pos = RIVE, imgName = "image/building_image/port.png", workerMax = 1500, secteur = "primaire", space = 1, buildcost = dict( Bois = 300, Minerais = 300), buildTime = 5, entretient = 0.15, prerequis = "" ),
     ZRLA= dict(resType = "population max", pos = GENERAL, imgName = "image/building_image/quartier_residentielle.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 500, Minerais = 500), buildTime = 5, entretient = 0.2, prerequis = "" ),
     Ecole  =  dict(resType = "Travailleurs", pos = GENERAL, imgName = "image/building_image/ecole.png", workerMax = 400, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 800, Minerais = 500), buildTime = 5, entretient = 0.1, prerequis = "" ),
     Stade = dict(resType = "Bonheur", pos = GENERAL, imgName = "image/building_image/stade.png", workerMax = 1700, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 100, Minerais = 2000), buildTime = 5, entretient = 0.1, prerequis = "" ),
@@ -44,19 +44,19 @@ buildingDesc = dict( \
     )
 
 buildingEffect = dict( \
-    Ferme = dict( add = ["pollution=6"], remove = [""]),
-    Mine  = dict( add = ["pollution=10" ], remove = [""]),
-    Scierie = dict( add = ["pollution=4"], remove = [""]),
-    Forage_petrolier = dict( add = ["pollution=16", "bonheur=-7"], remove = [""]),
-    Camp_de_chasse  =  dict( add = ["pollution=2"], remove = [""]),
-    Port = dict( add = ["pollution=4"], remove = [""]),
-    ZRLA = dict( add = ["pollution=8"], remove = [""]),#augmentation population
-    Ecole  = dict( add = ["pollution=2"], remove = [""]),#augemntation population
+    Ferme = dict( add = ["pollution=6"], remove = ["pollution=0"]),
+    Mine  = dict( add = ["pollution=10" ], remove = ["pollution=0"]),
+    Scierie = dict( add = ["pollution=4"], remove = ["pollution=0"]),
+    Forage_petrolier = dict( add = ["pollution=16", "bonheur=-7"], remove = ["pollution=0"]),
+    Camp_de_chasse  =  dict( add = ["pollution=2"], remove = ["pollution=0"]),
+    Port = dict( add = ["pollution=4"], remove = ["pollution=0"]),
+    ZRLA = dict( add = ["pollution=8"], remove = ["pollution=0"]),#augmentation population
+    Ecole  = dict( add = ["pollution=2", "education=20"], remove = ["education=-20"]),#augemntation population
     Stade = dict( add = ["pollution=8", "bonheur=20"], remove = ["bonheur=-25"]),
-    CSE = dict( add = ["pollution=-15"], remove = ["pollution=18"]),
-    Prison  =  dict( add = ["pollution=3","criminalite=-10"], remove = [""]),
-    CGA = dict( add = ["pollution=4","influence=15"], remove = [""]),
-    Parc =  dict( add = ["pollution=-40", "bonheur=10","sante=8"], remove = ["bonheur=-30"]),
+    CSE = dict( add = ["pollution=-15" ], remove = ["pollution=18"]),
+    Prison  =  dict( add = ["pollution=3","criminalite=-10"], remove = ["criminalite=15"]),
+    CGA = dict( add = ["pollution=4","influence=15"], remove = ["pollution=0"]),
+    Parc =  dict( add = ["pollution=-40", "bonheur=10","sante=8"], remove = ["bonheur=-30","sante=-8","pollution=-40"]),
     Hopital  =  dict( add = ["pollution=4","sante=17"], remove = ["bonheur=-30"])
     )
 

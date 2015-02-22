@@ -184,7 +184,7 @@ class Secteur():
         self.population.bonheur = startup_package.Effects ["Bonheur"] 
         self.population.education =  startup_package.Effects ["Education"] 
         self.population.panique = startup_package.Effects ["Panique"]
-        self.criminalite = startup_package.Effects ["Criminalite"] 
+        self.population.criminalite = startup_package.Effects ["Criminalite"] 
           
         
 

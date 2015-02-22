@@ -72,6 +72,10 @@ class EventImpact(object):
             self.island.ModifyCriminalite(secteur, value)
             print("%s modify %s criminalite by %s" % (evtName, secteur, value) )
 
+        elif(token == "education"):
+            self.island.ModifyEducation(secteur, value)
+            print("%s modify %s education by %s" % (evtName, secteur, value) )
+
         elif(token == "sante"):
             self.island.ModifySante(secteur, value)
             print("%s modify %s sante by %s" % (evtName, secteur, value) )

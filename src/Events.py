@@ -98,7 +98,7 @@ class EventsViewer(gui.Table):
         self.tr()
         regionString = ""
         for region in self.gameEvent.regions:
-            regionString += region +", "
+            regionString += Island.secteurDef[region]["name"] +", "
         title =  gui.Label("Event: %s les régions touché sont: %s" % (self.gameEvent.name, regionString) ) 
         self.td(title,align=0,cls=self.cls+'.bar')
         
