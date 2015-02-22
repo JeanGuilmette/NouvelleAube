@@ -66,7 +66,6 @@ class Island(object):
         return self.secteur[self.__activeZone]
     
     def SetActiveZone(self, zoneName):
-        print(zoneName)        
         self.__activeZone = zoneName
         
     def GetCurrentPopulation(self, zoneName="Active"):

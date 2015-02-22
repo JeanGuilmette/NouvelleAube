@@ -188,14 +188,14 @@ class BuildMenu(gui.Dialog):
 
     def action_ChangeZone(self):
         Musique.PlaySound(EventAdvancement.sound_validation)
+        
     def actionBuildingDesc(self, ctl):
         self.displayDesc.widget = CreateDescription(ctl.value, 400)
+        
     def close(self, w = None):
         Musique.PlaySound(EventAdvancement.sound_QuitOrReturn)
         gui.Dialog.close(self)
 
-        
-        
     def action_addBuilding(self, Value):
         result = self.island.secteur[self.ActiveZone.value].AddBuilding(Value)
         notConstruct = False
@@ -260,6 +260,7 @@ class TransferMenu(gui.Dialog):
             if(item != Island.OVERVIEW_ZONE_NAME):
                 self.ZoneSrc.add(Island.secteurDef[item]["name"], item)
                 self.ZoneDst.add(Island.secteurDef[item]["name"], item)
+              
         self.ZoneSrc.connect(gui.CHANGE, self.action_ChangeZone, "src")
         self.ZoneDst.connect(gui.CHANGE, self.action_ChangeZone, "dst")        
         t.td(self.ZoneSrc)
@@ -304,9 +305,15 @@ class TransferMenu(gui.Dialog):
         Musique.PlaySound(EventAdvancement.sound_validation)
         if(self.ZoneSrc.value == self.ZoneDst.value):
             zoneCtl = self.ZoneDst if(origin == "src") else self.ZoneSrc  
-            i =  zoneCtl.values.index(zoneCtl.top_selected.value)
-            i = 0 if(i+1 >= len(zoneCtl.values)) else (i+1)
-            zoneCtl.value =  zoneCtl.values[i].value 
+            i = 0
+            index = 0
+            for v in zoneCtl.values:
+                if(v._value == zoneCtl.value):
+                    index = i + 1
+                i += 1
+            index = 0 if(index >= len(zoneCtl.values)) else (index)
+            zoneCtl.value =  zoneCtl.values[index]._value 
+            print(zoneCtl.value)             
         for w in self.widgetList:
             w.Refresh()
 

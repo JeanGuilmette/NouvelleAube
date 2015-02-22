@@ -23,8 +23,6 @@ class Population():
         if(self.counter >= 30):
             self.UpdateCroissance()
             self.current += (self.current * self.croissance)
-            if(self.current > self.popMax):
-                self.current = self.popMax
             self.counter = 0
             self.UpdateMaxWorker()
         else:

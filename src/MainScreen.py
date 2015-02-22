@@ -86,7 +86,6 @@ class MainScreen(gui.Desktop):
 
     def ChangeZone(self):
         Musique.PlaySound(EventAdvancement.sound_validation)
-        print(self.region.value)
         self.island.SetActiveZone(self.region.value)  
                
     def action_new(self,value):
