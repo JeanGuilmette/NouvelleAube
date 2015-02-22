@@ -103,23 +103,23 @@ class RapportElements():
 
 class StoryEffects():
     Effects = dict( \
-    Bonheur  = (20),
-    Influence = (40),
+    Bonheur  = (75),
+    Influence = (50),
     Sante  = (60),
-    Education  = (30),
+    Education  = (50),
     Criminalite = (30),
 
     Panique = (0),
 
     Bois  = (1200),
-    Minerais  = (200),
+    Minerais  = (6200),
 
 
     Petrole = (100),
     Population = (3000),
-    Agriculture = (1800),
-    Chasse = (0),
-    Peche = (0)
+    Agriculture = (9600),
+    Chasse = (9600),
+    Peche = (9600)
     )
 
 

@@ -4,16 +4,19 @@ Created on Jan 11, 2015
 @author: SJS
 '''
 import sys
-import CustomWidget
+
 sys.path.append("../src")
 sys.path.append("../lib")
+sys.path.append("../src/SoundTrack")
+sys.path.append("../src/image")
+import pygame
+pygame.init()
 from BuildMenu import BuildMenu, TransferMenu
 from pgu import gui
 import Zone
 import Island
 import Events
-import pygame
-pygame.init()
+import CustomWidget
   
 ##########################################################    
 if __name__ in '__main__':

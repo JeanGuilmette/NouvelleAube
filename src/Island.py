@@ -135,10 +135,13 @@ class Island(object):
         if(zoneName == "Active"):
             zoneName = self.__activeZone         
         if(zoneName == OVERVIEW_ZONE_NAME):
+            nbrZone = 0
             for zone in self.secteur:
-                if(zone != OVERVIEW_ZONE_NAME):            
-                    retval += self.secteur[zone].GetSante()
-            retval /= float(len(self.secteur))
+                if(zone != OVERVIEW_ZONE_NAME):
+                    if(self.secteur[zone].GetCurrentPopulation() > 0):            
+                        retval += self.secteur[zone].GetSante()
+                        nbrZone += 1
+            retval /= float(nbrZone)
         else:
             retval = self.secteur[zoneName].GetSante()
         return retval 
@@ -148,10 +151,13 @@ class Island(object):
         if(zoneName == "Active"):
             zoneName = self.__activeZone         
         if(zoneName == OVERVIEW_ZONE_NAME):
+            nbrZone = 0
             for zone in self.secteur:
-                if(zone != OVERVIEW_ZONE_NAME):            
-                    retval += self.secteur[zone].GetBonheur()
-            retval /= len(self.secteur)                    
+                if(zone != OVERVIEW_ZONE_NAME):
+                    if(self.secteur[zone].GetCurrentPopulation() > 0):            
+                        retval += self.secteur[zone].GetBonheur()
+                        nbrZone += 1
+            retval /= float(nbrZone)            
         else:
             retval = self.secteur[zoneName].GetBonheur()
         return retval     
@@ -161,10 +167,13 @@ class Island(object):
         if(zoneName == "Active"):
             zoneName = self.__activeZone         
         if(zoneName == OVERVIEW_ZONE_NAME):
+            nbrZone = 0
             for zone in self.secteur:
-                if(zone != OVERVIEW_ZONE_NAME):            
-                    retval += self.secteur[zone].GetRecherche()
-            retval /= len(self.secteur)                    
+                if(zone != OVERVIEW_ZONE_NAME):
+                    if(self.secteur[zone].GetCurrentPopulation() > 0):            
+                        retval += self.secteur[zone].GetRecherche()
+                        nbrZone += 1
+            retval /= float(nbrZone)                      
         else:
             retval = self.secteur[zoneName].GetRecherche()
         return retval  
@@ -174,10 +183,13 @@ class Island(object):
         if(zoneName == "Active"):
             zoneName = self.__activeZone         
         if(zoneName == OVERVIEW_ZONE_NAME):
+            nbrZone = 0
             for zone in self.secteur:
-                if(zone != OVERVIEW_ZONE_NAME):            
-                    retval += self.secteur[zone].GetEducation()
-            retval /= len(self.secteur)                    
+                if(zone != OVERVIEW_ZONE_NAME):
+                    if(self.secteur[zone].GetCurrentPopulation() > 0):            
+                        retval += self.secteur[zone].GetEducation()
+                        nbrZone += 1
+            retval /= float(nbrZone)                    
         else:
             retval = self.secteur[zoneName].GetEducation()
         return retval    
@@ -187,10 +199,13 @@ class Island(object):
         if(zoneName == "Active"):
             zoneName = self.__activeZone         
         if(zoneName == OVERVIEW_ZONE_NAME):
+            nbrZone = 0
             for zone in self.secteur:
-                if(zone != OVERVIEW_ZONE_NAME):            
-                    retval += self.secteur[zone].GetPanique()
-            retval /= len(self.secteur)                       
+                if(zone != OVERVIEW_ZONE_NAME):
+                    if(self.secteur[zone].GetCurrentPopulation() > 0):            
+                        retval += self.secteur[zone].GetPanique()
+                        nbrZone += 1
+            retval /= float(nbrZone)                         
         else:
             retval = self.secteur[zoneName].GetPanique()
         return retval   
@@ -200,10 +215,13 @@ class Island(object):
         if(zoneName == "Active"):
             zoneName = self.__activeZone         
         if(zoneName == OVERVIEW_ZONE_NAME):
+            nbrZone = 0
             for zone in self.secteur:
-                if(zone != OVERVIEW_ZONE_NAME):            
-                    retval += self.secteur[zone].GetCriminalite()
-            retval /= len(self.secteur)                       
+                if(zone != OVERVIEW_ZONE_NAME):
+                    if(self.secteur[zone].GetCurrentPopulation() > 0):            
+                        retval += self.secteur[zone].GetCriminalite()
+                        nbrZone += 1
+            retval /= float(nbrZone)                         
         else:
             retval = self.secteur[zoneName].GetCriminalite()
         return retval   
@@ -213,10 +231,13 @@ class Island(object):
         if(zoneName == "Active"):
             zoneName = self.__activeZone         
         if(zoneName == OVERVIEW_ZONE_NAME):
+            nbrZone = 0
             for zone in self.secteur:
-                if(zone != OVERVIEW_ZONE_NAME):            
-                    retval += self.secteur[zone].GetInfluence()
-            retval /= len(self.secteur)                       
+                if(zone != OVERVIEW_ZONE_NAME):
+                    if(self.secteur[zone].GetCurrentPopulation() > 0):            
+                        retval += self.secteur[zone].GetInfluence()
+                        nbrZone += 1
+            retval /= float(nbrZone)                         
         else:
             retval = self.secteur[zoneName].GetInfluence()
         return retval   
@@ -226,40 +247,17 @@ class Island(object):
         if(zoneName == "Active"):
             zoneName = self.__activeZone         
         if(zoneName == OVERVIEW_ZONE_NAME):
+            nbrZone = 0
             for zone in self.secteur:
-                if(zone != OVERVIEW_ZONE_NAME):            
-                    retval += self.secteur[zone].GetPollution()
-            retval /= len(self.secteur)                       
+                if(zone != OVERVIEW_ZONE_NAME):
+                    if(self.secteur[zone].GetCurrentPopulation() > 0):            
+                        retval += self.secteur[zone].GetPollution()
+                        nbrZone += 1
+            retval /= float(nbrZone)                        
         else:
             retval = self.secteur[zoneName].GetPollution()
         return retval  
-    
-    def GetProduction(self, zoneName="Active"):
-        retval = 0
-        if(zoneName == "Active"):
-            zoneName = self.__activeZone         
-        if(zoneName == OVERVIEW_ZONE_NAME):
-            for zone in self.secteur:
-                if(zone != OVERVIEW_ZONE_NAME):            
-                    retval += self.secteur[zone].GetProduction()
-            retval /= len(self.secteur)                       
-        else:
-            retval = self.secteur[zoneName].GetProduction()
-        return retval  
-    
-    def GetTresors(self, zoneName="Active"):
-        retval = 0
-        if(zoneName == "Active"):
-            zoneName = self.__activeZone         
-        if(zoneName == OVERVIEW_ZONE_NAME):
-            for zone in self.secteur:
-                if(zone != OVERVIEW_ZONE_NAME):            
-                    retval += self.secteur[zone].GetTresors()
-            retval /= float(len(self.secteur))                     
-        else:
-            retval = self.secteur[zoneName].GetTresors()
-        return retval              
-                
+
     
     def GetRessourceInfo(self, resName, zoneName="Active"):
         stock = 0

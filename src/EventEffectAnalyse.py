@@ -29,23 +29,20 @@ class EventImpact(object):
         
         if(token == "population"):
             self.island.ModifyPopulation(secteur, value)
-            print("%s modify %s population by %s" % (evtName, secteur, value))
+
         elif(token == "panic"):
             self.island.ModifyPanic(secteur, value)
-            print("%s modify %s panic by %s" % (evtName, secteur, value) )               
+             
         elif(token == "MultiplyPop"):
             pop = self.island.GetCurrentPopulation(secteur)
             mod = pop * float(value)
             self.island.ModifyPopulation(secteur, (mod-pop))
-            print("%s modify %s population multiplied by %s" % (evtName, secteur, value) )
 
         elif(token == "influence"):
             self.island.ModifyInfluence(secteur, value)
-            print("%s modify %s Influence by %s" % (evtName, secteur, value) )
 
         elif(token == "bonheur"):
             self.island.ModifyBonheur(secteur, value)
-            print("%s modify %s Bonheur by %s" % (evtName, secteur, value) )
 
         elif(token == "MultiplyResStock"):
             Ress = ("Agriculture", "Chasse", "Peche", "Bois", "Minerais", "Petrole")
@@ -70,20 +67,16 @@ class EventImpact(object):
 
         elif(token == "criminalite"):
             self.island.ModifyCriminalite(secteur, value)
-            print("%s modify %s criminalite by %s" % (evtName, secteur, value) )
 
         elif(token == "education"):
             self.island.ModifyEducation(secteur, value)
-            print("%s modify %s education by %s" % (evtName, secteur, value) )
 
         elif(token == "sante"):
             self.island.ModifySante(secteur, value)
-            print("%s modify %s sante by %s" % (evtName, secteur, value) )
 
         elif(token == "pollution"):
             self.island.ModifyPollution(secteur, value)
-            print("%s modify %s panic by %s" % (evtName, secteur, value) )
-
+ 
         elif(token == "ARNAQUED"):
             EventAdvancement.ARNAQUED = False
 

@@ -39,6 +39,7 @@ class StockLabel(gui.Label):
     def paint(self, surf):
         stock, available, stockMax = self.island.GetRessourceInfo(self.resource, self.zoneCtl.value)
         self.value = ("{:0>6d}".format(stock))
+               
         gui.Label.paint(self, surf)
         
               
@@ -52,38 +53,55 @@ class DemographieLabel(gui.Label):
         
     def paint(self, surf):
         self.value = self.BuildString()
-        gui.Label.paint(self, surf)     
-        self.resize() 
+        if(self.isCritic()):
+            self.style.color = (255, 0, 0)
+        else:
+            self.style.color = (0, 0, 0) 
+        gui.Label.paint(self, surf) 
       
     def BuildString(self):  
         if(self.popName == "PopulationActive"):
             return ("%6d   " % (self.island.GetCurrentPopulation(self.zoneCtl.value)))
         if(self.popName == "Population"):
-            return ("%d/%d" % (self.island.GetCurrentPopulation(self.zoneCtl.value), self.island.GetPopulationMax(self.zoneCtl.value)) )
+            return ("%d/%d    " % (self.island.GetCurrentPopulation(self.zoneCtl.value), self.island.GetPopulationMax(self.zoneCtl.value)) )
         elif(self.popName == "Worker"):
-            return ("%d/%d/%d" % (self.island.GetCurrentWorker(self.zoneCtl.value), self.island.GetAvailableWorker(self.zoneCtl.value), self.island.GetMaxWorker(self.zoneCtl.value)) )
+            return ("%d/%d/%d    " % (self.island.GetCurrentWorker(self.zoneCtl.value), self.island.GetAvailableWorker(self.zoneCtl.value), self.island.GetMaxWorker(self.zoneCtl.value)) )
         elif(self.popName == "Sante"):
-            return ("%2.2f" % self.island.GetSante(self.zoneCtl.value))
+            return ("%2.2f    " % self.island.GetSante(self.zoneCtl.value))
         elif(self.popName == "Bonheur"):
-            return ("%2.2f" % self.island.GetBonheur(self.zoneCtl.value))
-        elif(self.popName == "Recherche"):
-            return ("%2.2f" % self.island.GetRecherche(self.zoneCtl.value))
+            return ("%2.2f    " % self.island.GetBonheur(self.zoneCtl.value))
         elif(self.popName == "Education"):
-            return ("%2.2f" % self.island.GetEducation(self.zoneCtl.value))
+            return ("%2.2f   " % self.island.GetEducation(self.zoneCtl.value))
         elif(self.popName == "Panique"):
-            return ("%2.2f" % self.island.GetPanique(self.zoneCtl.value))
+            return ("%2.2f    " % self.island.GetPanique(self.zoneCtl.value))
         elif(self.popName == "Criminalite"):
-            return ("%2.2f" % self.island.GetCriminalite(self.zoneCtl.value))
+            return ("%2.2f    " % self.island.GetCriminalite(self.zoneCtl.value))
         elif(self.popName == "Influence"):
-            return ("%2.2f" % self.island.GetInfluence(self.zoneCtl.value))
+            return ("%2.2f   " % self.island.GetInfluence(self.zoneCtl.value))
         elif(self.popName == "Pollution"):
-            return ("%2.2f" % self.island.GetPollution(self.zoneCtl.value))
-        elif(self.popName == "Production"):
-            return ("%d" % self.island.GetProduction(self.zoneCtl.value))
-        elif(self.popName == "Tresors"):
-            return ("%d" % self.island.GetTresors(self.zoneCtl.value))        
+            return ("%2.2f   " % self.island.GetPollution(self.zoneCtl.value))
         else:
             return "Not Applicable"  
+        
+    def isCritic(self):  
+        if((self.popName == "PopulationActive") or (self.popName == "Population")):
+            return (self.island.GetCurrentPopulation(self.zoneCtl.value) < 1000)
+        elif(self.popName == "Sante"):
+            return (self.island.GetSante(self.zoneCtl.value) < 10)
+        elif(self.popName == "Bonheur"):
+            return (self.island.GetBonheur(self.zoneCtl.value) < 10)
+        elif(self.popName == "Education"):
+            return (self.island.GetEducation(self.zoneCtl.value) <10 )
+        elif(self.popName == "Panique"):
+            return (self.island.GetPanique(self.zoneCtl.value) > 90)
+        elif(self.popName == "Criminalite"):
+            return (self.island.GetCriminalite(self.zoneCtl.value) >90)
+        elif(self.popName == "Influence"):
+            return (self.island.GetInfluence(self.zoneCtl.value) < 10)
+        elif(self.popName == "Pollution"):
+            return (self.island.GetPollution(self.zoneCtl.value) > 90)
+        else:
+            return False        
                        
 class MapDisplay(gui.Widget):
     def __init__(self, zone, width, height):

@@ -115,40 +115,40 @@ class MainScreen(gui.Desktop):
         Musique.PlaySound(EventAdvancement.sound_validation)
         d = BuildMenu.BuildMenu(self.island, self.region.value)            
         d.open()
+#         self.WaitEndOfDialog()
         
-    def action_transfer(self, value):
-        Musique.PlaySound(EventAdvancement.sound_validation)
-        d = BuildMenu.TransferMenu(self.island)            
-        d.open() 
-      
-    def action_option(self, value):
-        pass
-    
-    def action_event(self, evt):
-#         display = self.get_toplevel().screen        
-        dialog = Events.EventsViewer(self.island, evt)
-        dialog.open()
+
+    def WaitEndOfDialog(self):
         self.update()
         done = False
         while not done:
-            pygame.time.wait(5)              
+            pygame.time.wait(5)
             self.update()
             self.paint()
             pygame.display.update()
-            pygame.display.flip()              
-       
+            pygame.display.flip()
             # Process events
             for ev in pygame.event.get():
                 if (ev.type == pygame.QUIT or 
                     ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE):
                     done = True
                 else:
-                    # Pass the event off to pgu
-                    self.event(ev)
-                    
-        # Remove dialog
-#         Events.flipScreen(self, display, evt.surf, evt.surfRect)
+                    self.event(ev) # Pass the event off to pgu
+        
 
+    def action_transfer(self, value):
+        Musique.PlaySound(EventAdvancement.sound_validation)
+        d = BuildMenu.TransferMenu(self.island)            
+        d.open() 
+#         self.WaitEndOfDialog()
+      
+    def action_option(self, value):
+        pass
+    
+    def action_event(self, evt):
+        dialog = Events.EventsViewer(self.island, evt)
+        dialog.open()
+        self.WaitEndOfDialog()
         return evt       
 
     def CreateResourceStatus(self):

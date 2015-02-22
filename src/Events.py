@@ -14,6 +14,7 @@ sys.path.append("../src")
 import Musique
 from pgu import gui
 from pygame.transform import smoothscale
+import Island
 
 
 
@@ -79,8 +80,7 @@ class EventsViewer(gui.Table):
     OptIdBoxCoord = pygame.Rect(10, 184, 198, 320)  
     OptCoord = pygame.Rect(204, 140, 428, 320) 
     OptBoxCoord = pygame.Rect(212, 184, 428, 320) 
-    
-       
+ 
     def __init__(self, island, event, **params):
         # Initialize internal object  
         self.isOpen = False 
@@ -96,9 +96,8 @@ class EventsViewer(gui.Table):
         self.td(gui.Label("   " ))  
                         
         self.tr()
-        regionString = ""
-        for region in self.gameEvent.regions:
-            regionString += Island.secteurDef[region]["name"] +", "
+        
+        regionString = self.BuildRegionString(self.gameEvent)
         title =  gui.Label("Event: %s les régions touché sont: %s" % (self.gameEvent.name, regionString) ) 
         self.td(title,align=0,cls=self.cls+'.bar')
         
@@ -140,7 +139,15 @@ class EventsViewer(gui.Table):
         #Add space at dialog bottom
         self.tr() 
         self.td(gui.Label("   " ))  
-        
+  
+    def BuildRegionString(self, evt):
+        regionString = ""
+        for region in evt.regions:
+            if(region in Island.secteurDef):
+                regionString += Island.secteurDef[region]["name"] + ", "
+            else:
+                regionString += region + ", "
+        return regionString
         
     def action_SelectOption(self, ctl):
         Musique.PlaySound(EventAdvancement.sound_validation)

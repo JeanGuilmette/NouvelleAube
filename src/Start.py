@@ -35,7 +35,7 @@ if __name__ == "__main__":
     game = EnjeuxSurvieEngine.EnjeuxSurvieEngine(disp) 
     if(action.lower() == "start"):
         Musique.PlaySound(EventAdvancement.sound_validation)
-        #StoryTelling.StoryTelling(disp)
+        StoryTelling.StoryTelling(disp)
         game.run()
     elif(action.lower() == "continue"):
         Musique.PlaySound(EventAdvancement.sound_validation)
@@ -45,5 +45,4 @@ if __name__ == "__main__":
         game.run()
 
     # Game Over
-    #EndGame.EndGame(disp, game.score)
-    EndGame.EndGame(disp, game.island)
+#     EndGame.EndGame(disp, game.island)

@@ -139,15 +139,8 @@ class Secteur():
         return self.population.influence    
     
     def GetPollution(self):
-#         return self.population.valeur_de_polution() 
         return self.population.pollution
-    
-    def GetProduction(self):
-        return 999 
-    
-    def GetTresors(self):
-        return 111                   
-    
+     
     def GetRessourceInfo(self, resName):
         stock = 0
         available = 0
@@ -191,24 +184,36 @@ class Secteur():
     def UpdateExpandRessource(self):
         if(self.population.current > 0):
             #Nourrire la population
-            self.resources["Agriculture"].stock -= 0.005 * self.population.current
-            self.resources["Chasse"].stock -= 0.005 * self.population.current
-            self.resources["Peche"].stock -= 0.005 * self.population.current
-            if(self.resources["Agriculture"].stock <= 0):
-                self.resources["Agriculture"].stock = 0
-                self.population.bonheur -= 0.5
-                self.population.criminalite += 0.5
-                self.population.sante -= 0.22
-            if(self.resources["Chasse"].stock <= 0):
-                self.resources["Chasse"].stock = 0
-    #             self.population.bonheur -= 0.5
-    #             self.population.criminalite += 0.5
-    #             self.population.sante -= 0.2  
-            if(self.resources["Peche"].stock <= 0):
-                self.resources["Peche"].stock = 0
-    #             self.population.bonheur -= 0.5
-    #             self.population.criminalite += 0.5
-    #             self.population.sante -= 0.2
+            consommationDef = dict (Agriculture=0.010, Chasse=0.001, Peche=0.005)
+            missing = 0
+            
+            for res in ["Agriculture", "Chasse", "Peche"]:
+                current, avail, max = self.GetRessourceInfo(res)
+                need = self.population.current * consommationDef[res]
+                if(current < need):
+                    missing += need - current
+                self.ModifyRessource(res, -need)  
+            
+            if(missing > 0):
+                print(missing)
+                self.population.bonheur -= 5
+                self.population.criminalite += 5
+                self.population.sante -= 5
+                for res in ["Agriculture", "Chasse", "Peche"]:  
+                    current, avail, max = self.GetRessourceInfo(res)                    
+                    if(current != 0 ):
+                        if(current < missing):
+                            missing = missing - current
+                            self.ModifyRessource(res, -current) 
+                        else:
+                            self.ModifyRessource(res, -missing) 
+                            missing = 0
+                if(missing > 0):
+                    #C'est la famine
+                    self.population.bonheur -= 25
+                    self.population.criminalite += 25
+                    self.population.sante -= 25                    
+                                                    
     
     def ModifyRessource(self, resName, newVal):
         if resName in self.resources:

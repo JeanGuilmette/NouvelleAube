@@ -7,12 +7,12 @@ SOUSTERRAIN = 2
 AERIEN = 3
 
 buildingDef = dict( \
-    Ferme = dict(resType = "Agriculture", pos = GENERAL, imgName = "image/building_image/ferme.png", workerMax = 10, secteur = "primaire", space = 40, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
+    Ferme = dict(resType = "Agriculture", pos = GENERAL, imgName = "image/building_image/ferme.png", workerMax = 100, secteur = "primaire", space = 40, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
     Mine  =  dict(resType = "Metaux", pos = SOUSTERRAIN, imgName = "image/building_image/mine.png", workerMax = 100, secteur = "primaire", space = 2, buildcost = dict( Bois = 345, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
     Scierie = dict(resType = "Bois", pos = GENERAL, imgName = "image/building_image/usine_de_transformation_du_bois.png", workerMax = 20, secteur = "primaire", space = 5, buildcost = dict( Bois = 0, Minerais = 6), buildTime = 5, entretient = 0.1, prerequis = "" ),
 
     Forage_petrolier = dict(resType = "Petrole", pos = AERIEN, imgName = "image/building_image/Station_de_forage.png", workerMax = 3000, secteur = "primaire", space = 1, buildcost = dict( Bois = 0, Minerais = 800), buildTime = 5, entretient = 0.1, prerequis = "gisement" ),
-    Camp_de_chasse  =  dict(resType = "Chasse", pos = GENERAL, imgName = "image/building_image/camp_de_chasse.png", workerMax = 600, secteur = "primaire", space = 1, buildcost = dict( Bois = 345, Minerais = 60), buildTime = 5, entretient = 0.05, prerequis = "" ),
+    Camp_de_chasse  =  dict(resType = "Chasse", pos = GENERAL, imgName = "image/building_image/camp_de_chasse.png", workerMax = 100, secteur = "primaire", space = 1, buildcost = dict( Bois = 345, Minerais = 60), buildTime = 5, entretient = 0.05, prerequis = "" ),
     Port = dict(resType = "Peche", pos = RIVE, imgName = "image/building_image/port.png", workerMax = 1500, secteur = "primaire", space = 1, buildcost = dict( Bois = 300, Minerais = 300), buildTime = 5, entretient = 0.15, prerequis = "" ),
     ZRLA= dict(resType = "population max", pos = GENERAL, imgName = "image/building_image/quartier_residentielle.png", workerMax = 500, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 500, Minerais = 500), buildTime = 5, entretient = 0.2, prerequis = "" ),
     Ecole  =  dict(resType = "Travailleurs", pos = GENERAL, imgName = "image/building_image/ecole.png", workerMax = 400, secteur = "tertiaire", space = 1, buildcost = dict( Bois = 800, Minerais = 500), buildTime = 5, entretient = 0.1, prerequis = "" ),

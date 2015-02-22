@@ -3,13 +3,14 @@
 __author__ = 'SJS'
 
 import pygame
+import Musique
 import Building
 import CustomWidget
 import Island
 import Resources
 import EventEffectAnalyse
 import EventAdvancement
-import Musique
+
 
 import sys; sys.path.append("../lib"); sys.path.append("../src")
 from pgu import gui
@@ -195,6 +196,7 @@ class BuildMenu(gui.Dialog):
     def close(self, w = None):
         Musique.PlaySound(EventAdvancement.sound_QuitOrReturn)
         gui.Dialog.close(self)
+#         pygame.event.post(pygame.event.Event(pygame.QUIT))
 
     def action_addBuilding(self, Value):
         result = self.island.secteur[self.ActiveZone.value].AddBuilding(Value)
@@ -295,6 +297,7 @@ class TransferMenu(gui.Dialog):
     def close(self, w = None):
         Musique.PlaySound(EventAdvancement.sound_QuitOrReturn)
         gui.Dialog.close(self)
+#         pygame.event.post(pygame.event.Event(pygame.QUIT))        
 
     def action_TransferPopulation(self, slider):
         slider.populationToMove
